@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+// Imports
 import Header from './components/Header';
 import React, { useState } from 'react';
 import Home from './components/Home';
@@ -9,6 +8,7 @@ import Foxy from './components/Foxy';
 import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import BootstrapCarousel from './components/BootstrapCarousel';
 
 
 function App() {
@@ -48,6 +48,7 @@ function App() {
         <Header currentTab={currentTab} setCurrentTab={setCurrentTab}></Header>
       </div>
 
+      <BootstrapCarousel />
       <div>
         <main>{renderTab()}
         

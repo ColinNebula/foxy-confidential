@@ -4,8 +4,8 @@
 
 main {
   background: linear-gradient(90deg,
-      #22223b,
-      #5454e5);
+      #5f4e7b,
+      #626269);
   padding-bottom: 55px;
   
 
@@ -39,10 +39,8 @@ body {
   line-height: 1.5;
   font-size: 18px;
   letter-spacing: .1em;
-  
-
-
 }
+
 
 h1,
 h2,
@@ -110,6 +108,114 @@ footer {
   background: linear-gradient(90deg,
       #4a4e69,
       #afb1b3);
+}
+
+.carousel-item {
+  height: 30rem;
+}
+
+.center {
+  text-align: center;
+}
+
+
+.btn {
+  margin: 10px
+}
+
+/* Github section */
+.github-link {
+  opacity: .5;
+}
+
+.github-link:hover {
+  opacity: 1;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.card {
+  flex: 40%;
+  width: 50%;
+  margin: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-class {
+  height: 50px;
+  width: 50px;
+}
+
+.portfolio-div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.resume-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* card body */
+.card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.img-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
+  height: 300px;
+  flex: 10 15;
+}
+
+#contact-section {
+  padding: 15px;
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-radius: 5px;
+}
+
+.card-text:last-child {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.ProjectCard {
+  opacity: .5;
+}
+
+.ProjectCard:hover {
+  opacity: 1;
+}
+
+.image-box {
+  display: flex;
+  justify-content: center;
+}
+
+/* cover image */
+.cover-image {
+  align-self: center;
+  max-height: 300px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.my-project {
+  margin-bottom: 0;
+
 }
 
 
