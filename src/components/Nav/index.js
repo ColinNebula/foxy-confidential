@@ -1,33 +1,56 @@
-import Container from 'react-bootstrap/Container';
+import React from "react";
+import { Container } from 'react-bootstrap';
+import logo from '../../assets/images/logo.png';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-function Navigation() {
+
+function Navigation(props) {
+  const { currentTab, setCurrentTab } = props;
   return (
-    <Navbar bg="light" expand="lg" variant="light" sticky="top">
+    
+    <Navbar bg="light" expand="xl" variant="light" sticky="top">
       <Container>
-        <Navbar.Brand href="#home">Foxy Confidential</Navbar.Brand>
+        <Navbar.Brand href="/home">
+        <img src={logo} width="90px" height="40px" alt="logo" />
+        Foxy Confidential
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#blog">Blog</Nav.Link>
+            <Nav.Link className={currentTab === "/" ? "mx-2 navActive" : "mx-2"}>
+            <span onClick={() => setCurrentTab("home")}>Home</span>
+            </Nav.Link>
+            
+            <Nav.Link  className={currentTab === "blog" ? "mx-2 navActive" : "mx-2"}>
+            <span onClick={() => setCurrentTab("blog")}>Blog</span>
+        
+            </Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#food">Food Binge</NavDropdown.Item>
-              <NavDropdown.Item href="#wines">
-                Wines
+              <NavDropdown.Item className={currentTab === "food" ? "mx-2 navActive" : "mx-2"}>
+              <span onClick={() => setCurrentTab("food")}>Food Binge</span>
+              
               </NavDropdown.Item>
-              <NavDropdown.Item href="#foxy">Foxy</NavDropdown.Item>
+              <NavDropdown.Item className={currentTab === "wines" ? "mx-2 navActive" : "mx-2"}>
+              <span onClick={() => setCurrentTab("wines")}>Wines</span>
+                
+              </NavDropdown.Item>
+              <NavDropdown.Item className={currentTab === "foxy" ? "mx-2 navActive" : "mx-2"}>
+              <span onClick={() => setCurrentTab("foxy")}>Foxy</span>
+              
+              </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#gallery">
-                Gallery
+              <NavDropdown.Item className={currentTab === "gallery" ? "mx-2 navActive" : "mx-2"}>
+              <span onClick={() => setCurrentTab("gallery")}>Gallery</span>
+              
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    
   );
 }
 

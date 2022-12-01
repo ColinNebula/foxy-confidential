@@ -1,11 +1,11 @@
 // Imports
 import Header from './components/Header';
 import React, { useState } from 'react';
-import Home from './components/Home';
-import Food from './components/Food';
-import Wines from './components/Wines';
-import Foxy from './components/Foxy';
-import Gallery from './components/Gallery';
+import  Home  from './components/Home';
+import  Food  from './components/Food';
+import  Wines  from './components/Wines';
+import  Foxy  from './components/Foxy';
+import Gallery  from './components/Gallery';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapCarousel from './components/BootstrapCarousel';
@@ -16,32 +16,28 @@ function App() {
 
   const renderTab = () => {
     switch (currentTab) {
-      case "food":
-        return <Food  />;
-
       case "home":
-        return <Home />;
+        return <Home  />;
+
+      case "food":
+        return <Food />;
       
       case "blog":
         return <blog />;
 
-        case "wines":
-          return <Wines />;
+      case "wines":
+        return <Wines />;
           
-          case "foxy":
-            return <Foxy />;
+      case "foxy":
+        return <Foxy />;
           
-            case "gallery":
-              return <Gallery />;  
-
-
-
-      default:
+      case "gallery":
+        return <Gallery />;  
+        default:
         return null;
     }
   };
   return (
-
     <div>
       <div>
 
@@ -50,12 +46,9 @@ function App() {
 
       <BootstrapCarousel />
       <div>
-        <main>{renderTab()}
-        
-        </main>
+        <main>{renderTab()}</main>
         
       </div>
-
       <div>
         <Footer></Footer>
       </div>
