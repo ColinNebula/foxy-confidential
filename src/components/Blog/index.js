@@ -1,13 +1,13 @@
 import React from 'react'
 
-function Foxy () {
+const Blog = () => {
   return (
     <div>
     <h2>
-    This is Foxy
+    Blog Here
     </h2>
     </div>
   )
 }
 
-export default Foxy;
+export default Blog

@@ -1,4 +1,5 @@
 import Carousel from 'react-bootstrap/Carousel';
+import Fade from 'react-bootstrap/Fade'
 
 function Navigation() {
   return (

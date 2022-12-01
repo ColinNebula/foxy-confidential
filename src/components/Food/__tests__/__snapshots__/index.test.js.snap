@@ -2,32 +2,99 @@
 
 exports[`Food component matches snapshot DOM node structure 1`] = `
 <DocumentFragment>
-  <section
-    class="my-5"
+  <div
+    class="container-fluid"
   >
-    <h1
-      id="food"
-    >
-      Hi, my name is Colin Nebula
-    </h1>
-    <h3>
-       Full Stack Web Developer
-    </h3>
     <div
-      class="image-box"
+      class="row"
     >
-      <img
-        class="cover-image"
-        src="header-bg.jpg"
-      />
+      <div
+        class="col-md-auto"
+      >
+        <div
+          class="card-group"
+        >
+          <div
+            class="shadow-lg card"
+          >
+            <img
+              alt="food image"
+              class="rounded"
+              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.yO_oWdXO2qCADpbD-Eb-WQHaFl%26pid%3DApi&f=1&ipt=6e7c514c9c3ac5abc8a764a3b26023e3e8999d18b007585d75166ac9cc146d8f&ipo=images/100px160"
+            />
+            <div
+              class="card-body"
+            >
+              <div
+                class="card-title h5"
+              >
+                Eat Like Foxy
+              </div>
+              <p
+                class="card-text"
+              >
+                Eat like foxy queens and kings at some of the best and well renowns Restaurants city and around the the world with foxy. Join us on social media or come with your friends to one of our events.
+              </p>
+            </div>
+            <div
+              class="card-footer"
+            >
+              <button
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                Primary
+              </button>
+               
+              <small
+                class="text-muted"
+              >
+                Last updated 3 mins ago
+              </small>
+            </div>
+          </div>
+          <div
+            class="card"
+          >
+            <img
+              alt="food image"
+              class="rounded"
+              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.fDEDDwwgtCyI194bhdvcjQHaFu%26pid%3DApi&f=1&ipt=d3b34306d1aaebffed6f305ecadb6ce4c26f0722f71b7dc0277244e22f86b9ba&ipo=images/100px160 rounded"
+            />
+            <div
+              class="card-body"
+            >
+              <div
+                class="card-title h5"
+              >
+                Card title
+              </div>
+              <p
+                class="card-text"
+              >
+                Eat like foxy queens and kings at some of the best and well renowns Restaurants city and around the the world with foxy. Join us on social media or come with your friends to one of our events. 
+              </p>
+            </div>
+            <div
+              class="card-footer"
+            >
+              <button
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                Primary
+              </button>
+               
+              <small
+                class="text-muted"
+              >
+                Last updated 3 mins ago
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div
-      class="my-2"
-    >
-      <p>
-        As a self starter who loves being part of a team as well, I bring discipline and rigour from my years serving the US Military. This, in addition to my numerous diplomas in digital art, technology, animation, and now coding, have helped me reach my present position where I hope to develop websites.
-      </p>
-    </div>
-  </section>
+  </div>
 </DocumentFragment>
 `;
