@@ -10,14 +10,14 @@ function Navigation(props) {
   const { currentTab, setCurrentTab } = props;
   return (
     
-    <Navbar bg="light" expand="xl" variant="light" sticky="top">
+    <Navbar bg="light" expand="md" variant="light" sticky="top" collapseOnSelect>
       <Container>
         <Navbar.Brand href="/home">
         <img src={logo} width="90px" height="40px" alt="logo" />
         Foxy Confidential
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle aria-controls="navbarResponsive" />
+        <Navbar.Collapse id="navbarResponsive">
           <Nav className="ms-auto">
             <Nav.Link className={currentTab === "/" ? "mx-2 navActive" : "mx-2"}>
             <span onClick={() => setCurrentTab("home")}>Home</span>

@@ -5,6 +5,7 @@ import  Home  from './components/Home';
 import  Food  from './components/Food';
 import  Wines  from './components/Wines';
 import  Foxy  from './components/Foxy';
+import  Blog  from './components/Blog';
 import Gallery  from './components/Gallery';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,7 +24,7 @@ function App() {
         return <Food />;
       
       case "blog":
-        return <blog />;
+        return <Blog />;
 
       case "wines":
         return <Wines />;
