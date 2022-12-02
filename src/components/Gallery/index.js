@@ -1,18 +1,36 @@
 import React from 'react'
 import { Card, Container, Button, Col, Row } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
 
-function Gallery () {
+
+function Gallery() {
   return (
     <Container>
       <Row>
         <Col>
-          <div>
-    <h2>This is The Gallery</h2>
-          </div>
+          <Card className="shadow-lg" style={{ color: "#000", width: "auto" }}>
+            <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX8ShWNC5oFruCmEDMEeSYNj-5ADhq_hIabQ&usqp=CAU/100px180?text=Image cap" className="rounded" />
+            <Card.Body>
+              <Card.Title>Card Title</Card.Title>
+              <Card.Text>
+                Some quick example text to build on the card title and make up the
+                bulk of the card's content.
+              </Card.Text>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroup.Item>Cras justo odio</ListGroup.Item>
+              <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+              <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+            </ListGroup>
+            <Card.Body>
+              <Card.Link href="#">Card Link</Card.Link>
+              <Card.Link href="#">Another Link</Card.Link>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
 
 export default Gallery;

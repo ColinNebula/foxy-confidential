@@ -1,17 +1,17 @@
 import Carousel from 'react-bootstrap/Carousel';
-import Fade from 'react-bootstrap/Fade'
+// import Fade from 'react-bootstrap/Fade';
 
 function Navigation() {
   return (
     <Carousel>
       <Carousel.Item>
         <img
-          className="d-block w-100 h-100 carousel-fade" data-bs-interval="10000"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffoodsguy.com%2Fwp-content%2Fuploads%2F2020%2F11%2FThe-Best-Fruit-Snacks-Of-2020-1170x780.jpg&f=1&nofb=1&ipt=a767a82488f3c58c76727c0017ffbb18f7bb9619baa2d394e2ce0ebfa11495c4&ipo=images"
+          className="d-block w-100 h-100 carousel-fade" data-bs-interval="20000"
+          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fc2%2F5f%2F88%2Fc25f88db65dcd9a9d940e990ca1a4912.jpg&f=1&nofb=1&ipt=9be6cb518eb2cb03e5259be2c2600afee2e00a60e70767ee222ece8edd1fcbf7&ipo=images"
           alt="First slide"
         />
         <Carousel.Caption>
-          <h3>First slide label</h3>
+          <h3>Wear the best brands</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
       </Carousel.Item>
@@ -23,19 +23,19 @@ function Navigation() {
         />
 
         <Carousel.Caption>
-          <h3>Second slide label</h3>
+          <h3>Eat amazing food</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100 h-100 carousel-fade" data-bs-interval="10000"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fassets.onyamagazine.com%2Fwp-content%2Fuploads%2F2019%2F07%2F28220251%2FScreen-Shot-2019-07-08-at-9.14.20-am-1024x678.png&f=1&nofb=1&ipt=2b9bd3720403a00383aeb4c44c8ce67b42cd22c64ceb7987808a4285dd93f8f5&ipo=images"
+          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthewashingtonnote.com%2Fwp-content%2Fuploads%2F2020%2F09%2Flifestyle-1920x1279.jpeg&f=1&nofb=1&ipt=7787da3ada5200b6064f6a7de7cd83ffa45e4d4184172509e4add6867936ce51&ipo=images"
           alt="Third slide"
         />
 
         <Carousel.Caption>
-          <h3>Third slide label</h3>
+          <h3>Enjoy the best life style</h3>
           <p>
             Praesent commodo cursus magna, vel scelerisque nisl consectetur.
           </p>
