@@ -5,6 +5,8 @@ function Footer() {
     return (
             <div className="footer">
                 <footer>
+                <div>
+                </div>
                         <a href="https://github.com/ColinNebula" target="blank" rel="noopener noreferrer">
                             <li className="logo">
                                 <FaGithub />
