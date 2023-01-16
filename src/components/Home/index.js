@@ -1,76 +1,132 @@
-import { Card, Container, Button, Col, Row } from 'react-bootstrap';
-import CardGroup from 'react-bootstrap/CardGroup';
+import React, { useState } from 'react'
+import { CardGroup, Card, Container, Button, NavDropdown, Col, Row, Modal } from 'react-bootstrap';
+import food from '../../assets/images/food.png';
+import food2 from '../../assets/images/food2.png';
+import food3 from '../../assets/images/food3.png';
+import food6 from '../../assets/images/food6.png';
 // import Image from 'react-bootstrap/Image'
 
 
 function Home() {
+  const [lgShow, setLgShow] = useState(false);
   return (
+
+    
     <Container fluid>
       <Row>
+      <div>
+      <>
+      <Modal
+        size="lg"
+        show={lgShow}
+        onHide={() => setLgShow(false)}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            What we do
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Nibh cras pulvinar mattis nunc. Mollis aliquam ut porttitor leo a. 
+          Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. 
+          Volutpat diam ut venenatis tellus in metus vulputate.
+
+          </p>
+          <Card.Img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Froutenote.com%2Fblog%2Fwp-content%2Fuploads%2F2017%2F09%2FDJ.jpg&f=1&nofb=1&ipt=ddb0176cf1104a4d07576f128b48c3797be67004d74087a891a247c025d50dfa&ipo=images/100px270" className="rounded" alt="Card image" />
+          <a href="https://react-bootstrap.github.io/components/modal/"></a>
+        
+        </Modal.Body>
+      </Modal>
+    </>
+      </div>
+      <h2 class="home_top"> Welcome to Foxy Confidential</h2>
+      <p class="p_top"> Welcome to our fluffy world where we strive
+      to make your taste buds thrive and satisfy those intellectual demands to see what’s at the forefront, 
+      <br />
+      the cutting edge if you will.
+      Check our winners in the list of worthwhile endeavours who get awarded 1, 2, or 3 
+      fluffy wags of our tails and deserve your hard earned credit card tap.</p>
+
+      <NavDropdown.Divider />
+
         <Col ms={"auto"}>
-          <CardGroup>
-            <Card className="shadow-lg" style={{ color: "#000", width: "auto" }}>
-              <Card.Img variant="top" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.yO_oWdXO2qCADpbD-Eb-WQHaFl%26pid%3DApi&f=1&ipt=6e7c514c9c3ac5abc8a764a3b26023e3e8999d18b007585d75166ac9cc146d8f&ipo=images/100px160" className="rounded" alt="food image" />
-              <Card.Body>
-                <Card.Title>Eat Like Foxy</Card.Title>
-                <Card.Text>
-                  Eat like foxy queens and kings at some of the best and well renowns Restaurants city and around the the world
-                  with foxy. Join us on social media or come with your friends to one of our events.
-
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer>
-                <Button variant="outline-primary">Primary</Button>{' '}
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </Card.Footer>
-            </Card>
-            <Card className="shadow-lg" style={{ color: "#000", width: "auto" }}>
-              <Card.Img variant="top" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.fDEDDwwgtCyI194bhdvcjQHaFu%26pid%3DApi&f=1&ipt=d3b34306d1aaebffed6f305ecadb6ce4c26f0722f71b7dc0277244e22f86b9ba&ipo=images/100px160 rounded" className="rounded" alt="food image" />
-              <Card.Body>
-                <Card.Title>Clothes</Card.Title>
-                <Card.Text>
-                  Eat like foxy queens and kings at some of the best and well renowns
-                  Restaurants city and around the the world
-                  with foxy. Join us on social media or come with your friends to one of our events.{' '}
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer>
-                <Button variant="outline-primary">Primary</Button>{' '}
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </Card.Footer>
-            </Card>
-            <Card className="shadow-lg" style={{ color: "#000", width: "auto" }}>
-              <Card.Img variant="top" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fonmilwaukee.com%2Fimages%2Farticles%2Fgo%2Fgoodfoodcafemanna%2Fgoodfoodcafemanna_fullsize_story1.jpg%3F20120828153851&f=1&nofb=1&ipt=e9d01165d8490eb89e7e9e1ec52c0b3f789e94e993cb3eb9a21cea56e863ce8c&ipo=images/100px160" className="rounded" alt="food image" />
-              <Card.Body>
-                <Card.Title>Life Style</Card.Title>
-                <Card.Text>
-                  This is a wider card with supporting text below as a natural lead-in
-                  to additional content. This card has even longer content than the
-                  first to show that equal height action.
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer>
-                <Button variant="outline-primary">Primary</Button>{' '}
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </Card.Footer>
-            </Card>
-
-      </CardGroup>
-      <Card className="bg-dark text-white shadow-lg" style={{ color: "#000", width: "auto" }}>
-      <Card.Img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.howtostartanllc.com%2Fimages%2Fbusiness-ideas%2Fbusiness-idea-images%2Ffine-dining.jpg&f=1&nofb=1&ipt=b2fd0aae1fea268e3088e5547f41a460ecde27e7c7098a4b868c595b465969ad&ipo=images/100px270" className="rounded" alt="Card image" />
+        <Card className="bg-dark text-white shadow-lg" style={{ color: "#000", width: "auto" }}>
+      <Card.Img src={food} className="rounded" alt="Card image" />
       <Card.ImgOverlay>
-        <Card.Title>Card title</Card.Title>
+        <Card.Title>Party In NYC</Card.Title>
         <Card.Text>
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
+        We are FOXY CONFIDENTIAL and this is your scoop on what’s fluffy and what’s not.
         </Card.Text>
-        <Card.Text>Last updated 3 mins ago</Card.Text>
+        <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
+        <Card.Text></Card.Text>
       </Card.ImgOverlay>
     </Card>
         </Col>
       </Row>
+      <h2 class="home_top"> Welcome to Foxy Confidential</h2>
+      <p class="p_top"> As we search far and wide, high and low, wagging this way and that,
+      we come upon a few pretty spots
+      that deserve a mention.</p>
+      <NavDropdown.Divider />
+      <br />
+
+      <CardGroup>
+      <Card>
+        <Card.Img variant="top" src={food3} />
+        <Card.Body>
+          <Card.Title>Card title</Card.Title>
+          <Card.Text>
+            This is a wider card with supporting text below as a natural lead-in
+            to additional content. This content is a little bit longer.
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer>
+        <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
+          <small className="text-muted">Last updated 3 mins ago</small>
+        </Card.Footer>
+      </Card>
+
+      <Card>
+        <Card.Img variant="top" src={food2} />
+        <Card.Body>
+          <Card.Title>Card title</Card.Title>
+          <Card.Text>
+            This card has supporting text below as a natural lead-in to
+            additional content.{' '}
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer>
+          <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
+          <small className="text-muted">Last updated 3 mins ago</small>
+        </Card.Footer>
+      </Card>
+
+      <Card>
+        <Card.Img variant="top" src={food6} />
+        <Card.Body>
+          <Card.Title>Card title</Card.Title>
+          <Card.Text>
+            This is a wider card with supporting text below as a natural lead-in
+            to additional content. This card has even longer content than the
+            first to show that equal height action.
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer>
+        <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
+          <small className="text-muted">Last updated 3 mins ago</small>
+        </Card.Footer>
+      </Card>
+    </CardGroup>
+    <br />
+    <NavDropdown.Divider />
+    <br />
     </Container>
 
+
+    
 
   );
 
