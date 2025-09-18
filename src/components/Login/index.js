@@ -1,93 +1,167 @@
-import React, { useRef } from 'react';
-// import { NavLink } from 'react-router-dom';
-import { Button, Container, Card, Col, Form, Row  } from 'react-bootstrap';
+import React, { useRef, useState } from 'react';
+import { Button, Container, Card, Form, Alert } from 'react-bootstrap';
 import { SocialIcon } from 'react-social-icons';
+import { FaEye, FaEyeSlash, FaUser, FaLock, FaUtensils } from 'react-icons/fa';
 
-
-
-function Login () {
-  const emailRef = useRef()
-  const passwordRef = useRef()
+function Login() {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function onSubmit(e) {
-    e.preventDefault()
-    console.log({ email: emailRef.current.value, 
-      password: passwordRef.current.value })
-  } 
-    return (
-     
-      <Container className="mt-3">
-      <form onSubmit={onSubmit}>
-      <Row>
-      <Col>
-      
-      <div className="form">
-      <div className="form-under">
-      
-      
-<div className='login'>
-      <h1> Login </h1>
-      <div className='container'>
-      <div className='top'>
-      <SocialIcon url="https://github.com/" network="github" bgColor="#2a9d8f" />
-      <SocialIcon url="https://github.com/" network="twitter" bgColor="#2a9d8f" />
-      <SocialIcon url="https://github.com/" network="github" bgColor="#2a9d8f" />
-      </div>
-      <br/>
-      
-      <label>Email address</label>
-      <Form.Control 
-      ref={emailRef}
-      type="email" id="email" placeholder="Enter email"  />
+    e.preventDefault();
+    setIsLoading(true);
     
-        <Form.Text className="text-muted">
-        We will never share your email with anyone else.
-        </Form.Text>
-        </div>
-        <div>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" 
-        ref={passwordRef} 
-        
-        id="password"
-        />
-      </Form.Group>
-      </div>
-      <div className="mb-3 form-check">
-      <input type='checkbox' class="form-checked-input" id="rememberMe" />
-      <label className="form-check-label" for="rememberMe"> Remember Me </label>
-      </div>
-
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-      <Button type="submit">Login</Button>
-      <div className='bottom'>
-      <br/>
-      <p> Forgot your password? </p>
-      <a href='/'> Reset password</a>
-      </div>
+    // Simulate login process
+    setTimeout(() => {
+      console.log({ 
+        email: emailRef.current.value, 
+        password: passwordRef.current.value 
+      });
+      setShowAlert(true);
+      setIsLoading(false);
       
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-      <p className='create'> Create Account 
-      <br />
-      <a type="submit" href="/" target="blank"> <button class="btn">
-      <span>Sign Up</span></button></a>
-      </p>
-    
-    <a href={"/"} target="blank"> <button class="btn"> 
-    <span>Go Home </span></button> </a>
-    </Form.Group> 
-      
-      
-      </div>
-      </div>
-      </div>
-      </Col>
-      </Row>
-      </form>
-      </Container>
-    );
-    
+      // Hide alert after 3 seconds
+      setTimeout(() => setShowAlert(false), 3000);
+    }, 1000);
   }
+
+  return (
+    <Container className="login-container">
+      <div className="login-wrapper">
+        <Card className="login-card">
+          <Card.Body>
+            {/* Header */}
+            <div className="login-header">
+              <div className="login-icon">
+                <FaUtensils size={40} />
+              </div>
+              <h2 className="login-title">Welcome Back</h2>
+              <p className="login-subtitle">Sign in to your Foxy Restaurant account</p>
+            </div>
+
+            {/* Social Login */}
+            <div className="social-login">
+              <p className="social-text">Continue with</p>
+              <div className="social-icons">
+                <SocialIcon 
+                  url="https://google.com" 
+                  network="google" 
+                  bgColor="#ff6b6b"
+                  style={{ height: 45, width: 45 }}
+                />
+                <SocialIcon 
+                  url="https://facebook.com" 
+                  network="facebook" 
+                  bgColor="#4ecdc4"
+                  style={{ height: 45, width: 45 }}
+                />
+                <SocialIcon 
+                  url="https://twitter.com" 
+                  network="twitter" 
+                  bgColor="#45b7d1"
+                  style={{ height: 45, width: 45 }}
+                />
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="divider">
+              <span>or</span>
+            </div>
+
+            {/* Alert */}
+            {showAlert && (
+              <Alert variant="success" className="login-alert">
+                Login successful! Welcome to Foxy Restaurant Reviews.
+              </Alert>
+            )}
+
+            {/* Login Form */}
+            <Form onSubmit={onSubmit} className="login-form">
+              <Form.Group className="mb-3">
+                <Form.Label className="form-label">
+                  <FaUser className="label-icon" /> Email Address
+                </Form.Label>
+                <Form.Control
+                  ref={emailRef}
+                  type="email"
+                  placeholder="Enter your email"
+                  className="form-input"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label className="form-label">
+                  <FaLock className="label-icon" /> Password
+                </Form.Label>
+                <div className="password-input-wrapper">
+                  <Form.Control
+                    ref={passwordRef}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    className="form-input password-input"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+              </Form.Group>
+
+              <div className="form-options">
+                <Form.Check
+                  type="checkbox"
+                  id="rememberMe"
+                  label="Remember me"
+                  className="remember-check"
+                />
+                <a href="#" className="forgot-link">
+                  Forgot password?
+                </a>
+              </div>
+
+              <Button
+                type="submit"
+                className="login-btn"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <span className="spinner"></span>
+                    Signing in...
+                  </>
+                ) : (
+                  'Sign In'
+                )}
+              </Button>
+            </Form>
+
+            {/* Footer */}
+            <div className="login-footer">
+              <p>
+                Don't have an account?{' '}
+                <a href="#" className="signup-link">
+                  Create one here
+                </a>
+              </p>
+              <div className="back-home">
+                <a href="/" className="home-link">
+                  ← Back to Home
+                </a>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
+    </Container>
+  );
+}
   export default Login;
