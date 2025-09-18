@@ -49,7 +49,7 @@ function App() {
         {currentTab !== "login" && <BootstrapCarousel />}
         <main className="app-main">{renderTab()}</main>
       </div>
-      <Footer />
+      {currentTab !== "login" && <Footer />}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Container, Button, Col, Row, Modal, Badge, Carousel, ProgressBar } from 'react-bootstrap';
+import { Card, Container, Button, Col, Row, Modal, Badge, ProgressBar } from 'react-bootstrap';
 import { FaStar, FaUtensils, FaHeart, FaAward, FaClock, FaMapMarkerAlt, FaEye, FaFilter, FaTrophy, FaFire } from 'react-icons/fa';
 import StarRating from '../StarRating';
 import RestaurantRating from '../RestaurantRating';
@@ -196,87 +196,6 @@ function Home() {
         </Col>
       </Row>
 
-      {/* Trending Restaurants Carousel */}
-      <Row className="trending-section mb-5">
-        <Col xs={12}>
-          <div className="section-header text-center mb-4">
-            <h2 className="section-title">
-              <FaFire className="me-2 text-danger" />
-              Trending This Week
-            </h2>
-            <p className="section-description">
-              The hottest restaurants everyone's talking about right now
-            </p>
-          </div>
-          
-          <Carousel className="trending-carousel" indicators={false} interval={4000}>
-            {topRatedRestaurants.slice(0, 3).map((restaurant, index) => {
-              const images = [food1, food2, food3];
-              const overallRating = calculateOverallRating(restaurant.ratings);
-              
-              return (
-                <Carousel.Item key={restaurant.id}>
-                  <div className="trending-card">
-                    <Row className="align-items-center">
-                      <Col xs={12} md={6}>
-                        <div className="trending-image-wrapper">
-                          <img 
-                            src={images[index]} 
-                            alt={restaurant.name}
-                            className="trending-image"
-                          />
-                          <Badge bg="danger" className="trending-badge">
-                            <FaTrophy className="me-1" />
-                            <span className="d-none d-sm-inline">#{index + 1} Trending</span>
-                            <span className="d-sm-none">#{index + 1}</span>
-                          </Badge>
-                        </div>
-                      </Col>
-                      <Col xs={12} md={6}>
-                        <div className="trending-content">
-                          <h3 className="trending-title">{restaurant.name}</h3>
-                          <p className="trending-cuisine">{restaurant.cuisine}</p>
-                          <div className="trending-rating mb-3">
-                            <StarRating 
-                              rating={overallRating} 
-                              size="large"
-                              color="primary"
-                              showValue={true}
-                            />
-                          </div>
-                          <p className="trending-description d-none d-md-block">
-                            {restaurant.review.substring(0, 150)}...
-                          </p>
-                          <p className="trending-description d-md-none">
-                            {restaurant.review.substring(0, 100)}...
-                          </p>
-                          <div className="trending-highlights mb-3">
-                            {restaurant.highlights.slice(0, window.innerWidth < 768 ? 2 : 3).map((highlight, idx) => (
-                              <Badge key={idx} bg="outline-primary" className="me-2 mb-1">
-                                {highlight}
-                              </Badge>
-                            ))}
-                          </div>
-                          <Button 
-                            variant="primary" 
-                            onClick={() => handleViewRestaurant(restaurant)}
-                            className="trending-btn"
-                          >
-                            <FaEye className="me-2" />
-                            <span className="d-none d-sm-inline">Explore Rating</span>
-                            <span className="d-sm-none">View</span>
-                          </Button>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Carousel.Item>
-              );
-            })}
-          </Carousel>
-        </Col>
-      </Row>
-
       {/* Rating Categories Breakdown */}
       <Row className="categories-section mb-5">
         <Col xs={12}>
@@ -357,10 +276,10 @@ function Home() {
           const overallRating = calculateOverallRating(restaurant.ratings);
           
           return (
-            <Col xs={12} lg={12} className="mb-4" key={restaurant.id}>
+            <Col xs={12} className="mb-4" key={restaurant.id}>
               <Card className="h-100 shadow-sm content-card restaurant-card">
                 <Row className="g-0">
-                  <Col md={5}>
+                  <Col md={4} lg={3}>
                     <div className="card-image-wrapper">
                       <Card.Img src={images[index % 3]} className="card-image-horizontal" />
                       <Badge bg="success" className="card-badge">
@@ -376,7 +295,7 @@ function Home() {
                       )}
                     </div>
                   </Col>
-                  <Col md={7}>
+                  <Col md={8} lg={9}>
                     <Card.Body className="d-flex flex-column">
                       <div className="card-header-info mb-2">
                         <FaUtensils className="card-icon" />
