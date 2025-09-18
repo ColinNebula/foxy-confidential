@@ -8,6 +8,7 @@ import Gallery from './components/Gallery';
 import Login from './components/Login';
 import Blog from './components/Blog';
 import Footer from './components/Footer';
+import SplashScreen from './components/SplashScreen';
 import ParticlesBackground from './components/config/ParticlesBackground';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapCarousel from './components/BootstrapCarousel';
@@ -15,7 +16,12 @@ import './App.css';
 
 
 function App() {
-  const [currentTab, setCurrentTab] = useState("login");
+  const [currentTab, setCurrentTab] = useState("home");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoadComplete = () => {
+    setIsLoading(false);
+  };
 
 
 
@@ -42,15 +48,21 @@ function App() {
     }
   };
   return (
-    <div className="app-bg">
-      <ParticlesBackground />
-      <div className="app-container">
-        <Header currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        {currentTab !== "login" && <BootstrapCarousel />}
-        <main className="app-main">{renderTab()}</main>
-      </div>
-      {currentTab !== "login" && <Footer />}
-    </div>
+    <>
+      {isLoading ? (
+        <SplashScreen onLoadComplete={handleLoadComplete} />
+      ) : (
+        <div className="app-bg">
+          <ParticlesBackground />
+          <div className="app-container">
+            <Header currentTab={currentTab} setCurrentTab={setCurrentTab} />
+            {currentTab !== "login" && <BootstrapCarousel />}
+            <main className="app-main">{renderTab()}</main>
+          </div>
+          {currentTab !== "login" && <Footer />}
+        </div>
+      )}
+    </>
   );
 }
 

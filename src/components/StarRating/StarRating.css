@@ -21,19 +21,44 @@
 .stars-container {
   display: flex;
   align-items: center;
-  gap: 0.1rem;
+  gap: 0.2rem;
+  position: relative;
 }
 
 .star {
-  transition: all 0.2s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .star-interactive {
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.star-interactive::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255,193,7,0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  z-index: -1;
 }
 
 .star-interactive:hover {
-  transform: scale(1.1);
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 4px 8px rgba(255,193,7,0.3));
+}
+
+.star-interactive:hover::before {
+  width: 150%;
+  height: 150%;
 }
 
 /* Star Sizes */
@@ -53,57 +78,151 @@
   font-size: 1.5rem;
 }
 
-/* Star Colors */
+/* Star Colors with Enhanced Gradients */
 .star-primary.star-filled,
 .star-primary.star-half {
-  color: #ffc107;
+  background: linear-gradient(45deg, #ffc107, #ff8c00, #ff6b35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: starShimmer 3s ease-in-out infinite;
+  position: relative;
+}
+
+.star-primary.star-filled::after,
+.star-primary.star-half::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: starGlow 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes starShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes starGlow {
+  0%, 100% { opacity: 0; transform: translateX(-100%); }
+  50% { opacity: 1; transform: translateX(100%); }
 }
 
 .star-primary.star-empty {
   color: #e0e0e0;
+  background: linear-gradient(45deg, #e0e0e0, #d0d0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+}
+
+.star-primary.star-empty:hover {
+  background: linear-gradient(45deg, #ffc107, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.6;
 }
 
 .star-secondary.star-filled,
 .star-secondary.star-half {
-  color: #ff6b6b;
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24, #e55039);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: starShimmer 3s ease-in-out infinite;
 }
 
 .star-secondary.star-empty {
   color: #e0e0e0;
+  background: linear-gradient(45deg, #e0e0e0, #d0d0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .star-success.star-filled,
 .star-success.star-half {
-  color: #51cf66;
+  background: linear-gradient(45deg, #51cf66, #40c057, #37b24d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: starShimmer 3s ease-in-out infinite;
 }
 
 .star-success.star-empty {
   color: #e0e0e0;
+  background: linear-gradient(45deg, #e0e0e0, #d0d0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .star-info.star-filled,
 .star-info.star-half {
-  color: #339af0;
+  background: linear-gradient(45deg, #339af0, #228be6, #1c7ed6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: starShimmer 3s ease-in-out infinite;
 }
 
 .star-info.star-empty {
   color: #e0e0e0;
+  background: linear-gradient(45deg, #e0e0e0, #d0d0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .star-warning.star-filled,
 .star-warning.star-half {
-  color: #ff922b;
+  background: linear-gradient(45deg, #ff922b, #fd7e14, #f76707);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: starShimmer 3s ease-in-out infinite;
 }
 
 .star-warning.star-empty {
   color: #e0e0e0;
+  background: linear-gradient(45deg, #e0e0e0, #d0d0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Rating Value */
 .rating-value {
-  font-weight: 600;
-  color: #666;
-  margin-left: 0.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #495057, #6c757d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-left: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  background-color: rgba(248, 249, 250, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(108, 117, 125, 0.2);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.rating-value:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .rating-value-small {
