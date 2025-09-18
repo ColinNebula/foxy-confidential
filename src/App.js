@@ -11,7 +11,6 @@ import Footer from './components/Footer';
 import SplashScreen from './components/SplashScreen';
 import ParticlesBackground from './components/config/ParticlesBackground';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BootstrapCarousel from './components/BootstrapCarousel';
 import './App.css';
 
 
@@ -56,7 +55,6 @@ function App() {
           <ParticlesBackground />
           <div className="app-container">
             <Header currentTab={currentTab} setCurrentTab={setCurrentTab} />
-            {currentTab !== "login" && <BootstrapCarousel />}
             <main className="app-main">{renderTab()}</main>
           </div>
           {currentTab !== "login" && <Footer />}

@@ -346,7 +346,7 @@ function Home() {
             <Col xs={12} className="mb-4" key={restaurant.id}>
               <Card className="h-100 shadow-sm content-card restaurant-card">
                 <Row className="g-0">
-                  <Col md={4} lg={3}>
+                  <Col md={3} lg={4}>
                     <div className="card-image-wrapper">
                       <Card.Img src={images[index % 3]} className="card-image-horizontal" />
                       <Badge bg="success" className="card-badge">
@@ -362,7 +362,7 @@ function Home() {
                       )}
                     </div>
                   </Col>
-                  <Col md={8} lg={9}>
+                  <Col md={9} lg={8}>
                     <Card.Body className="d-flex flex-column">
                       <div className="card-header-info mb-2">
                         <FaUtensils className="card-icon" />
