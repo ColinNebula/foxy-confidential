@@ -1,15 +1,44 @@
+:root {
+  --primary: #e4b363;
+  --secondary: #ef6461;
+  --tertiary: #fffd8c;
+  --quaternary: #e0dfd5;
+  --quinary: #fcf83b;
+  --light: #e8e9eb;
+  --dark: #313638;
+  --border-radius: 1.5rem;
+  --spacing-one: calc(1rem * 0.25);
+  --spacing-two: calc(1rem * 0.5);
+  --spacing-three: 1rem;
+  --spacing-four: calc(1rem * 1.5);
+  --spacing-five: calc(1rem * 3);
+}
+
 * {
   box-sizing: border-box;
 }
 
 main {
-  background: linear-gradient(90deg,
+  background: linear-gradient(50deg,
       #0c0a0f,
       #2c2439);
   padding-bottom: 55px;
-  
+  background: url('./assets/images/background-image.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: "100%";
+  height: 100vh;
 
 }
+body {
+  background-color: inherit;
+  background: url('./assets/images/background-image.jpg') no-repeat center center fixed;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  width: "100%";
+  height: 100vh;
+}
+
 
 .carousel-item {
   height: 24rem;
@@ -20,10 +49,44 @@ main {
   
 }
 
+.login h1 {
+  text-align: center;
+  margin: -6rem 0 2rem;
+}
 
+h2 {
+  text-align: center;
+  padding: 1rem;
+}
+
+.top {
+  display: flex;
+  justify-content: space-around;
+}
+
+.form {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: 80px 0 80px 0;
+  background-color: inherit;
+  
+}
+
+.form-under {
+  display: flex;
+  justify-content: center;
+  height: 550px;
+  padding-top: 30px;
+  width: 40%;
+  box-shadow: 11px 12px 13px 12px rgb(207, 207, 207);
+  border-radius: 30px;
+  
+  
+}
 
 /* footer */
-footer {
+/* footer {
   width: 100%;
   height: 100px;
   position: sticky;
@@ -34,7 +97,7 @@ footer {
   background: linear-gradient(90deg,
       #4a4e69,
       #afb1b3);
-}
+} */
 
 .card {
   flex: 40%;

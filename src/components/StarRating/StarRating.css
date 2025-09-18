@@ -1,0 +1,139 @@
+/* Star Rating Component Styles */
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.star-rating-category {
+  margin: 0.5rem 0;
+}
+
+.rating-category {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  min-width: 80px;
+  text-transform: capitalize;
+}
+
+.stars-container {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.star {
+  transition: all 0.2s ease;
+}
+
+.star-interactive {
+  cursor: pointer;
+}
+
+.star-interactive:hover {
+  transform: scale(1.1);
+}
+
+/* Star Sizes */
+.star-small {
+  font-size: 0.8rem;
+}
+
+.star-medium {
+  font-size: 1rem;
+}
+
+.star-large {
+  font-size: 1.2rem;
+}
+
+.star-xl {
+  font-size: 1.5rem;
+}
+
+/* Star Colors */
+.star-primary.star-filled,
+.star-primary.star-half {
+  color: #ffc107;
+}
+
+.star-primary.star-empty {
+  color: #e0e0e0;
+}
+
+.star-secondary.star-filled,
+.star-secondary.star-half {
+  color: #ff6b6b;
+}
+
+.star-secondary.star-empty {
+  color: #e0e0e0;
+}
+
+.star-success.star-filled,
+.star-success.star-half {
+  color: #51cf66;
+}
+
+.star-success.star-empty {
+  color: #e0e0e0;
+}
+
+.star-info.star-filled,
+.star-info.star-half {
+  color: #339af0;
+}
+
+.star-info.star-empty {
+  color: #e0e0e0;
+}
+
+.star-warning.star-filled,
+.star-warning.star-half {
+  color: #ff922b;
+}
+
+.star-warning.star-empty {
+  color: #e0e0e0;
+}
+
+/* Rating Value */
+.rating-value {
+  font-weight: 600;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.rating-value-small {
+  font-size: 0.75rem;
+}
+
+.rating-value-medium {
+  font-size: 0.85rem;
+}
+
+.rating-value-large {
+  font-size: 0.95rem;
+}
+
+.rating-value-xl {
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rating-category {
+    min-width: 70px;
+    font-size: 0.8rem;
+  }
+  
+  .star-medium {
+    font-size: 0.9rem;
+  }
+  
+  .star-large {
+    font-size: 1.1rem;
+  }
+}

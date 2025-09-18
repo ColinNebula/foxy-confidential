@@ -4,39 +4,74 @@ import Nav from 'react-bootstrap/Nav';
 import fc_logo from '../../assets/images/fc_logo.png';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FaHome, FaBlog, FaUtensils, FaImages, FaSignInAlt, FaStar, FaChevronDown } from 'react-icons/fa';
+import './Nav.css';
 
 function Navigation(props) {
     const { currentTab, setCurrentTab } = props;
+    
+    const navItems = [
+      { key: 'home', label: 'Home', icon: <FaHome /> },
+      { key: 'blog', label: 'Reviews', icon: <FaBlog /> },
+      { key: 'lifestyle', label: 'Restaurants', icon: <FaUtensils /> }
+    ];
+    
+    const dropdownItems = [
+      { key: 'gallery', label: 'Gallery', icon: <FaImages /> },
+      { key: 'login', label: 'Login', icon: <FaSignInAlt /> }
+    ];
+    
   return (
-    <Navbar bg="dark text-white"  variant="dark" expand="md"  sticky="top" collapseOnSelect>
+    <Navbar bg="dark" variant="dark" expand="lg" sticky="top" collapseOnSelect className="foxy-navbar">
       <Container>
-        <Navbar.Brand href="/home">
-        <img src={fc_logo} width="90px" height="40px" alt="logo" />
-        Foxy Confidential 
+        <Navbar.Brand href="/home" className="brand-enhanced">
+          <img src={fc_logo} width="90px" height="40px" alt="Foxy Confidential Logo" className="brand-logo" />
+          <span className="brand-text">
+            <span className="brand-name">Foxy Confidential</span>
+            <span className="brand-tagline">Restaurant Ratings</span>
+          </span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link className={currentTab === "/" ? "mx-2 navActive" : "mx-2"}>
-            <span onClick={() => setCurrentTab("home")}>Home</span>
-            </Nav.Link>
-
-            <Nav.Link className={currentTab === "blog" ? "mx-2 navActive" : "mx-2"}>
-            <span onClick={() => setCurrentTab("blog")}>Blog</span>
-            </Nav.Link>
-
-            <Nav.Link className={currentTab === "lifestyle" ? "mx-2 navActive" : "mx-2"}>
-            <span onClick={() => setCurrentTab("lifestyle")}>Lifestyle</span>
-            </Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item className={currentTab === "gallery" ? "mx-2 navActive" : "mx-2"}>
-              <span onClick={() => setCurrentTab("gallery")}>Gallery</span>
-              </NavDropdown.Item>
-          
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Broadcast
-              </NavDropdown.Item>
+        
+        <Navbar.Toggle aria-controls="enhanced-navbar-nav" className="custom-toggler" />
+        
+        <Navbar.Collapse id="enhanced-navbar-nav">
+          <Nav className="ms-auto align-items-center">
+            {navItems.map(item => (
+              <Nav.Link 
+                key={item.key}
+                className={`nav-item-enhanced ${currentTab === item.key ? "nav-active" : ""}`}
+                onClick={() => setCurrentTab(item.key)}
+              >
+                <div className="nav-content">
+                  <span className="nav-icon">{item.icon}</span>
+                  <span className="nav-label d-none d-lg-inline">{item.label}</span>
+                </div>
+              </Nav.Link>
+            ))}
+            
+            <NavDropdown 
+              title={
+                <div className="nav-content dropdown-toggle-content">
+                  <span className="nav-icon"><FaStar /></span>
+                  <span className="nav-label d-none d-lg-inline">More</span>
+                  <FaChevronDown className="dropdown-arrow d-none d-lg-inline ms-1" />
+                </div>
+              } 
+              id="enhanced-nav-dropdown"
+              className="nav-dropdown-enhanced"
+            >
+              {dropdownItems.map(item => (
+                <NavDropdown.Item 
+                  key={item.key}
+                  className={`dropdown-item-enhanced ${currentTab === item.key ? "dropdown-active" : ""}`}
+                  onClick={() => setCurrentTab(item.key)}
+                >
+                  <div className="dropdown-content">
+                    <span className="dropdown-icon">{item.icon}</span>
+                    <span className="dropdown-label">{item.label}</span>
+                  </div>
+                </NavDropdown.Item>
+              ))}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
