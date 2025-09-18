@@ -1,7 +1,7 @@
 /* Home Component Styles */
 .home-container {
   padding: 20px 0;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   min-height: 100%;
   flex: 1;
@@ -203,9 +203,10 @@
 /* Cards Section */
 .cards-section {
   margin-bottom: 3rem;
-  max-width: 1400px;
+  max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 1rem;
 }
 
 .content-card {
@@ -238,11 +239,12 @@
 
 .card-image-horizontal {
   height: 100%;
-  object-fit: contain;
+  width: 100%;
+  object-fit: cover;
   object-position: center;
   transition: transform 0.3s ease;
-  width: 100%;
-  background: #f8f9fa;
+  border-radius: 15px 0 0 15px;
+  min-height: 250px;
 }
 
 .content-card:hover .card-image,
@@ -301,6 +303,8 @@
   gap: 1rem;
   padding-top: 1rem;
   border-top: 1px solid #eee;
+  margin-top: auto;
+  flex-wrap: wrap;
 }
 
 .card-meta small {
@@ -392,9 +396,10 @@
   transition: all 0.3s ease;
   overflow: hidden;
   margin-bottom: 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
 }
 
 .restaurant-card:hover {
@@ -403,20 +408,30 @@
 }
 
 .restaurant-card .row {
-  min-height: 320px;
+  min-height: auto;
 }
 
 .restaurant-card .card-image-wrapper {
   height: 100%;
+  min-height: 320px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   background: #f8f9fa;
   border-radius: 15px 0 0 15px;
+  overflow: hidden;
+  position: relative;
+  min-width: 300px;
+  max-width: 400px;
+  flex: 0 0 350px;
 }
 
 .restaurant-card .card-body {
-  padding: 2.5rem;
-  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  flex: 1;
+  overflow: hidden;
 }
 
 .michelin-badge {
@@ -444,12 +459,21 @@
   color: #666;
   line-height: 1.6;
   font-size: 0.95rem;
+  margin-bottom: 1rem;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  max-height: none;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .rating-preview {
   background: #f8f9fa;
   border-radius: 8px;
   padding: 0.75rem;
+  margin-bottom: 1rem;
+  overflow: visible;
 }
 
 .rating-item {
@@ -471,7 +495,11 @@
 }
 
 .restaurant-highlights {
-  min-height: 30px;
+  min-height: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .restaurant-highlights .badge {
@@ -483,6 +511,9 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  flex-wrap: wrap;
 }
 
 /* Responsive Design Updates */
@@ -945,24 +976,36 @@
   
   .restaurant-card .card-image-wrapper {
     border-radius: 15px 15px 0 0;
-    min-height: 200px;
+    min-height: 250px;
+    max-height: 250px;
+    flex: none;
+    min-width: auto;
+    max-width: none;
   }
   
   .restaurant-card .card-image-horizontal {
     border-radius: 15px 15px 0 0;
-    height: 200px;
+    height: 250px;
+    min-height: 250px;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .restaurant-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
   .restaurant-card {
-    max-width: 900px;
+    max-width: 1100px;
   }
 }
 
 @media (min-width: 1201px) {
   .restaurant-card {
-    max-width: 1200px;
+    max-width: 1400px;
   }
   
   .restaurant-card .card-body {
@@ -970,14 +1013,29 @@
   }
 }
 
+@media (min-width: 1400px) {
+  .restaurant-card {
+    max-width: 1500px;
+  }
+  
+  .cards-section {
+    max-width: 1800px;
+  }
+}
+
 /* Enhanced Card Image Proportions */
 .restaurant-card .card-image-wrapper {
   height: 100%;
-  min-height: 250px;
+  min-height: 320px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   background: #f8f9fa;
   border-radius: 15px 0 0 15px;
+  overflow: hidden;
+  position: relative;
+  min-width: 250px;
+  max-width: 350px;
+  flex: 0 0 300px;
 }
 
 @media (min-width: 768px) {
@@ -988,12 +1046,12 @@
 
 /* Ensure images fit properly within containers */
 .restaurant-card .card-image-horizontal {
-  height: auto;
-  max-height: 100%;
+  height: 100%;
   width: 100%;
   object-fit: cover;
   object-position: center;
   border-radius: 15px 0 0 15px;
+  min-height: 320px;
 }
 
 /* Additional image fixes for better display */
@@ -1006,6 +1064,19 @@
 .content-card img {
   max-width: 100%;
   height: auto;
+}
+
+/* Force proper image display */
+.restaurant-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ensure no layout shift */
+.card-image-wrapper img {
+  flex-shrink: 0;
 }
 
 /* Animation for smooth loading */
@@ -1022,6 +1093,87 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Additional fixes for text cutoff issues */
+.restaurant-card .col-md-9,
+.restaurant-card .col-lg-8 {
+  min-width: 0;
+  flex-basis: auto;
+  overflow: hidden;
+}
+
+.restaurant-card .card-title,
+.restaurant-card .card-text,
+.restaurant-card .restaurant-name,
+.restaurant-card .restaurant-description {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  min-width: 0;
+}
+
+.restaurant-card .card-header-info {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.restaurant-card .card-category {
+  flex-shrink: 0;
+}
+
+.restaurant-card .price-range {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Ensure rating preview doesn't cause overflow */
+.rating-preview .row {
+  margin: 0;
+}
+
+.rating-preview .col-4 {
+  padding: 0 0.25rem;
+  min-width: 0;
+}
+
+.rating-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Prevent text cutoff in restaurant cards */
+.restaurant-card .card-title {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  line-height: 1.3;
+}
+
+.restaurant-card .card-text {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  max-height: none;
+  display: block;
+}
+
+/* Ensure card content is fully visible */
+.restaurant-card .d-flex.flex-column {
+  min-height: auto;
+  height: auto;
+}
+
+/* Fix for flex-grow-1 elements that might cause issues */
+.restaurant-card .flex-grow-1 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  margin-bottom: 1rem;
 }
 
 /* Enhanced Restaurant Detail Modal */
