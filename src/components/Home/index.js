@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Card, Container, Button, Col, Row, Modal, Badge, ProgressBar } from 'react-bootstrap';
+import { Card, Container, Button, Col, Row, Modal, Badge, ProgressBar, Tabs, Tab } from 'react-bootstrap';
 import { FaStar, FaUtensils, FaHeart, FaAward, FaClock, FaMapMarkerAlt, FaEye, FaFilter, FaTrophy, FaFire } from 'react-icons/fa';
 import StarRating from '../StarRating';
 import RestaurantRating from '../RestaurantRating';
-import { restaurantData, getFeaturedRestaurants, calculateOverallRating, getRestaurantsByRating } from '../../data/restaurantData';
+import Reviews from '../Reviews';
+import { restaurantData, getFeaturedRestaurants, calculateOverallRating, getRestaurantsByRating, getRestaurantReviews, addReview, updateReview, deleteReview } from '../../data/restaurantData';
 import food1 from '../../assets/images/food1.png';
 import food2 from '../../assets/images/food2.png';
 import food3 from '../../assets/images/food3.png';
@@ -15,6 +16,8 @@ function Home() {
   const [lgShow, setLgShow] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
+  const [activeTab, setActiveTab] = useState('rating');
+  const [userReviews, setUserReviews] = useState({});
   
   // Get featured restaurants from data
   const featuredRestaurants = getFeaturedRestaurants().slice(0, 3);
@@ -31,7 +34,38 @@ function Home() {
   
   const handleViewRestaurant = (restaurant) => {
     setSelectedRestaurant(restaurant);
+    setActiveTab('rating');
+    // Load reviews for this restaurant
+    const reviews = getRestaurantReviews(restaurant.id);
+    setUserReviews(prev => ({
+      ...prev,
+      [restaurant.id]: reviews
+    }));
     setLgShow(true);
+  };
+
+  const handleAddReview = (restaurantId, review) => {
+    const updatedReviews = addReview(restaurantId, review);
+    setUserReviews(prev => ({
+      ...prev,
+      [restaurantId]: updatedReviews
+    }));
+  };
+
+  const handleUpdateReview = (restaurantId, review) => {
+    const updatedReviews = updateReview(restaurantId, review.id, review);
+    setUserReviews(prev => ({
+      ...prev,
+      [restaurantId]: updatedReviews
+    }));
+  };
+
+  const handleDeleteReview = (restaurantId, reviewId) => {
+    const updatedReviews = deleteReview(restaurantId, reviewId);
+    setUserReviews(prev => ({
+      ...prev,
+      [restaurantId]: updatedReviews
+    }));
   };
   
   const getFilteredRestaurants = () => {
@@ -49,25 +83,58 @@ function Home() {
   
   return (
     <Container className="home-container">
-      {/* Modal */}
+      {/* Enhanced Modal with Tabs */}
       <Modal
-        size="lg"
+        size="xl"
         show={lgShow}
         onHide={() => setLgShow(false)}
         aria-labelledby="restaurant-modal-title"
+        className="restaurant-detail-modal"
       >
         <Modal.Header closeButton>
           <Modal.Title id="restaurant-modal-title">
-            {selectedRestaurant ? selectedRestaurant.name : "Restaurant Details"}
+            {selectedRestaurant ? (
+              <div className="d-flex align-items-center">
+                <span>{selectedRestaurant.name}</span>
+                <Badge bg="primary" className="ms-2">
+                  {selectedRestaurant.cuisine}
+                </Badge>
+                <Badge bg="success" className="ms-2">
+                  <FaStar className="me-1" />
+                  {calculateOverallRating(selectedRestaurant.ratings).toFixed(1)}
+                </Badge>
+              </div>
+            ) : "Restaurant Details"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedRestaurant ? (
-            <RestaurantRating 
-              restaurant={selectedRestaurant} 
-              showDetailed={true}
-              layout="horizontal"
-            />
+            <Tabs
+              id="restaurant-tabs"
+              activeKey={activeTab}
+              onSelect={(tab) => setActiveTab(tab)}
+              className="mb-3"
+            >
+              <Tab eventKey="rating" title="Rating & Details">
+                <RestaurantRating 
+                  restaurant={selectedRestaurant} 
+                  showDetailed={true}
+                  layout="horizontal"
+                />
+              </Tab>
+              <Tab 
+                eventKey="reviews" 
+                title={`Reviews (${userReviews[selectedRestaurant.id]?.length || 0})`}
+              >
+                <Reviews
+                  restaurant={selectedRestaurant}
+                  userReviews={userReviews[selectedRestaurant.id] || []}
+                  onAddReview={(review) => handleAddReview(selectedRestaurant.id, review)}
+                  onUpdateReview={(review) => handleUpdateReview(selectedRestaurant.id, review)}
+                  onDeleteReview={(reviewId) => handleDeleteReview(selectedRestaurant.id, reviewId)}
+                />
+              </Tab>
+            </Tabs>
           ) : (
             <div>
               <h5>Welcome to Foxy Confidential!</h5>

@@ -1023,3 +1023,55 @@
     transform: translateY(0);
   }
 }
+
+/* Enhanced Restaurant Detail Modal */
+.restaurant-detail-modal .modal-dialog {
+  max-width: 1200px;
+}
+
+.restaurant-detail-modal .modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 15px 15px 0 0;
+}
+
+.restaurant-detail-modal .modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.restaurant-detail-modal .modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.restaurant-detail-modal .modal-body {
+  padding: 2rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.restaurant-detail-modal .nav-tabs {
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 2rem;
+}
+
+.restaurant-detail-modal .nav-tabs .nav-link {
+  color: #6c757d;
+  font-weight: 600;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.restaurant-detail-modal .nav-tabs .nav-link:hover {
+  border-bottom-color: #007bff;
+  color: #007bff;
+  background: rgba(0, 123, 255, 0.05);
+}
+
+.restaurant-detail-modal .nav-tabs .nav-link.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+  background: rgba(0, 123, 255, 0.1);
+}

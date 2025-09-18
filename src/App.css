@@ -34,6 +34,19 @@
   font-family: 'Segoe UI', 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  animation: appFadeIn 0.8s ease-out 0.2s forwards;
+}
+
+@keyframes appFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .app-container {
   flex: 1;
