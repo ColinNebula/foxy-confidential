@@ -13,7 +13,7 @@ function Navigation(props) {
     
     const navItems = [
       { key: 'home', label: 'Home', icon: <FaHome />, ariaLabel: 'Navigate to Home page' },
-      { key: 'blog', label: 'Reviews', icon: <FaBlog />, ariaLabel: 'Navigate to Reviews page' },
+      { key: 'reviews', label: 'Reviews', icon: <FaBlog />, ariaLabel: 'Navigate to Reviews page' },
       { key: 'lifestyle', label: 'Restaurants', icon: <FaUtensils />, ariaLabel: 'Navigate to Restaurants page' }
     ];
     
