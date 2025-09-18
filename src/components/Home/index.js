@@ -1,135 +1,451 @@
 import React, { useState } from 'react'
-import { CardGroup, Card, Container, Button, NavDropdown, Col, Row, Modal } from 'react-bootstrap';
-import food from '../../assets/images/food.png';
+import { Card, Container, Button, Col, Row, Modal, Badge, Carousel, ProgressBar } from 'react-bootstrap';
+import { FaStar, FaUtensils, FaHeart, FaAward, FaClock, FaMapMarkerAlt, FaEye, FaFilter, FaTrophy, FaFire } from 'react-icons/fa';
+import StarRating from '../StarRating';
+import RestaurantRating from '../RestaurantRating';
+import { restaurantData, getFeaturedRestaurants, calculateOverallRating, getRestaurantsByRating } from '../../data/restaurantData';
+import food1 from '../../assets/images/food1.png';
 import food2 from '../../assets/images/food2.png';
 import food3 from '../../assets/images/food3.png';
 import food6 from '../../assets/images/food6.png';
-// import Image from 'react-bootstrap/Image'
+import './Home.css';
 
 
 function Home() {
   const [lgShow, setLgShow] = useState(false);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('all');
+  
+  // Get featured restaurants from data
+  const featuredRestaurants = getFeaturedRestaurants().slice(0, 3);
+  const featuredRestaurant = restaurantData[3]; // Eleven Madison Park
+  const topRatedRestaurants = getRestaurantsByRating(4.5);
+  
+  // Category filters
+  const categories = [
+    { key: 'all', label: 'All Restaurants', icon: <FaUtensils /> },
+    { key: 'michelin', label: 'Michelin Starred', icon: <FaStar /> },
+    { key: 'creative', label: 'Most Creative', icon: <FaAward /> },
+    { key: 'popular', label: 'Fan Favorites', icon: <FaFire /> }
+  ];
+  
+  const handleViewRestaurant = (restaurant) => {
+    setSelectedRestaurant(restaurant);
+    setLgShow(true);
+  };
+  
+  const getFilteredRestaurants = () => {
+    switch(activeCategory) {
+      case 'michelin':
+        return restaurantData.filter(r => r.awards.some(award => award.includes('Michelin')));
+      case 'creative':
+        return restaurantData.filter(r => r.ratings.creativity >= 4.5);
+      case 'popular':
+        return restaurantData.filter(r => calculateOverallRating(r.ratings) >= 4.3);
+      default:
+        return featuredRestaurants;
+    }
+  };
+  
   return (
-
-    
-    <Container fluid>
-      <Row>
-      <div>
-      <>
+    <Container className="home-container">
+      {/* Modal */}
       <Modal
         size="lg"
         show={lgShow}
         onHide={() => setLgShow(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
+        aria-labelledby="restaurant-modal-title"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            What we do
+          <Modal.Title id="restaurant-modal-title">
+            {selectedRestaurant ? selectedRestaurant.name : "Restaurant Details"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Nibh cras pulvinar mattis nunc. Mollis aliquam ut porttitor leo a. 
-          Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. 
-          Volutpat diam ut venenatis tellus in metus vulputate.
-
-          </p>
-          <Card.Img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Froutenote.com%2Fblog%2Fwp-content%2Fuploads%2F2017%2F09%2FDJ.jpg&f=1&nofb=1&ipt=ddb0176cf1104a4d07576f128b48c3797be67004d74087a891a247c025d50dfa&ipo=images/100px270" className="rounded" alt="Card image" />
-          <a href="https://react-bootstrap.github.io/components/modal/"></a>
-        
+          {selectedRestaurant ? (
+            <RestaurantRating 
+              restaurant={selectedRestaurant} 
+              showDetailed={true}
+              layout="horizontal"
+            />
+          ) : (
+            <div>
+              <h5>Welcome to Foxy Confidential!</h5>
+              <p>
+                Your ultimate guide to the best restaurants in the city. We rate each establishment across five key categories:
+              </p>
+              <ul>
+                <li><strong>Food Quality</strong> - Ingredient freshness and preparation</li>
+                <li><strong>Taste</strong> - Flavor profiles and culinary execution</li>
+                <li><strong>Ambiance</strong> - Atmosphere, decor, and overall vibe</li>
+                <li><strong>Creativity</strong> - Innovation and unique approach</li>
+                <li><strong>Uniqueness</strong> - What makes this place special</li>
+              </ul>
+              <p>Each category is rated on a 5-star scale, giving you the complete picture!</p>
+            </div>
+          )}
         </Modal.Body>
       </Modal>
-    </>
-      </div>
-      <h2 class="home_top"> Welcome to Foxy Confidential</h2>
-      <p class="p_top"> Welcome to our fluffy world where we strive
-      to make your taste buds thrive and satisfy those intellectual demands to see what’s at the forefront, 
-      <br />
-      the cutting edge if you will.
-      Check our winners in the list of worthwhile endeavours who get awarded 1, 2, or 3 
-      fluffy wags of our tails and deserve your hard earned credit card tap.</p>
 
-      <NavDropdown.Divider />
-
-        <Col ms={"auto"}>
-        <Card className="bg-dark text-white shadow-lg" style={{ color: "#000", width: "auto" }}>
-      <Card.Img src={food} className="rounded" alt="Card image" />
-      <Card.ImgOverlay>
-        <Card.Title>Party In NYC</Card.Title>
-        <Card.Text>
-        We are FOXY CONFIDENTIAL and this is your scoop on what’s fluffy and what’s not.
-        </Card.Text>
-        <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
-        <Card.Text></Card.Text>
-      </Card.ImgOverlay>
-    </Card>
+      {/* Hero Section */}
+      <Row className="hero-section mb-5">
+        <Col xs={12}>
+          <div className="hero-content text-center">
+            <div className="hero-emoji mb-3">
+              <span role="img" aria-label="fox">🦊</span>
+              <span role="img" aria-label="sparkles">✨</span>
+              <span role="img" aria-label="fox">🦊</span>
+            </div>
+            <h1 className="hero-title">Welcome to Foxy Confidential</h1>
+            <p className="hero-subtitle mb-4">
+              Your premier destination for restaurant discovery and ratings
+            </p>
+            <p className="hero-description mb-4">
+              Welcome to Foxy Confidential - where culinary excellence meets honest reviews! We rate restaurants across 5 key categories: 
+              Food Quality, Taste, Ambiance, Creativity, and Uniqueness. Discover your next amazing dining experience with our 
+              comprehensive 🦊-approved rating system.
+            </p>
+            <div className="hero-buttons">
+              <Button variant="primary" size="lg" className="me-3 hero-cta">
+                <FaUtensils className="me-2" />
+                Explore Now
+              </Button>
+              <Button variant="outline-primary" size="lg" onClick={() => handleViewRestaurant(null)}>
+                <FaHeart className="me-2" />
+                How We Rate
+              </Button>
+            </div>
+          </div>
         </Col>
       </Row>
-      <h2 class="home_top"> Welcome to Foxy Confidential</h2>
-      <p class="p_top"> As we search far and wide, high and low, wagging this way and that,
-      we come upon a few pretty spots
-      that deserve a mention.</p>
-      <NavDropdown.Divider />
-      <br />
 
-      <CardGroup>
-      <Card>
-        <Card.Img variant="top" src={food3} />
-        <Card.Body>
-          <Card.Title>Card title</Card.Title>
-          <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-        <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
+      {/* Statistics Section */}
+      <Row className="stats-section mb-5">
+        <Col xs={12}>
+          <Row className="text-center">
+            <Col xs={6} md={3} className="mb-3">
+              <div className="stat-item">
+                <FaUtensils className="stat-icon" />
+                <h3 className="stat-number">500+</h3>
+                <p className="stat-label">Restaurants</p>
+              </div>
+            </Col>
+            <Col xs={6} md={3} className="mb-3">
+              <div className="stat-item">
+                <FaAward className="stat-icon" />
+                <h3 className="stat-number">50+</h3>
+                <p className="stat-label">Awards</p>
+              </div>
+            </Col>
+            <Col xs={6} md={3} className="mb-3">
+              <div className="stat-item">
+                <FaHeart className="stat-icon" />
+                <h3 className="stat-number">10K+</h3>
+                <p className="stat-label">Happy Customers</p>
+              </div>
+            </Col>
+            <Col xs={6} md={3} className="mb-3">
+              <div className="stat-item">
+                <FaStar className="stat-icon" />
+                <h3 className="stat-number">4.9</h3>
+                <p className="stat-label">Average Rating</p>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
 
-      <Card>
-        <Card.Img variant="top" src={food2} />
-        <Card.Body>
-          <Card.Title>Card title</Card.Title>
-          <Card.Text>
-            This card has supporting text below as a natural lead-in to
-            additional content.{' '}
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
+      {/* Featured Section */}
+      <Row className="featured-section mb-5">
+        <Col xs={12} lg={10} className="mx-auto">
+          <Card className="featured-card bg-dark text-white shadow-lg">
+            <Card.Img src={food1} className="featured-image" alt={featuredRestaurant.name} />
+            <Card.ImgOverlay className="featured-overlay">
+              <Badge bg="warning" className="featured-badge mb-2">
+                <FaStar className="me-1" />
+                Featured Restaurant
+              </Badge>
+              <Card.Title className="featured-title">{featuredRestaurant.name}</Card.Title>
+              <Card.Text className="featured-text">
+                {featuredRestaurant.review.substring(0, 120)}...
+              </Card.Text>
+              <div className="featured-rating mb-3">
+                <StarRating 
+                  rating={calculateOverallRating(featuredRestaurant.ratings)} 
+                  size="large"
+                  color="primary"
+                  showValue={true}
+                />
+              </div>
+              <div className="featured-meta mb-3">
+                <span className="featured-location">
+                  <FaMapMarkerAlt className="me-1" />
+                  {featuredRestaurant.location}
+                </span>
+                <span className="featured-time ms-3">
+                  <FaClock className="me-1" />
+                  {featuredRestaurant.cuisine}
+                </span>
+              </div>
+              <Button variant="warning" onClick={() => handleViewRestaurant(featuredRestaurant)} className="featured-btn">
+                <FaEye className="me-2" />
+                View Full Rating
+              </Button>
+            </Card.ImgOverlay>
+          </Card>
+        </Col>
+      </Row>
 
-      <Card>
-        <Card.Img variant="top" src={food6} />
-        <Card.Body>
-          <Card.Title>Card title</Card.Title>
-          <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This card has even longer content than the
-            first to show that equal height action.
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-        <Button variant="outline-primary" onClick={() => setLgShow(true)}>Read more</Button>{' '}
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-    </CardGroup>
-    <br />
-    <NavDropdown.Divider />
-    <br />
+      {/* Trending Restaurants Carousel */}
+      <Row className="trending-section mb-5">
+        <Col xs={12}>
+          <div className="section-header text-center mb-4">
+            <h2 className="section-title">
+              <FaFire className="me-2 text-danger" />
+              Trending This Week
+            </h2>
+            <p className="section-description">
+              The hottest restaurants everyone's talking about right now
+            </p>
+          </div>
+          
+          <Carousel className="trending-carousel" indicators={false} interval={4000}>
+            {topRatedRestaurants.slice(0, 3).map((restaurant, index) => {
+              const images = [food1, food2, food3];
+              const overallRating = calculateOverallRating(restaurant.ratings);
+              
+              return (
+                <Carousel.Item key={restaurant.id}>
+                  <div className="trending-card">
+                    <Row className="align-items-center">
+                      <Col xs={12} md={6}>
+                        <div className="trending-image-wrapper">
+                          <img 
+                            src={images[index]} 
+                            alt={restaurant.name}
+                            className="trending-image"
+                          />
+                          <Badge bg="danger" className="trending-badge">
+                            <FaTrophy className="me-1" />
+                            <span className="d-none d-sm-inline">#{index + 1} Trending</span>
+                            <span className="d-sm-none">#{index + 1}</span>
+                          </Badge>
+                        </div>
+                      </Col>
+                      <Col xs={12} md={6}>
+                        <div className="trending-content">
+                          <h3 className="trending-title">{restaurant.name}</h3>
+                          <p className="trending-cuisine">{restaurant.cuisine}</p>
+                          <div className="trending-rating mb-3">
+                            <StarRating 
+                              rating={overallRating} 
+                              size="large"
+                              color="primary"
+                              showValue={true}
+                            />
+                          </div>
+                          <p className="trending-description d-none d-md-block">
+                            {restaurant.review.substring(0, 150)}...
+                          </p>
+                          <p className="trending-description d-md-none">
+                            {restaurant.review.substring(0, 100)}...
+                          </p>
+                          <div className="trending-highlights mb-3">
+                            {restaurant.highlights.slice(0, window.innerWidth < 768 ? 2 : 3).map((highlight, idx) => (
+                              <Badge key={idx} bg="outline-primary" className="me-2 mb-1">
+                                {highlight}
+                              </Badge>
+                            ))}
+                          </div>
+                          <Button 
+                            variant="primary" 
+                            onClick={() => handleViewRestaurant(restaurant)}
+                            className="trending-btn"
+                          >
+                            <FaEye className="me-2" />
+                            <span className="d-none d-sm-inline">Explore Rating</span>
+                            <span className="d-sm-none">View</span>
+                          </Button>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                </Carousel.Item>
+              );
+            })}
+          </Carousel>
+        </Col>
+      </Row>
+
+      {/* Rating Categories Breakdown */}
+      <Row className="categories-section mb-5">
+        <Col xs={12}>
+          <div className="section-header text-center mb-4">
+            <h2 className="section-title">Our Rating Categories</h2>
+            <p className="section-description">
+              How we evaluate every restaurant across 5 key dimensions
+            </p>
+          </div>
+          
+          <Row>
+            {[
+              { name: 'Food Quality', icon: <FaUtensils />, description: 'Ingredient freshness, preparation techniques, and presentation', color: 'primary' },
+              { name: 'Taste', icon: <FaHeart />, description: 'Flavor profiles, seasoning, and overall deliciousness', color: 'danger' },
+              { name: 'Ambiance', icon: <FaMapMarkerAlt />, description: 'Atmosphere, decor, music, and overall dining environment', color: 'success' },
+              { name: 'Creativity', icon: <FaAward />, description: 'Innovation, unique approaches, and artistic presentation', color: 'warning' },
+              { name: 'Uniqueness', icon: <FaStar />, description: 'What makes this place special and memorable', color: 'info' }
+            ].map((category, index) => (
+              <Col xs={12} sm={6} lg={4} xl={4} key={index} className="mb-4">
+                <Card className="category-card h-100">
+                  <Card.Body className="text-center">
+                    <div className={`category-icon-wrapper bg-${category.color} text-white mb-3`}>
+                      {category.icon}
+                    </div>
+                    <h5 className="category-title">{category.name}</h5>
+                    <p className="category-description">{category.description}</p>
+                    <ProgressBar 
+                      variant={category.color} 
+                      now={85 + (index * 3)} 
+                      className="category-progress"
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Col>
+      </Row>
+
+      {/* Content Section with Filters */}
+      <Row className="content-section mb-5">
+        <Col xs={12}>
+          <div className="text-center mb-4">
+            <h2 className="section-title">
+              <FaFilter className="me-2" />
+              Browse by Category
+            </h2>
+            <p className="section-description">
+              Filter restaurants by what matters most to you
+            </p>
+          </div>
+          
+          {/* Category Filter Buttons */}
+          <div className="category-filters text-center mb-4">
+            <Row className="g-2">
+              {categories.map(category => (
+                <Col xs={12} sm={6} md={3} key={category.key}>
+                  <Button
+                    variant={activeCategory === category.key ? 'primary' : 'outline-primary'}
+                    className="filter-btn w-100"
+                    onClick={() => setActiveCategory(category.key)}
+                  >
+                    {category.icon}
+                    <span className="ms-2 d-none d-sm-inline">{category.label}</span>
+                    <span className="ms-2 d-sm-none">{category.label.split(' ')[0]}</span>
+                  </Button>
+                </Col>
+              ))}
+            </Row>
+          </div>
+        </Col>
+      </Row>
+
+      {/* Cards Section */}
+      <Row className="cards-section">
+        {getFilteredRestaurants().map((restaurant, index) => {
+          const images = [food3, food2, food6];
+          const overallRating = calculateOverallRating(restaurant.ratings);
+          
+          return (
+            <Col xs={12} lg={12} className="mb-4" key={restaurant.id}>
+              <Card className="h-100 shadow-sm content-card restaurant-card">
+                <Row className="g-0">
+                  <Col md={5}>
+                    <div className="card-image-wrapper">
+                      <Card.Img src={images[index % 3]} className="card-image-horizontal" />
+                      <Badge bg="success" className="card-badge">
+                        <FaStar className="me-1" />
+                        {overallRating.toFixed(1)}
+                      </Badge>
+                      {restaurant.awards.some(award => award.includes('Michelin')) && (
+                        <Badge bg="warning" className="michelin-badge">
+                          <FaStar className="me-1" />
+                          <span className="d-none d-sm-inline">Michelin</span>
+                          <span className="d-sm-none">⭐</span>
+                        </Badge>
+                      )}
+                    </div>
+                  </Col>
+                  <Col md={7}>
+                    <Card.Body className="d-flex flex-column">
+                      <div className="card-header-info mb-2">
+                        <FaUtensils className="card-icon" />
+                        <span className="card-category">{restaurant.cuisine}</span>
+                        <span className="ms-auto price-range">{restaurant.priceRange}</span>
+                      </div>
+                      <Card.Title className="restaurant-name">{restaurant.name}</Card.Title>
+                      <Card.Text className="flex-grow-1 restaurant-description">
+                        {restaurant.review.substring(0, 180)}...
+                      </Card.Text>
+                      
+                      {/* Rating Breakdown Preview */}
+                      <div className="rating-preview mb-3">
+                        <Row className="g-1">
+                          <Col xs={4} className="rating-item">
+                            <span className="rating-label">Food:</span>
+                            <StarRating rating={restaurant.ratings.food} size="small" showValue={false} />
+                          </Col>
+                          <Col xs={4} className="rating-item">
+                            <span className="rating-label">Taste:</span>
+                            <StarRating rating={restaurant.ratings.taste} size="small" showValue={false} />
+                          </Col>
+                          <Col xs={4} className="rating-item">
+                            <span className="rating-label">Ambiance:</span>
+                            <StarRating rating={restaurant.ratings.ambiance} size="small" showValue={false} />
+                          </Col>
+                        </Row>
+                      </div>
+
+                      <div className="restaurant-highlights mb-3">
+                        {restaurant.highlights.slice(0, 3).map((highlight, idx) => (
+                          <Badge key={idx} bg="light" text="dark" className="me-1 mb-1">
+                            {highlight}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <div className="card-meta mb-3">
+                        <small className="text-muted">
+                          <FaMapMarkerAlt className="me-1" />
+                          {restaurant.location}
+                        </small>
+                        <small className="text-muted ms-3">
+                          <FaClock className="me-1" />
+                          Since {restaurant.openSince}
+                        </small>
+                      </div>
+                      
+                      <div className="mt-auto card-actions">
+                        <Button variant="primary" onClick={() => handleViewRestaurant(restaurant)} className="me-2">
+                          <FaEye className="me-1" />
+                          <span className="d-none d-sm-inline">Full Rating</span>
+                          <span className="d-sm-none">Rating</span>
+                        </Button>
+                        <Button variant="outline-secondary" size="sm">
+                          <FaHeart />
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          );
+        })}
+
+      </Row>
     </Container>
-
-
-    
-
   );
-
 }
 
 export default Home;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Col, Row, Container } from 'react-bootstrap/Card';
+import { Card, Col, Row, Container } from 'react-bootstrap';
 
 function Lifestyle() {
   return (

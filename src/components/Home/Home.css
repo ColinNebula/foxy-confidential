@@ -1,0 +1,1060 @@
+/* Home Component Styles */
+.home-container {
+  padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100%;
+  flex: 1;
+}
+
+/* Hero Section */
+.hero-section {
+  margin-bottom: 4rem;
+}
+
+.hero-content {
+  padding: 3rem 1rem;
+}
+
+.hero-emoji {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.hero-subtitle {
+  font-size: 1.4rem;
+  color: #e67e22;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-buttons {
+  margin-top: 2rem;
+}
+
+.hero-cta {
+  padding: 0.8rem 2.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Statistics Section */
+.stats-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  margin-bottom: 4rem;
+}
+
+.stat-item {
+  padding: 1.5rem 1rem;
+  transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: #e67e22;
+  margin-bottom: 1rem;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Featured Section */
+.featured-section {
+  margin-bottom: 4rem;
+}
+
+.featured-card {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.featured-card:hover {
+  transform: translateY(-8px);
+}
+
+.featured-image {
+  height: 450px;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.featured-overlay {
+  background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem;
+}
+
+.featured-badge {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.featured-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.featured-text {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.featured-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.featured-location,
+.featured-time {
+  background: rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.featured-btn {
+  padding: 0.8rem 2.5rem;
+  font-weight: 600;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.featured-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Content Section */
+.content-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Cards Section */
+.cards-section {
+  margin-bottom: 3rem;
+}
+
+.content-card {
+  border-radius: 15px;
+  border: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15) !important;
+}
+
+.card-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image {
+  height: 320px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.card-image-horizontal {
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.content-card:hover .card-image,
+.content-card:hover .card-image-horizontal {
+  transform: scale(1.08);
+}
+
+.card-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.card-header-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-icon {
+  color: #e67e22;
+  font-size: 1.1rem;
+}
+
+.card-category {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.content-card .card-body {
+  padding: 2rem;
+}
+
+.content-card .card-title {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.content-card .card-text {
+  color: #666;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.card-meta small {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.restaurant-quick-ratings {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.featured-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Trending Section */
+.trending-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  margin-bottom: 4rem;
+  color: white;
+}
+
+.trending-section .section-title {
+  color: white;
+}
+
+.trending-section .section-description {
+  color: rgba(255,255,255,0.9);
+}
+
+.trending-carousel .carousel-control-prev,
+.trending-carousel .carousel-control-next {
+  width: 60px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  height: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.trending-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  color: #333;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+.trending-image-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.trending-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.trending-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.trending-content {
+  padding-left: 2rem;
+}
+
+.trending-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.trending-cuisine {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.trending-description {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.trending-highlights .badge {
+  background: #f8f9fa !important;
+  color: #495057 !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+.trending-btn {
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border-radius: 25px;
+}
+
+/* Categories Section */
+.categories-section {
+  background: #f8f9fa;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  margin-bottom: 4rem;
+}
+
+.category-card {
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.category-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 1.5rem;
+}
+
+.category-title {
+  color: #2c3e50;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.category-description {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.category-progress {
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* Filter Section */
+.category-filters {
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Enhanced Restaurant Cards */
+.restaurant-card {
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15) !important;
+}
+
+.restaurant-card .row {
+  min-height: 280px;
+}
+
+.restaurant-card .card-image-wrapper {
+  height: 100%;
+}
+
+.restaurant-card .card-body {
+  padding: 2rem;
+  height: 100%;
+}
+
+.michelin-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.price-range {
+  font-weight: bold;
+  color: #28a745;
+  font-size: 1rem;
+}
+
+.restaurant-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.restaurant-description {
+  color: #666;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.rating-preview {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.rating-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.rating-item:last-child {
+  margin-bottom: 0;
+}
+
+.rating-label {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+  min-width: 60px;
+}
+
+.restaurant-highlights {
+  min-height: 30px;
+}
+
+.restaurant-highlights .badge {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Responsive Design Updates */
+@media (max-width: 768px) {
+  .hero-emoji {
+    font-size: 2.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+  
+  .hero-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .hero-cta {
+    font-size: 1rem;
+    padding: 0.7rem 2rem;
+    width: 100%;
+  }
+  
+  .stats-section {
+    padding: 2rem 1rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stat-icon {
+    font-size: 2rem;
+  }
+  
+  .featured-image {
+    height: 350px;
+  }
+  
+  .featured-overlay {
+    padding: 2rem 1.5rem;
+  }
+  
+  .featured-title {
+    font-size: 2rem;
+  }
+  
+  .featured-text {
+    font-size: 1rem;
+  }
+  
+  .featured-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .home-container {
+    padding: 15px;
+  }
+  
+  /* Trending Section Mobile */
+  .trending-section {
+    padding: 2rem 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .trending-card {
+    padding: 1.5rem;
+  }
+  
+  .trending-content {
+    padding-left: 0;
+    padding-top: 1.5rem;
+  }
+  
+  .trending-title {
+    font-size: 1.5rem;
+  }
+  
+  .trending-image {
+    height: 250px;
+  }
+  
+  .trending-description {
+    font-size: 0.9rem;
+  }
+  
+  .trending-highlights {
+    margin-bottom: 2rem;
+  }
+  
+  .trending-btn {
+    width: 100%;
+    padding: 0.75rem;
+  }
+  
+  /* Categories Section Mobile */
+  .categories-section {
+    padding: 2rem 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .category-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .category-title {
+    font-size: 1.1rem;
+  }
+  
+  .category-description {
+    font-size: 0.85rem;
+  }
+  
+  /* Filter Buttons Mobile */
+  .category-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  
+  .filter-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Restaurant Cards Mobile */
+  .restaurant-card {
+    margin-bottom: 2rem;
+  }
+  
+  .restaurant-card .row {
+    min-height: auto;
+  }
+  
+  .restaurant-card .card-body {
+    padding: 1.5rem;
+  }
+  
+  .card-image-horizontal {
+    height: 250px;
+  }
+  
+  .card-header-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .price-range {
+    align-self: flex-end;
+  }
+  
+  .restaurant-name {
+    font-size: 1.3rem;
+  }
+  
+  .rating-preview {
+    padding: 0.5rem;
+  }
+  
+  .rating-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  .rating-label {
+    font-size: 0.75rem;
+    min-width: 50px;
+  }
+  
+  .card-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  
+  .card-actions {
+    flex-direction: row;
+    gap: 0.75rem;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .hero-content {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .hero-emoji {
+    font-size: 2rem;
+  }
+  
+  .hero-cta {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+  }
+  
+  .stats-section {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .stat-item {
+    padding: 1rem 0.5rem;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .stat-icon {
+    font-size: 1.8rem;
+  }
+  
+  .featured-image {
+    height: 300px;
+  }
+  
+  .featured-overlay {
+    padding: 1.5rem 1rem;
+  }
+  
+  .featured-title {
+    font-size: 1.5rem;
+  }
+  
+  .featured-text {
+    font-size: 0.9rem;
+  }
+  
+  .trending-section {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .trending-card {
+    padding: 1rem;
+  }
+  
+  .trending-title {
+    font-size: 1.3rem;
+  }
+  
+  .trending-image {
+    height: 200px;
+  }
+  
+  .trending-content {
+    padding-top: 1rem;
+  }
+  
+  .categories-section {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .category-card .card-body {
+    padding: 1rem;
+  }
+  
+  .category-icon-wrapper {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  
+  .category-title {
+    font-size: 1rem;
+  }
+  
+  .category-description {
+    font-size: 0.8rem;
+  }
+  
+  .filter-btn {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .restaurant-card .card-body {
+    padding: 1rem;
+  }
+  
+  .card-image-horizontal {
+    height: 200px;
+  }
+  
+  .restaurant-name {
+    font-size: 1.2rem;
+  }
+  
+  .restaurant-description {
+    font-size: 0.9rem;
+  }
+  
+  .card-image {
+    height: 200px;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .section-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .trending-card {
+    padding: 1rem;
+  }
+  
+  .trending-content {
+    padding-left: 1rem;
+    padding-top: 0;
+  }
+  
+  .trending-image {
+    height: 220px;
+  }
+  
+  .featured-image {
+    height: 280px;
+  }
+  
+  .featured-overlay {
+    padding: 1.5rem;
+  }
+}
+
+/* Ultra-wide mobile screens */
+@media (max-width: 430px) {
+  .home-container {
+    padding: 10px;
+  }
+  
+  .hero-title {
+    font-size: 1.6rem;
+  }
+  
+  .stats-section .col-6 {
+    margin-bottom: 1rem;
+  }
+  
+  .trending-section,
+  .categories-section {
+    margin-bottom: 2rem;
+  }
+  
+  .card-badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .michelin-badge {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .restaurant-highlights .badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-emoji {
+    font-size: 2.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+  
+  .hero-buttons {
+    margin-top: 1.5rem;
+  }
+  
+  .hero-cta {
+    font-size: 1rem;
+    padding: 0.7rem 2rem;
+  }
+  
+  .stats-section {
+    padding: 2rem 1rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stat-icon {
+    font-size: 2rem;
+  }
+  
+  .featured-image {
+    height: 350px;
+  }
+  
+  .featured-overlay {
+    padding: 2rem 1.5rem;
+  }
+  
+  .featured-title {
+    font-size: 2rem;
+  }
+  
+  .featured-text {
+    font-size: 1rem;
+  }
+  
+  .featured-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .home-container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-content {
+    padding: 1rem 0.5rem;
+  }
+  
+  .featured-image {
+    height: 250px;
+  }
+  
+  .featured-overlay {
+    padding: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .card-image {
+    height: 200px;
+  }
+  
+  .content-card .card-body {
+    padding: 1rem;
+  }
+}
+
+/* Animation for smooth loading */
+.home-container {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

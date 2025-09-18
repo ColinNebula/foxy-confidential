@@ -1,40 +1,48 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaTwitter, FaLinkedin } from "react-icons/fa";
+import './Footer.css';
+
 
 function Footer() {
     return (
-            <div className="footer">
-                <footer>
-                <div>
+        <footer className="footer">
+            <div className="footer-content">
+                <div className="footer-brand">
+                    <span role="img" aria-label="fox">🦊</span> Foxy Confidential
                 </div>
-                        <a href="https://github.com/ColinNebula" target="blank" rel="noopener noreferrer">
-                            <li className="logo">
-                                <FaGithub />
-                            </li>
+                <ul className="footer-social">
+                    <li>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <FaInstagram />
                         </a>
-                        <a href="https://www.linkedin.com/in/colin-nebula-07176022/" target="blank" rel="noopener noreferrer">
-                            <li className="logo">
-                                <FaLinkedin />
-                            </li>
+                    </li>
+                    <li>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <FaFacebookF />
                         </a>
-                        <a href="https://www.youtube.com/" target="blank" rel="noopener noreferrer">
-                            <li className="logo">
-                                <FaYoutube />
-                            </li>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                            <FaTwitter />
                         </a>
-                    
-                        
-                        <div>
-                        
-        
-                        <a href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Home</a>
-                        <br/>
-                        
-                        &copy; 2022 <a href="mailto:obdyer@rogers.com">obdyer@rogers.com</a>
-                        </div>
-                </footer>
+                    </li>
+                    <li>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <FaLinkedin />
+                        </a>
+                    </li>
+                </ul>
+                <div className="footer-links">
+                    <a href="/">Home</a>
+                    <span className="footer-sep">|</span>
+                    <a href="mailto:obdyer@rogers.com">Contact</a>
+                </div>
             </div>
-        );
-    }
+            <div className="footer-bottom">
+                &copy; {new Date().getFullYear()} Foxy Confidential. All rights reserved.
+            </div>
+        </footer>
+    );
+}
 
 export default Footer;
