@@ -8,6 +8,7 @@ import Gallery from './components/Gallery';
 import Login from './components/Login';
 import Blog from './components/Blog';
 import Reviews from './components/Reviews';
+import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
 import SplashScreen from './components/SplashScreen';
 import ParticlesBackground from './components/config/ParticlesBackground';
@@ -161,6 +162,9 @@ function App() {
           onUpdateReview={handleUpdateReview}
           onDeleteReview={handleDeleteReview}
         />;
+
+      case "dashboard":
+        return <Dashboard />;
         
       case "login":
       return <Login />;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, ProgressBar } from 'react-bootstrap';
 import { FaUtensils, FaStar, FaHeart } from 'react-icons/fa';
+import FoxyLogo from '../FoxyLogo';
 import './SplashScreen.css';
 
 const SplashScreen = ({ onLoadComplete }) => {
@@ -91,7 +92,7 @@ const SplashScreen = ({ onLoadComplete }) => {
           <div className="splash-logo">
             <div className="logo-container">
               <div className="logo-icon">
-                <FaUtensils />
+                <FoxyLogo width={120} height={120} className="foxy-logo-pulse" />
               </div>
               <div className="logo-text">
                 <h1 className="brand-name">Foxy Confidential</h1>

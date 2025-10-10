@@ -10,11 +10,16 @@
 }
 
 /* Ensure navbar container is properly constrained */
-.foxy-navbar .container {
+.foxy-navbar .container,
+.foxy-navbar .container-fluid {
   max-width: 100% !important;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* Wide Screen Optimizations with proper constraints */
@@ -48,12 +53,13 @@
 .brand-enhanced {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   text-decoration: none !important;
   color: white !important;
   transition: all 0.3s ease;
   flex-shrink: 0;
-  max-width: 240px;
+  max-width: 140px;
+  min-width: 140px;
 }
 
 .brand-enhanced:hover {
@@ -80,7 +86,7 @@
 }
 
 .brand-name {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: bold;
   color: white;
   white-space: nowrap;
@@ -89,7 +95,7 @@
 }
 
 .brand-tagline {
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   color: #f39c12;
   font-weight: 500;
   text-transform: uppercase;
@@ -102,39 +108,46 @@
 /* Responsive brand scaling */
 @media (min-width: 1200px) {
   .brand-enhanced {
-    max-width: 280px;
+    max-width: 150px;
+    min-width: 150px;
   }
   
   .brand-name {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
   
   .brand-tagline {
-    font-size: 0.7rem;
+    font-size: 0.58rem;
   }
 }
 
 @media (min-width: 1400px) {
   .brand-enhanced {
-    max-width: 320px;
+    max-width: 160px;
+    min-width: 160px;
   }
   
   .brand-name {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
   }
   
   .brand-tagline {
-    font-size: 0.75rem;
+    font-size: 0.6rem;
   }
 }
 
 @media (min-width: 1600px) {
+  .brand-enhanced {
+    max-width: 170px;
+    min-width: 170px;
+  }
+  
   .brand-name {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
   
   .brand-tagline {
-    font-size: 0.8rem;
+    font-size: 0.65rem;
   }
 }
 
@@ -167,6 +180,8 @@
   flex-basis: 100%;
   flex-grow: 1;
   align-items: center;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .navbar-nav {
@@ -181,10 +196,12 @@
   flex-wrap: nowrap;
   overflow: visible;
   max-width: 100%;
+  margin-left: auto;
 }
 
 .foxy-navbar .navbar-collapse {
-  overflow: hidden;
+  overflow: visible;
+  flex-shrink: 1;
 }
 
 @media (min-width: 992px) {
@@ -196,7 +213,7 @@
   .navbar-nav {
     flex-direction: row;
     width: auto;
-    max-width: calc(100% - 250px); /* Reserve space for brand */
+    flex: 1;
   }
 }
 
@@ -215,8 +232,8 @@
 
 /* Navigation Items */
 .nav-item-enhanced {
-  margin: 0 0.25rem;
-  border-radius: 25px;
+  margin: 0 0.1rem;
+  border-radius: 15px;
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
@@ -234,8 +251,8 @@
 .nav-content {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 0.8rem;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
   color: #ecf0f1;
   text-decoration: none;
   font-weight: 500;
@@ -244,52 +261,64 @@
 }
 
 /* Responsive navigation spacing */
-@media (min-width: 1200px) {
+@media (min-width: 992px) and (max-width: 1199px) {
   .nav-item-enhanced {
-    margin: 0 0.4rem;
+    margin: 0 0.08rem;
   }
   
   .nav-content {
-    padding: 0.7rem 1rem;
-    gap: 0.5rem;
+    padding: 0.12rem 0.4rem;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .nav-item-enhanced {
+    margin: 0 0.15rem;
+  }
+  
+  .nav-content {
+    padding: 0.15rem 0.55rem;
+    gap: 0.25rem;
   }
 }
 
 @media (min-width: 1400px) {
   .nav-item-enhanced {
-    margin: 0 0.5rem;
+    margin: 0 0.18rem;
   }
   
   .nav-content {
-    padding: 0.75rem 1.2rem;
+    padding: 0.18rem 0.6rem;
   }
   
   .nav-label {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 }
 
 @media (min-width: 1600px) {
   .nav-item-enhanced {
-    margin: 0 0.6rem;
+    margin: 0 0.2rem;
   }
   
   .nav-content {
-    padding: 0.8rem 1.4rem;
+    padding: 0.2rem 0.7rem;
   }
 }
 
 @media (min-width: 1920px) {
   .nav-item-enhanced {
-    margin: 0 0.75rem;
+    margin: 0 0.25rem;
   }
   
   .nav-content {
-    padding: 0.875rem 1.6rem;
+    padding: 0.22rem 0.8rem;
   }
   
   .nav-label {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -328,25 +357,14 @@
   color: white;
 }
 
-.nav-content {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  color: #ecf0f1;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
 .nav-icon {
-  font-size: 1.1rem;
-  min-width: 20px;
+  font-size: 0.85rem;
+  min-width: 16px;
   text-align: center;
 }
 
 .nav-label {
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
@@ -372,8 +390,8 @@
 .dropdown-toggle-content {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
   color: #ecf0f1 !important;
   text-decoration: none;
   font-weight: 500;
@@ -381,7 +399,7 @@
 }
 
 .dropdown-arrow {
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   transition: transform 0.3s ease;
 }
 
@@ -483,6 +501,10 @@
     padding: 0.5rem 0;
   }
   
+  .brand-enhanced {
+    max-width: 250px;
+  }
+  
   .brand-name {
     font-size: 1.1rem;
   }
@@ -501,6 +523,7 @@
     justify-content: flex-start;
     padding: 1rem 1.5rem;
     gap: 1rem;
+    color: #ecf0f1 !important;
   }
   
   .nav-icon {
@@ -511,6 +534,8 @@
   .nav-label {
     display: inline !important;
     font-size: 1rem;
+    color: #ecf0f1 !important;
+    opacity: 1 !important;
   }
   
   .dropdown-toggle-content {
@@ -552,10 +577,16 @@
   
   .dropdown-label {
     font-size: 1rem;
+    color: #ecf0f1 !important;
+    opacity: 1 !important;
   }
 }
 
 @media (max-width: 768px) {
+  .brand-enhanced {
+    max-width: 220px;
+  }
+  
   .brand-logo {
     width: 70px;
     height: 30px;
@@ -581,6 +612,8 @@
   
   .nav-label {
     font-size: 0.95rem;
+    color: #ecf0f1 !important;
+    display: inline !important;
   }
   
   .dropdown-toggle-content {
@@ -591,12 +624,21 @@
   .dropdown-content {
     padding: 0.875rem 1.25rem;
     min-height: 44px;
+    color: #ecf0f1 !important;
+  }
+  
+  .dropdown-label {
+    color: #ecf0f1 !important;
   }
 }
 
 @media (max-width: 576px) {
   .foxy-navbar {
     padding: 0.25rem 0;
+  }
+  
+  .brand-enhanced {
+    max-width: 200px;
   }
   
   .brand-logo {
@@ -630,6 +672,8 @@
   .nav-label {
     font-size: 1rem;
     font-weight: 500;
+    color: #ffffff !important;
+    display: inline !important;
   }
   
   .dropdown-toggle-content {
@@ -649,6 +693,7 @@
   
   .dropdown-label {
     font-size: 1rem;
+    color: #ffffff !important;
   }
 }
 

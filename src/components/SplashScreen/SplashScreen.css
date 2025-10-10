@@ -130,7 +130,7 @@
   text-align: left;
 }
 
-.brand-name {
+.splash-screen .brand-name {
   font-size: 3.5rem;
   font-weight: 800;
   margin: 0;
@@ -151,7 +151,7 @@
   }
 }
 
-.brand-tagline {
+.splash-screen .brand-tagline {
   font-size: 1.2rem;
   margin: 0;
   opacity: 0.9;

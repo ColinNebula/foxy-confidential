@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Container } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
-import fc_logo from '../../assets/images/fc_logo.png';
+import FoxyLogo from '../FoxyLogo';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaHome, FaBlog, FaUtensils, FaImages, FaSignInAlt, FaStar, FaChevronDown } from 'react-icons/fa';
+import { FaHome, FaBlog, FaUtensils, FaImages, FaSignInAlt, FaStar, FaChevronDown, FaMapMarkedAlt } from 'react-icons/fa';
 import './Nav.css';
 
 function Navigation(props) {
@@ -13,6 +13,7 @@ function Navigation(props) {
     
     const navItems = [
       { key: 'home', label: 'Home', icon: <FaHome />, ariaLabel: 'Navigate to Home page' },
+      { key: 'dashboard', label: 'Dashboard', icon: <FaMapMarkedAlt />, ariaLabel: 'Navigate to Dashboard page' },
       { key: 'reviews', label: 'Reviews', icon: <FaBlog />, ariaLabel: 'Navigate to Reviews page' },
       { key: 'lifestyle', label: 'Restaurants', icon: <FaUtensils />, ariaLabel: 'Navigate to Restaurants page' }
     ];
@@ -49,14 +50,7 @@ function Navigation(props) {
           }}
           aria-label="Foxy Confidential - Navigate to Home"
         >
-          <img 
-            src={fc_logo} 
-            width="90" 
-            height="40" 
-            alt="Foxy Confidential Logo" 
-            className="brand-logo"
-            loading="lazy"
-          />
+          <FoxyLogo width={50} height={50} className="brand-logo me-2" />
           <span className="brand-text">
             <span className="brand-name">Foxy Confidential</span>
             <span className="brand-tagline">Restaurant Ratings</span>
