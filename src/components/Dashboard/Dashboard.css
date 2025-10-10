@@ -185,12 +185,6 @@
   font-weight: 500;
 }
 
-.restaurant-card .card-body {
-  position: relative;
-  z-index: 1;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
-}
-
 /* View Toggle */
 .view-toggle {
   display: flex;
@@ -232,14 +226,23 @@
 
 /* Map Card */
 .map-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(255, 255, 255, 0.25);
+  background: rgba(30, 30, 40, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   position: relative;
-  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  min-height: 600px;
+}
+
+.map-card > div {
+  padding: 0;
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
 }
 
 .map-card::before {
@@ -252,7 +255,8 @@
   background: linear-gradient(90deg, #ff6b6b, #ee5a6f, #c44569, #ee5a6f, #ff6b6b);
   background-size: 200% 100%;
   animation: gradientShift 3s ease infinite;
-  z-index: 2;
+  z-index: 10000;
+  pointer-events: none;
 }
 
 @keyframes gradientShift {
@@ -372,7 +376,11 @@
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  min-height: 500px;
+  max-width: 100%;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   position: relative;
 }
@@ -404,17 +412,32 @@
 .restaurant-card-image-container {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  height: 220px;
+  flex-shrink: 0;
 }
 
 .restaurant-card-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
+  display: block;
 }
 
 .restaurant-card:hover .restaurant-card-image {
   transform: scale(1.1);
+}
+
+.restaurant-card .card-body {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.5rem;
 }
 
 .status-badge {
@@ -434,13 +457,22 @@
 
 .restaurant-card-title {
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   margin-bottom: 0.75rem;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   letter-spacing: 0.3px;
   position: relative;
   z-index: 1;
+  min-height: 2.6rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .restaurant-card-meta {
@@ -449,6 +481,9 @@
   gap: 0.5rem;
   position: relative;
   z-index: 1;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+  min-height: 2rem;
 }
 
 .restaurant-card-meta .badge {
@@ -470,6 +505,16 @@
   font-weight: 400;
   position: relative;
   z-index: 1;
+  min-height: 4.8rem;
+  max-height: 4.8rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex-shrink: 0;
 }
 
 .restaurant-card-info {
@@ -480,6 +525,7 @@
   margin-top: auto;
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
 }
 
 .restaurant-card-info small {
@@ -500,6 +546,10 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
+}
+
+.stats-card-body {
+  padding: 2rem;
 }
 
 .stats-card::before {
@@ -577,8 +627,47 @@
   position: relative;
 }
 
+/* Extra Large Screens - Better card proportions */
+/* Responsive Design for Extra Large Screens */
+@media (min-width: 1400px) {
+  .restaurant-card {
+    min-height: 550px;
+  }
+
+  .restaurant-card-image-container {
+    height: 250px;
+  }
+
+  .restaurant-card-title {
+    font-size: 1.4rem;
+    min-height: 2.8rem;
+  }
+
+  .restaurant-card-description {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .restaurant-card {
+    min-height: 520px;
+  }
+
+  .restaurant-card-image-container {
+    height: 240px;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .dashboard-header {
+    padding: 1.5rem 1rem;
+  }
+
   .dashboard-title {
     font-size: 1.8rem;
   }
@@ -590,6 +679,11 @@
   .location-btn {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .filters-card .card-body {
+    padding: 1rem;
   }
 
   .stat-number {
@@ -600,16 +694,121 @@
     font-size: 0.8rem;
   }
 
-  .restaurant-card-image {
-    height: 180px;
+  .stat-item {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .restaurant-card {
+    margin-bottom: 1.25rem;
+    min-height: 450px;
+  }
+
+  .restaurant-card-image-container {
+    height: 200px;
+  }
+
+  .restaurant-card-title {
+    font-size: 1.2rem;
+  }
+
+  .restaurant-card-description {
+    font-size: 0.9rem;
+    min-height: 4.3rem;
+  }
+
+  .restaurant-card-meta {
+    gap: 0.35rem;
+  }
+
+  .restaurant-card-meta .badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
   }
 
   .view-toggle {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .view-toggle .btn {
     width: 100%;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .map-loading {
+    height: 400px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-container {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .dashboard-header {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .filters-card .card-body {
+    padding: 0.75rem;
+  }
+
+  .filter-label {
+    font-size: 0.85rem;
+  }
+
+  .filter-input,
+  .filter-select {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .stat-number {
+    font-size: 1.75rem;
+  }
+
+  .stat-item {
+    padding: 0.75rem;
+  }
+
+  .restaurant-card {
+    min-height: 400px;
+  }
+
+  .restaurant-card-image-container {
+    height: 180px;
+  }
+
+  .restaurant-card .card-body {
+    padding: 1rem;
+  }
+
+  .restaurant-card-title {
+    font-size: 1.1rem;
+    min-height: 2.4rem;
+  }
+
+  .restaurant-card-description {
+    font-size: 0.85rem;
+    min-height: 4rem;
+  }
+
+  .view-toggle .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .map-loading {
+    height: 300px;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Badge, InputGroup, Alert, Spinner } from 'react-bootstrap';
 import { 
   FaMapMarkerAlt, 
@@ -11,7 +11,7 @@ import {
   FaList,
   FaMap
 } from 'react-icons/fa';
-import { GoogleMap, LoadScript, Marker, InfoWindow, MarkerClusterer } from '@react-google-maps/api';
+import LeafletMap from './LeafletMap';
 import { 
   fetchNearbyRestaurantsWithMap, 
   searchRestaurants, 
@@ -19,9 +19,8 @@ import {
 } from '../../services/googlePlacesService';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const Dashboard = ({ onRestaurantClick }) => {
   // State management
-  const [map, setMap] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
@@ -31,21 +30,12 @@ const Dashboard = () => {
   const [ratingFilter, setRatingFilter] = useState('all');
   const [priceFilter, setPriceFilter] = useState('all');
   const [radiusFilter, setRadiusFilter] = useState(10); // km
+  const [sortBy, setSortBy] = useState('distance'); // 'distance', 'rating', 'name'
   const [viewMode, setViewMode] = useState('list'); // 'map' or 'list' - start with list
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
   const [isLoadingRestaurants, setIsLoadingRestaurants] = useState(false);
   const [locationError, setLocationError] = useState('');
-  const [hasApiKey, setHasApiKey] = useState(false);
-  const [mapError, setMapError] = useState('');
   const [useRealData, setUseRealData] = useState(true); // Toggle between real API and mock data
-  const mapRef = useRef(null);
-
-  // Google Maps configuration
-  const mapContainerStyle = {
-    width: '100%',
-    height: '600px',
-    borderRadius: '15px'
-  };
 
   const defaultCenter = {
     lat: 40.7128, // New York City default
@@ -228,7 +218,7 @@ const Dashboard = () => {
   ];
 
   // Get user's current location
-  const getUserLocation = useCallback(() => {
+  const getUserLocation = () => {
     setIsLoadingLocation(true);
     setLocationError('');
 
@@ -243,11 +233,6 @@ const Dashboard = () => {
           setMapCenter(userPos);
           setMapZoom(14);
           setIsLoadingLocation(false);
-          
-          // Fetch restaurants near user location
-          if (map && useRealData) {
-            fetchRestaurantsNearby(userPos);
-          }
         },
         (error) => {
           setLocationError('Unable to get your location. Using default location.');
@@ -259,69 +244,11 @@ const Dashboard = () => {
       setLocationError('Geolocation is not supported by your browser.');
       setIsLoadingLocation(false);
     }
-  }, [map, useRealData]);
+  };
 
-  // Fetch restaurants from Google Places API
-  const fetchRestaurantsNearby = useCallback(async (location) => {
-    if (!map) {
-      console.log('Map not ready yet');
-      return;
-    }
 
-    setIsLoadingRestaurants(true);
-    setLocationError('');
 
-    try {
-      const radiusInMeters = radiusFilter * 1000; // Convert km to meters
-      const results = await fetchNearbyRestaurantsWithMap(map, location, radiusInMeters);
-      
-      console.log(`Fetched ${results.length} restaurants from Google Places`);
-      setRestaurants(results);
-      setFilteredRestaurants(results);
-    } catch (error) {
-      console.error('Error fetching restaurants:', error);
-      setLocationError(`Failed to load restaurants: ${error.message}`);
-      
-      // Fall back to mock data if API fails
-      if (useRealData) {
-        console.log('Falling back to mock data');
-        setRestaurants(mockRestaurants);
-        setFilteredRestaurants(mockRestaurants);
-      }
-    } finally {
-      setIsLoadingRestaurants(false);
-    }
-  }, [map, radiusFilter, useRealData]);
 
-  // Handle search with Google Places Text Search
-  const handleSearchSubmit = useCallback(async (e) => {
-    e?.preventDefault();
-    
-    if (!searchQuery.trim()) {
-      return;
-    }
-
-    if (!map || !useRealData) {
-      // Use local filtering for mock data
-      return;
-    }
-
-    setIsLoadingRestaurants(true);
-    setLocationError('');
-
-    try {
-      const results = await searchRestaurants(map, searchQuery, userLocation || mapCenter);
-      
-      console.log(`Found ${results.length} restaurants for "${searchQuery}"`);
-      setRestaurants(results);
-      setFilteredRestaurants(results);
-    } catch (error) {
-      console.error('Error searching restaurants:', error);
-      setLocationError(`Search failed: ${error.message}`);
-    } finally {
-      setIsLoadingRestaurants(false);
-    }
-  }, [map, searchQuery, userLocation, mapCenter, useRealData]);
 
   // Calculate distance between two coordinates (Haversine formula)
   const calculateDistanceLocal = (lat1, lon1, lat2, lon2) => {
@@ -336,21 +263,30 @@ const Dashboard = () => {
     return R * c;
   };
 
-  // Load initial data when map is ready
+  // Load initial mock data and request user location
   useEffect(() => {
-    if (map && useRealData) {
-      const location = userLocation || mapCenter;
-      fetchRestaurantsNearby(location);
-    } else if (!useRealData) {
-      // Use mock data
-      setRestaurants(mockRestaurants);
-      setFilteredRestaurants(mockRestaurants);
-    }
-  }, [map, useRealData]); // Only run when map or useRealData changes
+    setRestaurants(mockRestaurants);
+    setFilteredRestaurants(mockRestaurants);
+    // Request user location on mount for better experience
+    getUserLocation();
+  }, []);
 
   // Filter restaurants based on criteria
   useEffect(() => {
     let filtered = [...mockRestaurants];
+
+    // Add distance to each restaurant if user location is available
+    if (userLocation) {
+      filtered = filtered.map(r => ({
+        ...r,
+        distance: calculateDistanceLocal(
+          userLocation.lat,
+          userLocation.lng,
+          r.position.lat,
+          r.position.lng
+        )
+      }));
+    }
 
     // Search filter
     if (searchQuery) {
@@ -410,30 +346,6 @@ const Dashboard = () => {
   }, [searchQuery, cuisineFilter, ratingFilter, priceFilter, radiusFilter, userLocation]);
 
   // Check for API key and initialize
-  useEffect(() => {
-    const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-    if (apiKey && apiKey !== 'YOUR_API_KEY_HERE' && apiKey !== '') {
-      setHasApiKey(true);
-      getUserLocation();
-    } else {
-      setMapError('Google Maps API key not configured. Please add your API key to the .env file.');
-    }
-  }, [getUserLocation]);
-
-  // Map load handler
-  const onMapLoad = useCallback((map) => {
-    setMap(map);
-    mapRef.current = map;
-  }, []);
-
-  // Custom marker icon colors based on rating
-  const getMarkerColor = (rating) => {
-    if (rating >= 4.5) return '#00d084'; // Green
-    if (rating >= 4.0) return '#ffc107'; // Yellow
-    if (rating >= 3.5) return '#ff9800'; // Orange
-    return '#f44336'; // Red
-  };
-
   // Handle marker click
   const handleMarkerClick = (restaurant) => {
     setSelectedRestaurant(restaurant);
@@ -443,10 +355,16 @@ const Dashboard = () => {
 
   // Handle list item click
   const handleListItemClick = (restaurant) => {
-    setSelectedRestaurant(restaurant);
-    setMapCenter(restaurant.position);
-    setMapZoom(15);
-    setViewMode('map');
+    if (onRestaurantClick) {
+      // Navigate to restaurant detail page
+      onRestaurantClick(restaurant);
+    } else {
+      // Fallback to map view
+      setSelectedRestaurant(restaurant);
+      setMapCenter(restaurant.position);
+      setMapZoom(15);
+      setViewMode('map');
+    }
   };
 
   // Get unique cuisines for filter
@@ -477,7 +395,7 @@ const Dashboard = () => {
                 {useRealData ? '🌐 Real Data' : '📝 Mock Data'}
               </Button>
               <Button
-                variant="primary"
+                variant={userLocation ? "success" : "primary"}
                 onClick={getUserLocation}
                 disabled={isLoadingLocation}
                 className="location-btn"
@@ -487,10 +405,15 @@ const Dashboard = () => {
                     <Spinner animation="border" size="sm" className="me-2" />
                     Getting Location...
                   </>
+                ) : userLocation ? (
+                  <>
+                    <FaLocationArrow className="me-2" />
+                    Location Active
+                  </>
                 ) : (
                   <>
                     <FaLocationArrow className="me-2" />
-                    Update Location
+                    Use My Location
                   </>
                 )}
               </Button>
@@ -499,7 +422,24 @@ const Dashboard = () => {
 
           {locationError && (
             <Alert variant="warning" dismissible onClose={() => setLocationError('')}>
-              {locationError}
+              <strong>Location Not Available:</strong> {locationError}
+              <br />
+              <small>You can still browse restaurants, but they won't be sorted by distance.</small>
+            </Alert>
+          )}
+          
+          {userLocation && (
+            <Alert variant="success" className="mb-0 mt-2">
+              <FaMapMarkerAlt className="me-2" />
+              <strong>Location Active!</strong> Restaurants are now sorted by distance from your location 
+              (Lat: {userLocation.lat.toFixed(4)}, Lng: {userLocation.lng.toFixed(4)})
+            </Alert>
+          )}
+          
+          {!userLocation && !locationError && !isLoadingLocation && (
+            <Alert variant="info" className="mb-0 mt-2">
+              <FaLocationArrow className="me-2" />
+              <strong>Tip:</strong> Click "Use My Location" to find restaurants near you and see distances!
             </Alert>
           )}
         </div>
@@ -520,19 +460,9 @@ const Dashboard = () => {
                       placeholder="Restaurant name, cuisine..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleSearchSubmit(e)}
                       className="filter-input"
                       disabled={isLoadingRestaurants}
                     />
-                    {useRealData && (
-                      <Button 
-                        variant="primary" 
-                        onClick={handleSearchSubmit}
-                        disabled={isLoadingRestaurants || !searchQuery.trim()}
-                      >
-                        {isLoadingRestaurants ? <Spinner animation="border" size="sm" /> : <FaSearch />}
-                      </Button>
-                    )}
                   </InputGroup>
                 </Form.Group>
               </Col>
@@ -595,7 +525,7 @@ const Dashboard = () => {
                 <Form.Group>
                   <Form.Label className="filter-label">
                     <FaLayerGroup className="me-2" />
-                    Radius: {radiusFilter} km
+                    Radius: {radiusFilter} km {userLocation && <small className="text-success">(from your location)</small>}
                   </Form.Label>
                   <Form.Range
                     min="1"
@@ -603,7 +533,13 @@ const Dashboard = () => {
                     value={radiusFilter}
                     onChange={(e) => setRadiusFilter(parseInt(e.target.value))}
                     className="filter-range"
+                    disabled={!userLocation}
                   />
+                  {!userLocation && (
+                    <Form.Text className="text-muted">
+                      Enable location to use radius filter
+                    </Form.Text>
+                  )}
                 </Form.Group>
               </Col>
             </Row>
@@ -618,7 +554,7 @@ const Dashboard = () => {
             className="me-2"
           >
             <FaMap className="me-2" />
-            Map View {!hasApiKey && '(Setup Required)'}
+            Map View
           </Button>
           <Button
             variant={viewMode === 'list' ? 'primary' : 'outline-primary'}
@@ -633,155 +569,26 @@ const Dashboard = () => {
         <Row>
           {viewMode === 'map' ? (
             <Col lg={12}>
-              {!hasApiKey ? (
-                <Card className="map-card">
-                  <Card.Body className="text-center p-5">
-                    <div className="map-placeholder">
-                      <FaMapMarkerAlt size={80} className="mb-4" style={{ color: '#ff6b6b', opacity: 0.5 }} />
-                      <h3 className="text-white mb-3">Google Maps Not Configured</h3>
-                      <p className="text-white mb-4" style={{ maxWidth: '600px', margin: '0 auto' }}>
-                        To see restaurants on the map, you need to configure your Google Maps API key.
-                      </p>
-                      <Alert variant="info" className="text-start" style={{ maxWidth: '700px', margin: '0 auto' }}>
-                        <h5><strong>Setup Instructions:</strong></h5>
-                        <ol className="mb-2">
-                          <li>Visit <a href="https://console.cloud.google.com/google/maps-apis" target="_blank" rel="noopener noreferrer">Google Cloud Console</a></li>
-                          <li>Create a project and enable "Maps JavaScript API"</li>
-                          <li>Create an API key</li>
-                          <li>Create a <code>.env</code> file in the project root</li>
-                          <li>Add: <code>REACT_APP_GOOGLE_MAPS_API_KEY=your_key_here</code></li>
-                          <li>Restart the development server</li>
-                        </ol>
-                      </Alert>
-                      <Button
-                        variant="primary"
-                        size="lg"
-                        className="mt-4"
-                        onClick={() => setViewMode('list')}
-                      >
-                        <FaList className="me-2" />
-                        View Restaurant List Instead
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              ) : (
-              <Card className="map-card">
-                <Card.Body className="p-0">
-                  <LoadScript
-                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                    libraries={['places']}
-                    loadingElement={<div className="map-loading">Loading map...</div>}
-                    onError={() => setMapError('Failed to load Google Maps. Please check your API key.')}
-                  >
-                    <GoogleMap
-                      mapContainerStyle={mapContainerStyle}
-                      center={mapCenter}
-                      zoom={mapZoom}
-                      onLoad={onMapLoad}
-                      options={{
-                        styles: [
-                          {
-                            featureType: 'poi',
-                            elementType: 'labels',
-                            stylers: [{ visibility: 'off' }]
-                          }
-                        ],
-                        disableDefaultUI: false,
-                        zoomControl: true,
-                        mapTypeControl: false,
-                        streetViewControl: false,
-                        fullscreenControl: true,
-                      }}
-                    >
-                      {/* User Location Marker */}
-                      {userLocation && (
-                        <Marker
-                          position={userLocation}
-                          icon={{
-                            path: window.google?.maps?.SymbolPath?.CIRCLE || 0,
-                            scale: 10,
-                            fillColor: '#4285F4',
-                            fillOpacity: 1,
-                            strokeColor: '#ffffff',
-                            strokeWeight: 3,
-                          }}
-                          title="Your Location"
-                        />
-                      )}
-
-                      {/* Restaurant Markers with Clustering */}
-                      <MarkerClusterer
-                        options={{
-                          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-                          gridSize: 50,
-                          maxZoom: 15,
-                        }}
-                      >
-                        {(clusterer) =>
-                          filteredRestaurants.map((restaurant) => (
-                            <Marker
-                              key={restaurant.id}
-                              position={restaurant.position}
-                              onClick={() => handleMarkerClick(restaurant)}
-                              clusterer={clusterer}
-                              icon={{
-                                path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
-                                fillColor: getMarkerColor(restaurant.rating),
-                                fillOpacity: 1,
-                                strokeColor: '#ffffff',
-                                strokeWeight: 2,
-                                scale: 1.5,
-                                anchor: new window.google.maps.Point(12, 24),
-                              }}
-                            />
-                          ))
-                        }
-                      </MarkerClusterer>
-
-                      {/* Info Window */}
-                      {selectedRestaurant && (
-                        <InfoWindow
-                          position={selectedRestaurant.position}
-                          onCloseClick={() => setSelectedRestaurant(null)}
-                        >
-                          <div className="info-window-content">
-                            <img
-                              src={selectedRestaurant.image}
-                              alt={selectedRestaurant.name}
-                              className="info-window-image"
-                            />
-                            <h5 className="info-window-title">{selectedRestaurant.name}</h5>
-                            <div className="info-window-details">
-                              <Badge bg="primary" className="me-2">{selectedRestaurant.cuisine}</Badge>
-                              <Badge bg="warning" text="dark">
-                                <FaStar /> {selectedRestaurant.rating}
-                              </Badge>
-                              <Badge bg="success" className="ms-2">{selectedRestaurant.priceRange}</Badge>
-                            </div>
-                            <p className="info-window-description">{selectedRestaurant.description}</p>
-                            {selectedRestaurant.distance && (
-                              <p className="info-window-distance">
-                                <FaMapMarkerAlt className="me-1" />
-                                {selectedRestaurant.distance} km away
-                              </p>
-                            )}
-                            <Button
-                              variant="primary"
-                              size="sm"
-                              className="w-100 mt-2"
-                              onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedRestaurant.position.lat},${selectedRestaurant.position.lng}`, '_blank')}
-                            >
-                              Get Directions
-                            </Button>
-                          </div>
-                        </InfoWindow>
-                      )}
-                    </GoogleMap>
-                  </LoadScript>
-                </Card.Body>
-              </Card>
-              )}
+              <div className="map-card" style={{ minHeight: '600px' }}>
+                <div style={{ 
+                  padding: 0, 
+                  height: '600px', 
+                  minHeight: '600px',
+                  width: '100%',
+                  display: 'block',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  {/* Free OpenStreetMap - No API Key Required! */}
+                  <LeafletMap
+                    center={mapCenter}
+                    zoom={mapZoom}
+                    restaurants={filteredRestaurants}
+                    selectedRestaurant={selectedRestaurant}
+                    onMarkerClick={handleMarkerClick}
+                  />
+                </div>
+              </div>
             </Col>
           ) : (
             <Col lg={12}>
@@ -810,9 +617,9 @@ const Dashboard = () => {
               ) : (
               <Row>
                 {filteredRestaurants.map((restaurant) => (
-                  <Col md={6} lg={4} key={restaurant.id} className="mb-4">
+                  <Col xxl={4} xl={4} lg={6} md={6} sm={12} key={restaurant.id} className="mb-4 d-flex">
                     <Card 
-                      className="restaurant-card"
+                      className="restaurant-card w-100"
                       onClick={() => handleListItemClick(restaurant)}
                     >
                       <div className="restaurant-card-image-container">
@@ -838,6 +645,12 @@ const Dashboard = () => {
                             <FaStar /> {restaurant.rating}
                           </Badge>
                           <Badge bg="success" className="ms-2">{restaurant.priceRange}</Badge>
+                          {restaurant.distance && (
+                            <Badge bg="info" className="ms-2">
+                              <FaLocationArrow className="me-1" />
+                              {restaurant.distance} km
+                            </Badge>
+                          )}
                         </div>
                         <Card.Text className="restaurant-card-description">
                           {restaurant.description}
@@ -862,8 +675,8 @@ const Dashboard = () => {
         </Row>
 
         {/* Statistics Footer */}
-        <Card className="stats-card mt-4">
-          <Card.Body>
+        <div className="stats-card mt-4">
+          <div className="stats-card-body">
             <Row className="text-center">
               <Col md={3}>
                 <div className="stat-item">
@@ -894,8 +707,8 @@ const Dashboard = () => {
                 </div>
               </Col>
             </Row>
-          </Card.Body>
-        </Card>
+          </div>
+        </div>
       </Container>
     </div>
   );

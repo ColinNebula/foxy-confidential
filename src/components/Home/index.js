@@ -12,7 +12,7 @@ import food6 from '../../assets/images/food6.png';
 import './Home.css';
 
 
-function Home() {
+function Home({ onRestaurantClick }) {
   const [lgShow, setLgShow] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
@@ -33,15 +33,21 @@ function Home() {
   ];
   
   const handleViewRestaurant = (restaurant) => {
-    setSelectedRestaurant(restaurant);
-    setActiveTab('rating');
-    // Load reviews for this restaurant
-    const reviews = getRestaurantReviews(restaurant.id);
-    setUserReviews(prev => ({
-      ...prev,
-      [restaurant.id]: reviews
-    }));
-    setLgShow(true);
+    if (onRestaurantClick) {
+      // Navigate to restaurant detail page
+      onRestaurantClick(restaurant);
+    } else {
+      // Fallback to modal view
+      setSelectedRestaurant(restaurant);
+      setActiveTab('rating');
+      // Load reviews for this restaurant
+      const reviews = getRestaurantReviews(restaurant.id);
+      setUserReviews(prev => ({
+        ...prev,
+        [restaurant.id]: reviews
+      }));
+      setLgShow(true);
+    }
   };
 
   const handleAddReview = (restaurantId, review) => {
@@ -281,8 +287,8 @@ function Home() {
               { name: 'Creativity', icon: <FaAward />, description: 'Innovation, unique approaches, and artistic presentation', color: 'warning' },
               { name: 'Uniqueness', icon: <FaStar />, description: 'What makes this place special and memorable', color: 'info' }
             ].map((category, index) => (
-              <Col xs={12} sm={6} lg={4} xl={4} key={index} className="mb-4">
-                <Card className="category-card h-100">
+              <Col xs={12} sm={6} xl={4} xxl={4} key={index} className="mb-4 d-flex">
+                <Card className="category-card w-100">
                   <Card.Body className="text-center">
                     <div className={`category-icon-wrapper bg-${category.color} text-white mb-3`}>
                       {category.icon}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Button, Modal, Row, Col, Badge, Alert, Dropdown } from 'react-bootstrap';
+import { Form, Button, Modal, Row, Col, Badge, Alert, Dropdown } from 'react-bootstrap';
 import { FaStar, FaUser, FaCalendarAlt, FaThumbsUp, FaThumbsDown, FaFlag, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import StarRating from '../StarRating';
 import './Reviews.css';
@@ -586,7 +586,7 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
               <div className="stat-number">{reviewStats.verifiedCount}</div>
               <div className="stat-label">Verified Reviews</div>
               <div className="stat-percentage">
-                {((reviewStats.verifiedCount / reviewStats.totalReviews) * 100).toFixed(0)}%
+                {reviewStats.totalReviews > 0 ? ((reviewStats.verifiedCount / reviewStats.totalReviews) * 100).toFixed(0) : 0}%
               </div>
             </div>
           </Col>
@@ -595,7 +595,7 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
               <div className="stat-number">{reviewStats.recommendedCount}</div>
               <div className="stat-label">Recommended</div>
               <div className="stat-percentage">
-                {((reviewStats.recommendedCount / reviewStats.totalReviews) * 100).toFixed(0)}%
+                {reviewStats.totalReviews > 0 ? ((reviewStats.recommendedCount / reviewStats.totalReviews) * 100).toFixed(0) : 0}%
               </div>
             </div>
           </Col>
@@ -636,8 +636,8 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
           </div>
         ) : (
           getSortedAndFilteredReviews().map(review => (
-            <Card key={review.id} className="review-card mb-3">
-              <Card.Body>
+            <div key={review.id} className="review-card mb-3">
+              <div className="review-card-body">
                 <div className="review-header">
                   <div className="reviewer-info">
                     <div className="reviewer-avatar">
@@ -839,8 +839,8 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                     Report
                   </Button>
                 </div>
-              </Card.Body>
-            </Card>
+              </div>
+            </div>
           ))
         )}
       </div>

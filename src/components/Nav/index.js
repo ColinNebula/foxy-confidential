@@ -15,11 +15,12 @@ function Navigation(props) {
       { key: 'home', label: 'Home', icon: <FaHome />, ariaLabel: 'Navigate to Home page' },
       { key: 'dashboard', label: 'Dashboard', icon: <FaMapMarkedAlt />, ariaLabel: 'Navigate to Dashboard page' },
       { key: 'reviews', label: 'Reviews', icon: <FaBlog />, ariaLabel: 'Navigate to Reviews page' },
-      { key: 'lifestyle', label: 'Restaurants', icon: <FaUtensils />, ariaLabel: 'Navigate to Restaurants page' }
+      { key: 'lifestyle', label: 'Lifestyle', icon: <FaUtensils />, ariaLabel: 'Navigate to Lifestyle page' }
     ];
     
     const dropdownItems = [
       { key: 'gallery', label: 'Gallery', icon: <FaImages />, ariaLabel: 'Navigate to Gallery page' },
+      { key: 'blog', label: 'Blog', icon: <FaBlog />, ariaLabel: 'Navigate to Blog page' },
       { key: 'login', label: 'Login', icon: <FaSignInAlt />, ariaLabel: 'Navigate to Login page' }
     ];
     

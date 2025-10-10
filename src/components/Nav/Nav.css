@@ -351,6 +351,7 @@
 .nav-item-enhanced.nav-active {
   background: #f39c12;
   color: white !important;
+  animation: navPulse 2s infinite;
 }
 
 .nav-item-enhanced.nav-active .nav-content {
@@ -761,10 +762,6 @@
   0% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
   70% { box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
   100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0); }
-}
-
-.nav-item-enhanced.nav-active {
-  animation: navPulse 2s infinite;
 }
 
 /* Smooth transitions */

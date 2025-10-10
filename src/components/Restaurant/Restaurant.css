@@ -1,0 +1,440 @@
+/* Restaurant Page Styles */
+.restaurant-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Hero Section */
+.restaurant-hero {
+  position: relative;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.8)
+  );
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 2rem 0;
+}
+
+.restaurant-name-hero {
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+.restaurant-meta-hero {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rating-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hero-actions .btn {
+  border-radius: 25px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.hero-actions .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Info Bar */
+.info-bar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.info-icon {
+  font-size: 2rem;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.3rem;
+}
+
+.info-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Tabs */
+.restaurant-tabs {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-tabs .nav-link {
+  color: #666;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.restaurant-tabs .nav-link:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.restaurant-tabs .nav-link.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Content Cards */
+.content-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.content-card h3, .content-card h4 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.restaurant-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* Specialties */
+.specialties-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.specialty-badge {
+  font-size: 0.95rem;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+/* Amenities */
+.amenities-grid {
+  margin-top: 1rem;
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #555;
+}
+
+.amenity-icon {
+  font-size: 1.3rem;
+  color: #667eea;
+}
+
+/* Hours */
+.list-group-item {
+  background: transparent;
+  border-color: rgba(0, 0, 0, 0.05);
+  padding: 0.8rem 0;
+}
+
+/* Rating Breakdown */
+.rating-breakdown-item {
+  font-size: 0.9rem;
+}
+
+.progress {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  transition: width 0.6s ease;
+}
+
+/* Menu Section */
+.menu-section {
+  margin-bottom: 3rem;
+}
+
+.menu-category {
+  color: #333;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+}
+
+.menu-item {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.menu-item-description {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 0;
+}
+
+.menu-item-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #667eea;
+  white-space: nowrap;
+}
+
+/* Photos */
+.photo-card {
+  background: transparent;
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.photo-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.restaurant-photo {
+  height: 250px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.photo-card:hover .restaurant-photo {
+  transform: scale(1.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 992px) {
+  .restaurant-name-hero {
+    font-size: 2.2rem;
+  }
+
+  .restaurant-hero {
+    height: 350px;
+  }
+
+  .info-bar .col-md-4 {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+  }
+
+  .info-bar .col-md-4:last-child {
+    border-bottom: none;
+  }
+
+  .restaurant-tabs .nav-link {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .amenity-item {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .restaurant-name-hero {
+    font-size: 1.8rem;
+  }
+
+  .restaurant-hero {
+    height: 300px;
+  }
+
+  .hero-overlay {
+    padding: 1rem 0;
+  }
+
+  .restaurant-meta-hero {
+    font-size: 0.95rem;
+  }
+
+  .hero-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .info-icon {
+    font-size: 1.5rem;
+  }
+
+  .info-label {
+    font-size: 0.75rem;
+  }
+
+  .info-value {
+    font-size: 0.95rem;
+  }
+
+  .restaurant-tabs {
+    padding: 0.5rem;
+  }
+
+  .restaurant-tabs .nav-link {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .content-card {
+    margin-bottom: 1rem;
+  }
+
+  .restaurant-description {
+    font-size: 1rem;
+  }
+
+  .menu-item-name {
+    font-size: 1.1rem;
+  }
+
+  .menu-item-description {
+    font-size: 0.9rem;
+  }
+
+  .menu-item-price {
+    font-size: 1.2rem;
+  }
+
+  .restaurant-photo {
+    height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .restaurant-name-hero {
+    font-size: 1.5rem;
+  }
+
+  .restaurant-hero {
+    height: 250px;
+  }
+
+  .restaurant-meta-hero {
+    font-size: 0.85rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .restaurant-tabs .nav-link {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .restaurant-tabs .nav-link svg {
+    display: none;
+  }
+
+  .menu-item {
+    padding: 1rem;
+  }
+
+  .menu-item-price {
+    margin-top: 0.5rem;
+  }
+
+  .amenity-item {
+    font-size: 0.85rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .restaurant-hero,
+  .hero-actions,
+  .restaurant-tabs .nav,
+  .btn {
+    display: none;
+  }
+
+  .content-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .restaurant-page {
+    background: white;
+  }
+}

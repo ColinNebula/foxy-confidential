@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Blog from './components/Blog';
 import Reviews from './components/Reviews';
 import Dashboard from './components/Dashboard';
+import Restaurant from './components/Restaurant';
 import Footer from './components/Footer';
 import SplashScreen from './components/SplashScreen';
 import ParticlesBackground from './components/config/ParticlesBackground';
@@ -19,6 +20,8 @@ import './App.css';
 function App() {
   const [currentTab, setCurrentTab] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [userReviews, setUserReviews] = useState([]);
 
   const handleLoadComplete = () => {
     setIsLoading(false);
@@ -45,9 +48,10 @@ function App() {
         creativity: 4,
         uniqueness: 3
       },
+      overallRating: 4.2,
       userName: "Sarah Johnson",
-      date: new Date('2024-09-15'),
-      visitDate: new Date('2024-09-14'),
+      date: new Date('2024-09-15').toISOString(),
+      visitDate: new Date('2024-09-14').toISOString(),
       wouldRecommend: true,
       verified: true,
       helpful: 8,
@@ -75,9 +79,10 @@ function App() {
         creativity: 2,
         uniqueness: 2
       },
+      overallRating: 2.8,
       userName: "Mike Chen",
-      date: new Date('2024-09-10'),
-      visitDate: new Date('2024-09-09'),
+      date: new Date('2024-09-10').toISOString(),
+      visitDate: new Date('2024-09-09').toISOString(),
       wouldRecommend: false,
       verified: false,
       helpful: 3,
@@ -102,9 +107,10 @@ function App() {
         creativity: 4,
         uniqueness: 4
       },
+      overallRating: 4.6,
       userName: "Emily Rodriguez",
-      date: new Date('2024-09-12'),
-      visitDate: new Date('2024-09-11'),
+      date: new Date('2024-09-12').toISOString(),
+      visitDate: new Date('2024-09-11').toISOString(),
       wouldRecommend: true,
       verified: true,
       helpful: 12,
@@ -124,17 +130,23 @@ function App() {
 
   const handleAddReview = (newReview) => {
     console.log('New review added:', newReview);
-    // In a real app, this would update the reviews state
+    setUserReviews(prevReviews => [newReview, ...prevReviews]);
   };
 
-  const handleUpdateReview = (reviewId, updatedReview) => {
-    console.log('Review updated:', reviewId, updatedReview);
-    // In a real app, this would update the specific review
+  const handleUpdateReview = (updatedReview) => {
+    console.log('Review updated:', updatedReview);
+    setUserReviews(prevReviews => 
+      prevReviews.map(review => 
+        review.id === updatedReview.id ? updatedReview : review
+      )
+    );
   };
 
   const handleDeleteReview = (reviewId) => {
     console.log('Review deleted:', reviewId);
-    // In a real app, this would remove the review from state
+    setUserReviews(prevReviews => 
+      prevReviews.filter(review => review.id !== reviewId)
+    );
   };
 
 
@@ -143,7 +155,10 @@ function App() {
 
     switch (currentTab) {
       case "home":
-          return <Home />;
+          return <Home onRestaurantClick={(restaurant) => {
+            setSelectedRestaurant(restaurant);
+            setCurrentTab("restaurant");
+          }} />;
 
       case "blog":
         return <Blog />;
@@ -157,14 +172,23 @@ function App() {
       case "reviews":
         return <Reviews 
           restaurant={mockRestaurant}
-          userReviews={mockReviews}
+          userReviews={[...mockReviews, ...userReviews]}
           onAddReview={handleAddReview}
           onUpdateReview={handleUpdateReview}
           onDeleteReview={handleDeleteReview}
         />;
 
       case "dashboard":
-        return <Dashboard />;
+        return <Dashboard onRestaurantClick={(restaurant) => {
+          setSelectedRestaurant(restaurant);
+          setCurrentTab("restaurant");
+        }} />;
+
+      case "restaurant":
+        return <Restaurant 
+          restaurant={selectedRestaurant}
+          onBack={() => setCurrentTab("home")}
+        />;
         
       case "login":
       return <Login />;

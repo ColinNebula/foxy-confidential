@@ -1,6 +1,7 @@
 {
   "short_name": "Foxy Confidential",
   "name": "Foxy Confidential - Restaurant Reviews & Discovery",
+  "description": "Discover and review the best restaurants in your area with Google Maps integration",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +11,22 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "theme_color": "#ff6b6b",
-  "background_color": "#1a1a2e"
+  "background_color": "#1a1a2e",
+  "scope": "/",
+  "categories": ["food", "lifestyle", "entertainment"],
+  "prefer_related_applications": false
 }
