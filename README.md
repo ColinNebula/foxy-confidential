@@ -50,6 +50,13 @@
 - **Admin Features** - Restaurant and review management
 - **Connection Pooling** - Optimized database performance
 
+### 📦 Git LFS (Large File Storage)
+- **Lightweight Repository** - Images stored efficiently with Git LFS
+- **28 Image Files** - All large assets tracked by LFS (~24MB)
+- **Fast Cloning** - Reduced repository size for faster clones
+- **Bandwidth Optimization** - Only download files you need
+- See [GIT_LFS_SETUP.md](./GIT_LFS_SETUP.md) for details
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -57,6 +64,7 @@
 - MySQL 8.x or higher (for backend features)
 - Google Maps API key (optional, for production)
 - Git
+- **Git LFS** (for large files) - [Installation Guide](https://git-lfs.github.com/)
 
 ### Installation
 
@@ -64,6 +72,9 @@
 ```bash
 git clone https://github.com/ColinNebula/foxy-confidential.git
 cd foxy-confidential
+
+# Verify Git LFS files downloaded
+git lfs ls-files
 ```
 
 2. **Install dependencies**
