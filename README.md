@@ -398,10 +398,9 @@ Your support helps us:
 ### How to Support
 
 #### 💰 Donations
-- **PayPal**: [Donate via PayPal](https://paypal.me/ColinNebula) *(Replace with your actual link)*
-- **Buy Me a Coffee**: [Support on Ko-fi](https://ko-fi.com/colinnebula) *(Replace with your actual link)*
-- **GitHub Sponsors**: [Sponsor on GitHub](https://github.com/sponsors/ColinNebula) *(Replace with your actual link)*
-- **Cryptocurrency**: Contact for crypto donation addresses
+- **PayPal**: [Donate via PayPal](https://paypal.me/ColinNebula) 
+- **Buy Me a Coffee**: [Support on Ko-fi](https://ko-fi.com/colinnebula) 
+- **GitHub Sponsors**: [Sponsor on GitHub](https://github.com/sponsors/ColinNebula) 
 
 #### 🌟 Other Ways to Help
 - ⭐ **Star this repository** - Show your appreciation
