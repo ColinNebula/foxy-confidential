@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback, memo } from 'react'
 import { Card, Container, Button, Col, Row, Modal, Badge, ProgressBar, Tabs, Tab } from 'react-bootstrap';
 import { FaStar, FaUtensils, FaHeart, FaAward, FaClock, FaMapMarkerAlt, FaEye, FaFilter, FaTrophy, FaFire } from 'react-icons/fa';
 import StarRating from '../StarRating';
@@ -11,6 +11,88 @@ import food3 from '../../assets/images/food3.png';
 import food6 from '../../assets/images/food6.png';
 import './Home.css';
 
+// Memoized restaurant card component for better performance
+const RestaurantCard = memo(({ restaurant, index, onViewRestaurant }) => {
+  const images = [food3, food2, food6];
+  const overallRating = useMemo(() => calculateOverallRating(restaurant.ratings), [restaurant.ratings]);
+  const hasMichelin = useMemo(() => restaurant.awards.some(award => award.includes('Michelin')), [restaurant.awards]);
+  
+  return (
+    <Col xs={12}>
+      <Card className="restaurant-card-modern h-100">
+        <div className="card-image-container">
+          <Card.Img 
+            variant="top" 
+            src={images[index % 3]} 
+            className="restaurant-card-image"
+            loading="lazy"
+            alt={restaurant.name}
+          />
+          <div className="card-overlay">
+            <Badge bg="success" className="rating-badge">
+              <FaStar className="me-1" />
+              {overallRating.toFixed(1)}
+            </Badge>
+            {hasMichelin && (
+              <Badge bg="warning" className="michelin-star-badge">
+                <FaStar className="me-1" />
+                Michelin
+              </Badge>
+            )}
+          </div>
+        </div>
+        
+        <Card.Body className="restaurant-card-body">
+          <div className="restaurant-header">
+            <div className="cuisine-type">
+              <FaUtensils className="me-2" />
+              {restaurant.cuisine}
+            </div>
+            <div className="price-indicator">{restaurant.priceRange}</div>
+          </div>
+          
+          <Card.Title className="restaurant-title">{restaurant.name}</Card.Title>
+          <Card.Text className="restaurant-excerpt">
+            {restaurant.review.substring(0, 120)}...
+          </Card.Text>
+          
+          <div className="quick-ratings">
+            {Object.entries(restaurant.ratings).slice(0, 3).map(([key, value]) => (
+              <div key={key} className="quick-rating-item">
+                <span className="rating-category">{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                <StarRating rating={value} size="small" showValue={false} />
+              </div>
+            ))}
+          </div>
+          
+          <div className="restaurant-tags">
+            {restaurant.highlights.slice(0, 2).map((highlight, idx) => (
+              <span key={idx} className="tag-item">{highlight}</span>
+            ))}
+          </div>
+          
+          <div className="restaurant-footer">
+            <div className="location-info">
+              <FaMapMarkerAlt className="me-1" />
+              <small>{restaurant.location}</small>
+            </div>
+            <Button 
+              variant="primary" 
+              size="sm" 
+              className="view-details-btn"
+              onClick={() => onViewRestaurant(restaurant)}
+            >
+              View Details
+              <FaEye className="ms-2" />
+            </Button>
+          </div>
+        </Card.Body>
+      </Card>
+    </Col>
+  );
+});
+
+RestaurantCard.displayName = 'RestaurantCard';
 
 function Home({ onRestaurantClick }) {
   const [lgShow, setLgShow] = useState(false);
@@ -19,62 +101,21 @@ function Home({ onRestaurantClick }) {
   const [activeTab, setActiveTab] = useState('rating');
   const [userReviews, setUserReviews] = useState({});
   
-  // Get featured restaurants from data
-  const featuredRestaurants = getFeaturedRestaurants().slice(0, 3);
-  const featuredRestaurant = restaurantData[3]; // Eleven Madison Park
-  const topRatedRestaurants = getRestaurantsByRating(4.5);
+  // Memoize expensive calculations
+  const featuredRestaurants = useMemo(() => getFeaturedRestaurants().slice(0, 3), []);
+  const featuredRestaurant = useMemo(() => restaurantData[3], []); // Eleven Madison Park
+  const topRatedRestaurants = useMemo(() => getRestaurantsByRating(4.5), []);
   
   // Category filters
-  const categories = [
+  const categories = useMemo(() => [
     { key: 'all', label: 'All Restaurants', icon: <FaUtensils /> },
     { key: 'michelin', label: 'Michelin Starred', icon: <FaStar /> },
     { key: 'creative', label: 'Most Creative', icon: <FaAward /> },
     { key: 'popular', label: 'Fan Favorites', icon: <FaFire /> }
-  ];
+  ], []);
   
-  const handleViewRestaurant = (restaurant) => {
-    if (onRestaurantClick) {
-      // Navigate to restaurant detail page
-      onRestaurantClick(restaurant);
-    } else {
-      // Fallback to modal view
-      setSelectedRestaurant(restaurant);
-      setActiveTab('rating');
-      // Load reviews for this restaurant
-      const reviews = getRestaurantReviews(restaurant.id);
-      setUserReviews(prev => ({
-        ...prev,
-        [restaurant.id]: reviews
-      }));
-      setLgShow(true);
-    }
-  };
-
-  const handleAddReview = (restaurantId, review) => {
-    const updatedReviews = addReview(restaurantId, review);
-    setUserReviews(prev => ({
-      ...prev,
-      [restaurantId]: updatedReviews
-    }));
-  };
-
-  const handleUpdateReview = (restaurantId, review) => {
-    const updatedReviews = updateReview(restaurantId, review.id, review);
-    setUserReviews(prev => ({
-      ...prev,
-      [restaurantId]: updatedReviews
-    }));
-  };
-
-  const handleDeleteReview = (restaurantId, reviewId) => {
-    const updatedReviews = deleteReview(restaurantId, reviewId);
-    setUserReviews(prev => ({
-      ...prev,
-      [restaurantId]: updatedReviews
-    }));
-  };
-  
-  const getFilteredRestaurants = () => {
+  // Memoize filtered restaurants
+  const filteredRestaurants = useMemo(() => {
     switch(activeCategory) {
       case 'michelin':
         return restaurantData.filter(r => r.awards.some(award => award.includes('Michelin')));
@@ -85,7 +126,67 @@ function Home({ onRestaurantClick }) {
       default:
         return featuredRestaurants;
     }
-  };
+  }, [activeCategory, featuredRestaurants]);
+  
+  const handleViewRestaurant = useCallback((restaurant) => {
+    console.log('🍽️ View Restaurant clicked:', restaurant?.name);
+    console.log('📍 onRestaurantClick prop:', onRestaurantClick ? 'Available' : 'Missing');
+    
+    if (onRestaurantClick && restaurant) {
+      // Navigate to restaurant detail page
+      console.log('✅ Navigating to restaurant detail page');
+      onRestaurantClick(restaurant);
+    } else {
+      // Fallback to modal view
+      console.log('📋 Opening modal view instead');
+      setSelectedRestaurant(restaurant);
+      setActiveTab('rating');
+      // Load reviews for this restaurant
+      if (restaurant) {
+        const reviews = getRestaurantReviews(restaurant.id);
+        setUserReviews(prev => ({
+          ...prev,
+          [restaurant.id]: reviews
+        }));
+      }
+      setLgShow(true);
+    }
+  }, [onRestaurantClick]);
+
+  const scrollToRestaurants = useCallback(() => {
+    const restaurantSection = document.querySelector('.restaurant-grid-section');
+    if (restaurantSection) {
+      restaurantSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
+
+  const handleAddReview = useCallback((restaurantId, review) => {
+    const updatedReviews = addReview(restaurantId, review);
+    setUserReviews(prev => ({
+      ...prev,
+      [restaurantId]: updatedReviews
+    }));
+  }, []);
+
+  const handleUpdateReview = useCallback((restaurantId, review) => {
+    const updatedReviews = updateReview(restaurantId, review.id, review);
+    setUserReviews(prev => ({
+      ...prev,
+      [restaurantId]: updatedReviews
+    }));
+  }, []);
+
+  const handleDeleteReview = useCallback((restaurantId, reviewId) => {
+    const updatedReviews = deleteReview(restaurantId, reviewId);
+    setUserReviews(prev => ({
+      ...prev,
+      [restaurantId]: updatedReviews
+    }));
+  }, []);
+  
+  const getFilteredRestaurants = useCallback(() => {
+    return filteredRestaurants;
+  }, [filteredRestaurants]);
   
   return (
     <Container className="home-container">
@@ -161,72 +262,80 @@ function Home({ onRestaurantClick }) {
       </Modal>
 
       {/* Hero Section */}
-      <Row className="hero-section mb-5">
-        <Col xs={12}>
-          <div className="hero-content text-center">
-            <div className="hero-emoji mb-3">
-              <span role="img" aria-label="fox">🦊</span>
-              <span role="img" aria-label="sparkles">✨</span>
-              <span role="img" aria-label="fox">🦊</span>
+      <div className="hero-section-wrapper">
+        <Row className="hero-section">
+          <Col xs={12}>
+            <div className="hero-content text-center">
+              <div className="hero-badge mb-3">
+                <Badge bg="warning" className="hero-label">
+                  <FaStar className="me-2" />
+                  Premium Restaurant Reviews
+                </Badge>
+              </div>
+              <h1 className="hero-title">Discover Extraordinary Dining</h1>
+              <p className="hero-subtitle">
+                Expert reviews and ratings for the finest restaurants
+              </p>
+              <p className="hero-description">
+                We evaluate restaurants across five comprehensive categories: Food Quality, Taste, 
+                Ambiance, Creativity, and Uniqueness. Make informed dining decisions with our 
+                detailed, professional ratings.
+              </p>
+              <div className="hero-buttons">
+                <Button variant="primary" size="lg" className="hero-cta" onClick={scrollToRestaurants}>
+                  <FaUtensils className="me-2" />
+                  Explore Restaurants
+                </Button>
+                <Button variant="outline-light" size="lg" className="hero-cta-secondary" onClick={() => handleViewRestaurant(null)}>
+                  Learn More
+                </Button>
+              </div>
             </div>
-            <h1 className="hero-title">Welcome to Foxy Confidential</h1>
-            <p className="hero-subtitle mb-4">
-              Your premier destination for restaurant discovery and ratings
-            </p>
-            <p className="hero-description mb-4">
-              Welcome to Foxy Confidential - where culinary excellence meets honest reviews! We rate restaurants across 5 key categories: 
-              Food Quality, Taste, Ambiance, Creativity, and Uniqueness. Discover your next amazing dining experience with our 
-              comprehensive 🦊-approved rating system.
-            </p>
-            <div className="hero-buttons">
-              <Button variant="primary" size="lg" className="me-3 hero-cta">
-                <FaUtensils className="me-2" />
-                Explore Now
-              </Button>
-              <Button variant="outline-primary" size="lg" onClick={() => handleViewRestaurant(null)}>
-                <FaHeart className="me-2" />
-                How We Rate
-              </Button>
-            </div>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </div>
 
       {/* Statistics Section */}
-      <Row className="stats-section mb-5">
-        <Col xs={12}>
-          <Row className="text-center">
-            <Col xs={6} md={3} className="mb-3">
-              <div className="stat-item">
+      <Container className="stats-container">
+        <Row className="stats-section">
+          <Col xs={6} md={3} className="stat-col">
+            <div className="stat-item">
+              <div className="stat-icon-wrapper">
                 <FaUtensils className="stat-icon" />
-                <h3 className="stat-number">500+</h3>
-                <p className="stat-label">Restaurants</p>
               </div>
-            </Col>
-            <Col xs={6} md={3} className="mb-3">
-              <div className="stat-item">
+              <h3 className="stat-number">500+</h3>
+              <p className="stat-label">Reviewed Restaurants</p>
+            </div>
+          </Col>
+          <Col xs={6} md={3} className="stat-col">
+            <div className="stat-item">
+              <div className="stat-icon-wrapper">
                 <FaAward className="stat-icon" />
-                <h3 className="stat-number">50+</h3>
-                <p className="stat-label">Awards</p>
               </div>
-            </Col>
-            <Col xs={6} md={3} className="mb-3">
-              <div className="stat-item">
+              <h3 className="stat-number">50+</h3>
+              <p className="stat-label">Michelin Stars</p>
+            </div>
+          </Col>
+          <Col xs={6} md={3} className="stat-col">
+            <div className="stat-item">
+              <div className="stat-icon-wrapper">
                 <FaHeart className="stat-icon" />
-                <h3 className="stat-number">10K+</h3>
-                <p className="stat-label">Happy Customers</p>
               </div>
-            </Col>
-            <Col xs={6} md={3} className="mb-3">
-              <div className="stat-item">
+              <h3 className="stat-number">10K+</h3>
+              <p className="stat-label">Community Members</p>
+            </div>
+          </Col>
+          <Col xs={6} md={3} className="stat-col">
+            <div className="stat-item">
+              <div className="stat-icon-wrapper">
                 <FaStar className="stat-icon" />
-                <h3 className="stat-number">4.9</h3>
-                <p className="stat-label">Average Rating</p>
               </div>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+              <h3 className="stat-number">4.9</h3>
+              <p className="stat-label">Average Rating</p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
 
       {/* Featured Section */}
       <Row className="featured-section mb-5">
@@ -308,134 +417,47 @@ function Home({ onRestaurantClick }) {
         </Col>
       </Row>
 
-      {/* Content Section with Filters */}
-      <Row className="content-section mb-5">
-        <Col xs={12}>
-          <div className="text-center mb-4">
-            <h2 className="section-title">
-              <FaFilter className="me-2" />
-              Browse by Category
-            </h2>
-            <p className="section-description">
-              Filter restaurants by what matters most to you
-            </p>
-          </div>
-          
-          {/* Category Filter Buttons */}
-          <div className="category-filters text-center mb-4">
-            <Row className="g-2">
-              {categories.map(category => (
-                <Col xs={12} sm={6} md={3} key={category.key}>
-                  <Button
-                    variant={activeCategory === category.key ? 'primary' : 'outline-primary'}
-                    className="filter-btn w-100"
-                    onClick={() => setActiveCategory(category.key)}
-                  >
-                    {category.icon}
-                    <span className="ms-2 d-none d-sm-inline">{category.label}</span>
-                    <span className="ms-2 d-sm-none">{category.label.split(' ')[0]}</span>
-                  </Button>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </Col>
-      </Row>
+      {/* Featured Restaurants Section */}
+      <section className="featured-restaurants-section">
+        <div className="section-header text-center">
+          <h2 className="section-title">Featured Restaurants</h2>
+          <p className="section-description">
+            Hand-picked establishments that exemplify culinary excellence
+          </p>
+          <div className="section-divider"></div>
+        </div>
+        
+        {/* Category Filter Buttons */}
+        <div className="category-filters-wrapper">
+          <Row className="g-3 justify-content-center">
+            {categories.map(category => (
+              <Col xs={6} sm={6} md={3} lg={3} key={category.key}>
+                <div
+                  className={`filter-card ${activeCategory === category.key ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(category.key)}
+                >
+                  <div className="filter-icon">{category.icon}</div>
+                  <div className="filter-label">{category.label}</div>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      </section>
 
-      {/* Cards Section */}
-      <Row className="cards-section">
-        {getFilteredRestaurants().map((restaurant, index) => {
-          const images = [food3, food2, food6];
-          const overallRating = calculateOverallRating(restaurant.ratings);
-          
-          return (
-            <Col xs={12} className="mb-4" key={restaurant.id}>
-              <Card className="h-100 shadow-sm content-card restaurant-card">
-                <Row className="g-0">
-                  <Col md={3} lg={4}>
-                    <div className="card-image-wrapper">
-                      <Card.Img src={images[index % 3]} className="card-image-horizontal" />
-                      <Badge bg="success" className="card-badge">
-                        <FaStar className="me-1" />
-                        {overallRating.toFixed(1)}
-                      </Badge>
-                      {restaurant.awards.some(award => award.includes('Michelin')) && (
-                        <Badge bg="warning" className="michelin-badge">
-                          <FaStar className="me-1" />
-                          <span className="d-none d-sm-inline">Michelin</span>
-                          <span className="d-sm-none">⭐</span>
-                        </Badge>
-                      )}
-                    </div>
-                  </Col>
-                  <Col md={9} lg={8}>
-                    <Card.Body className="d-flex flex-column">
-                      <div className="card-header-info mb-2">
-                        <FaUtensils className="card-icon" />
-                        <span className="card-category">{restaurant.cuisine}</span>
-                        <span className="ms-auto price-range">{restaurant.priceRange}</span>
-                      </div>
-                      <Card.Title className="restaurant-name">{restaurant.name}</Card.Title>
-                      <Card.Text className="flex-grow-1 restaurant-description">
-                        {restaurant.review.substring(0, 180)}...
-                      </Card.Text>
-                      
-                      {/* Rating Breakdown Preview */}
-                      <div className="rating-preview mb-3">
-                        <Row className="g-1">
-                          <Col xs={4} className="rating-item">
-                            <span className="rating-label">Food:</span>
-                            <StarRating rating={restaurant.ratings.food} size="small" showValue={false} />
-                          </Col>
-                          <Col xs={4} className="rating-item">
-                            <span className="rating-label">Taste:</span>
-                            <StarRating rating={restaurant.ratings.taste} size="small" showValue={false} />
-                          </Col>
-                          <Col xs={4} className="rating-item">
-                            <span className="rating-label">Ambiance:</span>
-                            <StarRating rating={restaurant.ratings.ambiance} size="small" showValue={false} />
-                          </Col>
-                        </Row>
-                      </div>
-
-                      <div className="restaurant-highlights mb-3">
-                        {restaurant.highlights.slice(0, 3).map((highlight, idx) => (
-                          <Badge key={idx} bg="light" text="dark" className="me-1 mb-1">
-                            {highlight}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="card-meta mb-3">
-                        <small className="text-muted">
-                          <FaMapMarkerAlt className="me-1" />
-                          {restaurant.location}
-                        </small>
-                        <small className="text-muted ms-3">
-                          <FaClock className="me-1" />
-                          Since {restaurant.openSince}
-                        </small>
-                      </div>
-                      
-                      <div className="mt-auto card-actions">
-                        <Button variant="primary" onClick={() => handleViewRestaurant(restaurant)} className="me-2">
-                          <FaEye className="me-1" />
-                          <span className="d-none d-sm-inline">Full Rating</span>
-                          <span className="d-sm-none">Rating</span>
-                        </Button>
-                        <Button variant="outline-secondary" size="sm">
-                          <FaHeart />
-                        </Button>
-                      </div>
-                    </Card.Body>
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-          );
-        })}
-
-      </Row>
+      {/* Restaurant Cards Grid */}
+      <section className="restaurant-grid-section">
+        <Row className="g-4">
+          {getFilteredRestaurants().map((restaurant, index) => (
+            <RestaurantCard
+              key={restaurant.id}
+              restaurant={restaurant}
+              index={index}
+              onViewRestaurant={handleViewRestaurant}
+            />
+          ))}
+        </Row>
+      </section>
     </Container>
   );
 }

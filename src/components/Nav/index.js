@@ -39,7 +39,6 @@ function Navigation(props) {
       className="foxy-navbar"
       expanded={expanded}
       onToggle={(expanded) => setExpanded(expanded)}
-      fluid
     >
       <Container fluid className="nav-container">
         <Navbar.Brand 

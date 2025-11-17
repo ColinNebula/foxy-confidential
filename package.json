@@ -2,6 +2,13 @@
   "name": "foxy-confidential",
   "version": "0.1.0",
   "private": true,
+  "description": "A modern restaurant discovery and rating platform",
+  "author": "Foxy Confidential Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/foxy-confidential.git"
+  },
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "@testing-library/jest-dom": "^5.16.5",
@@ -18,7 +25,7 @@
     "react-leaflet": "^4.2.1",
     "react-particles": "^2.8.0",
     "react-router-dom": "^6.4.4",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^0.0.0",
     "react-social-icons": "^5.15.0",
     "react-tsparticles": "^2.8.0",
     "styled-components": "^5.3.6",
@@ -33,13 +40,34 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "audit-security": "npm audit --audit-level=moderate",
+    "audit-fix": "npm audit fix",
+    "check-updates": "npm outdated",
+    "clean": "rm -rf node_modules build package-lock.json",
+    "reinstall": "npm run clean && npm install",
+    "security-check": "npm run audit-security && npm run check-env",
+    "check-env": "node -e \"if (!require('fs').existsSync('.env')) { console.error('❌ .env file missing! Copy from .env.example'); process.exit(1); } else { console.log('✅ .env file found'); }\"",
+    "prebuild": "npm run security-check",
+    "postinstall": "npm run check-env || true"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-console": [
+        "warn",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ],
+      "no-debugger": "error"
+    }
   },
   "browserslist": {
     "production": [
@@ -52,5 +80,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }

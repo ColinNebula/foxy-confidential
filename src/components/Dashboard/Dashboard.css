@@ -1,13 +1,20 @@
 /* Dashboard Container */
 .dashboard-container {
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(20, 20, 40, 0.5));
-  backdrop-filter: blur(20px);
-  border-radius: 25px;
+  background: linear-gradient(135deg, 
+    rgba(15, 15, 35, 0.95) 0%, 
+    rgba(30, 30, 60, 0.92) 50%,
+    rgba(20, 20, 45, 0.95) 100%);
+  backdrop-filter: blur(40px);
+  border-radius: 30px;
   min-height: 100vh;
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 100px rgba(102, 126, 234, 0.1);
+  overflow: hidden;
 }
 
 .dashboard-container::before {
@@ -18,27 +25,47 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, rgba(255, 107, 107, 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.15) 0%, transparent 60%);
-  border-radius: 25px;
+    radial-gradient(circle at 15% 25%, rgba(102, 126, 234, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(255, 107, 107, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.18) 0%, transparent 55%),
+    linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  border-radius: 30px;
   pointer-events: none;
   z-index: 0;
   mix-blend-mode: screen;
+  animation: gradientPulse 15s ease infinite;
+}
+
+@keyframes gradientPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.02); }
 }
 
 /* Header */
 .dashboard-header {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
-  border-radius: 20px;
+  background: linear-gradient(135deg, 
+    #667eea 0%, 
+    #764ba2 35%,
+    #f093fb 70%,
+    #f5576c 100%);
+  border-radius: 24px;
   padding: 2.5rem;
   margin-bottom: 2rem;
   color: white;
-  box-shadow: 0 15px 50px rgba(255, 107, 107, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 60px rgba(102, 126, 234, 0.45), 
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   z-index: 1;
+  animation: headerGlow 8s ease infinite;
+}
+
+@keyframes headerGlow {
+  0%, 100% { box-shadow: 0 20px 60px rgba(102, 126, 234, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15); }
+  50% { box-shadow: 0 20px 60px rgba(245, 87, 108, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.2); }
 }
 
 .dashboard-header::before {
@@ -46,11 +73,18 @@
   position: absolute;
   top: -50%;
   right: -50%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg, 
+    transparent, 
+    rgba(255,255,255,0.15), 
+    transparent,
+    rgba(255,255,255,0.08),
+    transparent
+  );
   transform: rotate(45deg);
-  animation: shimmer 3s infinite;
+  animation: shimmer 4s infinite;
 }
 
 @keyframes shimmer {
@@ -99,18 +133,48 @@
 
 /* Filters Card */
 .filters-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 18px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.08) 100%);
+  backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 20px;
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 5px 15px rgba(102, 126, 234, 0.2);
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+}
+
+.filters-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 18px 60px rgba(0, 0, 0, 0.4), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 20px rgba(102, 126, 234, 0.25);
+}
+
+.filters-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
 }
 
 .filters-card .card-body {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  padding: 1.75rem;
 }
 
 .filter-label {
@@ -186,42 +250,216 @@
 }
 
 /* View Toggle */
-.view-toggle {
+.results-summary {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  padding: 1rem 0;
+}
+
+.results-summary .badge {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Modern Split View Layout */
+.map-column {
   position: relative;
   z-index: 1;
 }
 
-.view-toggle .btn {
-  border-radius: 15px;
-  padding: 0.9rem 2rem;
-  font-weight: 700;
-  font-size: 1.05rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.list-column {
+  position: relative;
+  z-index: 1;
 }
 
-.view-toggle .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+.map-container-modern {
+  position: relative;
+  top: 0;
+  height: 500px;
+  min-height: 500px;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.08) 100%);
+  backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 60px rgba(102, 126, 234, 0.2);
+  animation: fadeIn 0.6s ease-out;
+  transition: all 0.5s ease;
 }
 
-.view-toggle .btn-primary {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-  border-color: #ff6b6b;
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+/* Full width map when no results */
+.map-column:has(+ .list-column:empty) .map-container-modern,
+.map-column[class*="col-lg-12"] .map-container-modern {
+  height: 600px;
+  min-height: 600px;
 }
 
-.view-toggle .btn-outline-primary {
+.map-container-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.map-wrapper > div {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.map-info-overlay {
+  position: absolute;
+  bottom: 190px;
+  left: 20px;
+  z-index: 1000;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  max-width: 280px;
+  animation: slideInLeft 0.5s ease-out;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.map-info-overlay:hover {
+  transform: translateX(5px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.map-info-content {
+  position: relative;
+}
+
+.map-info-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.map-info-subtitle {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.restaurant-list-container {
+  height: calc(100vh - 200px);
+  min-height: 700px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(102, 126, 234, 0.5) rgba(255, 255, 255, 0.1);
+}
+
+.restaurant-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.restaurant-list-container::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #fff;
+  border-radius: 10px;
+}
+
+.restaurant-list-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.restaurant-list-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #764ba2, #f093fb);
+}
+
+/* Update restaurant cards for compact list view */
+.restaurant-list-container .restaurant-card {
+  margin-bottom: 1.25rem;
+  min-height: auto;
+  animation: slideInRight 0.4s ease-out;
+  animation-fill-mode: both;
+}
+
+.restaurant-list-container .restaurant-card:nth-child(1) { animation-delay: 0.05s; }
+.restaurant-list-container .restaurant-card:nth-child(2) { animation-delay: 0.1s; }
+.restaurant-list-container .restaurant-card:nth-child(3) { animation-delay: 0.15s; }
+.restaurant-list-container .restaurant-card:nth-child(4) { animation-delay: 0.2s; }
+.restaurant-list-container .restaurant-card:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.restaurant-list-container .restaurant-card-image-container {
+  height: 180px;
+}
+
+.restaurant-list-container .restaurant-card-title {
+  font-size: 1.1rem;
+  min-height: 2.2rem;
+}
+
+.restaurant-list-container .restaurant-card-description {
+  font-size: 0.88rem;
+  min-height: 3.5rem;
+  max-height: 3.5rem;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 /* Map Card */
@@ -369,20 +607,97 @@
 
 /* Restaurant Cards (List View) */
 .restaurant-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.12));
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 18px;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.15) 0%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(25px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 20px;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   height: 100%;
   min-height: 500px;
-  max-width: 100%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  width: 100%;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 0 1px rgba(102, 126, 234, 0.1);
   position: relative;
+}
+
+/* Favorite Button */
+.favorite-button {
+  backdrop-filter: blur(10px);
+  animation: heartBeat 1.5s ease-in-out infinite;
+}
+
+.favorite-button:hover {
+  animation: heartBeatFast 0.6s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  10% { transform: scale(1.05); }
+  20% { transform: scale(1); }
+}
+
+@keyframes heartBeatFast {
+  0%, 100% { transform: scale(1.15); }
+  50% { transform: scale(1.2); }
+}
+
+/* Floating Action Button */
+.floating-add-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  box-shadow: 
+    0 10px 30px rgba(102, 126, 234, 0.5),
+    0 0 20px rgba(102, 126, 234, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  animation: floatPulse 3s ease-in-out infinite;
+}
+
+.floating-add-btn:hover {
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 
+    0 15px 40px rgba(102, 126, 234, 0.6),
+    0 0 30px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.floating-add-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes floatPulse {
+  0%, 100% { 
+    transform: translateY(0) scale(1);
+    box-shadow: 
+      0 10px 30px rgba(102, 126, 234, 0.5),
+      0 0 20px rgba(102, 126, 234, 0.3);
+  }
+  50% { 
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 
+      0 15px 40px rgba(102, 126, 234, 0.6),
+      0 0 30px rgba(102, 126, 234, 0.5);
+  }
 }
 
 .restaurant-card::before {
@@ -392,20 +707,44 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(145deg, transparent, rgba(255, 107, 107, 0.1));
+  background: linear-gradient(145deg, 
+    rgba(102, 126, 234, 0.15), 
+    transparent,
+    rgba(245, 87, 108, 0.12));
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
   z-index: 0;
 }
 
+.restaurant-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: gradientShift 3s ease infinite;
+}
+
 .restaurant-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 50px rgba(255, 107, 107, 0.4), 0 0 0 2px #ff6b6b;
-  border-color: #ff6b6b;
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 
+    0 25px 70px rgba(102, 126, 234, 0.4), 
+    0 0 0 2px rgba(102, 126, 234, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(102, 126, 234, 0.6);
 }
 
 .restaurant-card:hover::before {
+  opacity: 1;
+}
+
+.restaurant-card:hover::after {
   opacity: 1;
 }
 
@@ -413,7 +752,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 220px;
+  height: 260px;
   flex-shrink: 0;
 }
 
@@ -538,14 +877,20 @@
 
 /* Statistics Card */
 .stats-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.08) 100%);
+  backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 60px rgba(102, 126, 234, 0.15);
   position: relative;
   overflow: hidden;
   z-index: 1;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .stats-card-body {
@@ -559,25 +904,44 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), transparent, rgba(0, 210, 211, 0.1));
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.12), 
+    transparent,
+    rgba(245, 87, 108, 0.1));
   pointer-events: none;
+  animation: gradientPulse 10s ease infinite;
+}
+
+.stats-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
 }
 
 .stats-card .card-body {
   position: relative;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 24px;
 }
 
 .stat-item {
   padding: 1.5rem;
-  border-radius: 15px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 16px;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.06) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .stat-item::before {
@@ -587,16 +951,22 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), transparent);
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.25), 
+    rgba(245, 87, 108, 0.15));
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
 }
 
 .stat-item:hover {
-  background: linear-gradient(145deg, rgba(255, 107, 107, 0.2), rgba(255, 255, 255, 0.15));
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
-  border-color: #ff6b6b;
+  background: linear-gradient(145deg, 
+    rgba(102, 126, 234, 0.2) 0%, 
+    rgba(245, 87, 108, 0.15) 100%);
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 
+    0 15px 40px rgba(102, 126, 234, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(102, 126, 234, 0.5);
 }
 
 .stat-item:hover::before {
@@ -631,11 +1001,11 @@
 /* Responsive Design for Extra Large Screens */
 @media (min-width: 1400px) {
   .restaurant-card {
-    min-height: 550px;
+    min-height: 600px;
   }
 
   .restaurant-card-image-container {
-    height: 250px;
+    height: 300px;
   }
 
   .restaurant-card-title {
@@ -650,15 +1020,36 @@
 
 @media (min-width: 1200px) and (max-width: 1399px) {
   .restaurant-card {
-    min-height: 520px;
+    min-height: 560px;
   }
 
   .restaurant-card-image-container {
-    height: 240px;
+    height: 280px;
   }
 }
 
 /* Responsive Design */
+@media (max-width: 991px) {
+  /* Stack map and list on tablets and smaller */
+  .map-container-modern {
+    position: relative;
+    top: 0;
+    height: 500px;
+    min-height: 500px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .restaurant-list-container {
+    height: auto;
+    min-height: auto;
+    overflow-y: visible;
+  }
+  
+  .list-column {
+    margin-top: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 1rem 0.5rem;
@@ -684,6 +1075,27 @@
 
   .filters-card .card-body {
     padding: 1rem;
+  }
+  
+  .map-container-modern {
+    height: 400px;
+    min-height: 400px;
+    border-radius: 18px;
+  }
+  
+  .map-info-overlay {
+    padding: 0.75rem 1rem;
+    max-width: 240px;
+    bottom: 180px;
+    left: 15px;
+  }
+  
+  .map-info-title {
+    font-size: 0.9rem;
+  }
+  
+  .map-info-subtitle {
+    font-size: 0.75rem;
   }
 
   .stat-number {
@@ -726,18 +1138,14 @@
     padding: 0.35rem 0.7rem;
   }
 
-  .view-toggle {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .view-toggle .btn {
-    width: 100%;
-    padding: 0.75rem 1.5rem;
-  }
-
   .map-loading {
     height: 400px;
+  }
+  
+  .results-summary {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start !important;
   }
 }
 
@@ -821,6 +1229,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
   }
 }
 

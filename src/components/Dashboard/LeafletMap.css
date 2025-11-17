@@ -1,55 +1,37 @@
 /* Leaflet Map Styling Overrides */
 
-/* Zoom controls styling */
-.leaflet-control-zoom {
-  border: none !important;
-  border-radius: 8px !important;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  margin: 10px !important;
+/* Slide in animation for search and legend */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.leaflet-control-zoom a {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border: none !important;
-  color: #333 !important;
-  font-size: 18px !important;
-  font-weight: bold;
-  transition: all 0.3s ease;
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.leaflet-control-zoom a:hover {
-  background-color: #ff6b6b !important;
-  color: white !important;
+/* Ensure map is fully interactive */
+.leaflet-container {
+  animation: fadeIn 0.5s ease-in-out;
+  cursor: grab !important;
+  font-family: inherit !important;
 }
 
-/* Attribution styling */
-.leaflet-control-attribution {
-  background: rgba(255, 255, 255, 0.8) !important;
-  font-size: 10px !important;
-  border-radius: 4px !important;
-  padding: 2px 5px !important;
-  margin: 0 !important;
-}
-
-/* Custom popup styling to match app theme */
-.leaflet-popup-content-wrapper {
-  border-radius: 12px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
-}
-
-.leaflet-popup-content {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Marker animation */
-.leaflet-marker-icon {
-  transition: transform 0.3s ease;
-}
-
-.leaflet-marker-icon:hover {
-  transform: scale(1.1);
+.leaflet-container:active {
+  cursor: grabbing !important;
 }
 
 /* Fix z-index for proper layering */
@@ -82,85 +64,159 @@
 }
 
 .leaflet-control {
-  z-index: 800;
+  z-index: 800 !important;
 }
 
-/* Fix z-index for Leaflet pane */
-.leaflet-pane {
-  z-index: 400;
+/* Make sure controls are clickable */
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+  pointer-events: auto !important;
 }
 
-.leaflet-tile-pane {
-  z-index: 200;
-}
-
-.leaflet-overlay-pane {
-  z-index: 400;
-}
-
-.leaflet-shadow-pane {
-  z-index: 500;
-}
-
-.leaflet-marker-pane {
-  z-index: 600;
-}
-
-.leaflet-tooltip-pane {
-  z-index: 650;
-}
-
-.leaflet-popup-pane {
-  z-index: 700;
-}
-
-/* Custom popup styling to match app theme */
-.leaflet-popup-content-wrapper {
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-.leaflet-popup-content {
-  margin: 0;
-  padding: 0;
+/* Ensure map tiles load properly */
+.leaflet-tile-container {
+  pointer-events: none;
 }
 
 /* Zoom controls styling */
 .leaflet-control-zoom {
   border: none !important;
-  border-radius: 8px !important;
+  border-radius: 12px !important;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  margin: 16px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  animation: slideInRight 0.3s ease;
 }
 
 .leaflet-control-zoom a {
-  background-color: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   border: none !important;
-  color: #333 !important;
-  font-size: 18px !important;
+  color: #667eea !important;
+  font-size: 20px !important;
   font-weight: bold;
-  transition: all 0.3s ease;
+  width: 40px !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer !important;
 }
 
 .leaflet-control-zoom a:hover {
-  background-color: #ff6b6b !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
   color: white !important;
+  transform: scale(1.05);
+}
+
+.leaflet-control-zoom a:active {
+  transform: scale(0.95);
+}
+
+.leaflet-disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
 }
 
 /* Attribution styling */
 .leaflet-control-attribution {
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
   font-size: 10px !important;
-  border-radius: 4px;
-  padding: 2px 5px;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+  margin: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(10px);
 }
 
-/* Marker animation */
+/* Marker animation with pulse effect */
 .leaflet-marker-icon {
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: markerPulse 2s infinite;
+  cursor: pointer !important;
+}
+
+@keyframes markerPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .leaflet-marker-icon:hover {
-  transform: scale(1.1);
+  transform: scale(1.2) !important;
   z-index: 1000 !important;
+  filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.5));
+  animation: none;
+}
+
+/* Custom popup styling to match app theme */
+.leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25) !important;
+  border: 2px solid rgba(102, 126, 234, 0.2) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  padding: 16px !important;
+  font-family: inherit !important;
+}
+
+.leaflet-popup-tip {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+}
+
+.leaflet-popup-close-button {
+  color: #667eea !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  padding: 8px !important;
+  width: 30px !important;
+  height: 30px !important;
+  transition: all 0.2s ease;
+}
+
+.leaflet-popup-close-button:hover {
+  color: #764ba2 !important;
+  transform: scale(1.1);
+}
+
+/* Map container animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Tile layer fade in */
+.leaflet-tile {
+  transition: opacity 0.3s ease-in-out !important;
+}
+
+/* Fix for touch devices */
+.leaflet-touch .leaflet-control-zoom {
+  margin: 12px !important;
+}
+
+.leaflet-touch .leaflet-control-zoom a {
+  width: 44px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+}
+
+/* Ensure dragging works smoothly */
+.leaflet-dragging .leaflet-container {
+  cursor: grabbing !important;
+}
+
+/* Loading tiles indicator */
+.leaflet-tile-container.leaflet-zoom-animated {
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }

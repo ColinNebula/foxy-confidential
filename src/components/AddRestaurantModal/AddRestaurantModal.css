@@ -1,0 +1,112 @@
+.add-restaurant-modal .modal-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.add-restaurant-modal .modal-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px 20px 0 0;
+}
+
+.add-restaurant-modal .modal-title {
+  color: white;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.add-restaurant-modal .modal-body {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+}
+
+.add-restaurant-modal .modal-footer {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0 0 20px 20px;
+  padding: 1.5rem 2rem;
+}
+
+.add-restaurant-modal .form-label {
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.add-restaurant-modal .form-control,
+.add-restaurant-modal .form-select {
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.add-restaurant-modal .form-control:focus,
+.add-restaurant-modal .form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.price-range-display {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.price-range-display svg {
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.price-range-display svg.active {
+  color: #28a745;
+}
+
+.price-range-display svg.inactive {
+  color: #e0e0e0;
+}
+
+.location-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+}
+
+.location-section .form-check-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.add-restaurant-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.add-restaurant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.add-restaurant-modal .btn-secondary {
+  border-radius: 10px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+}
+
+.add-restaurant-modal .close {
+  color: white;
+  opacity: 0.8;
+}
+
+.add-restaurant-modal .close:hover {
+  color: white;
+  opacity: 1;
+}

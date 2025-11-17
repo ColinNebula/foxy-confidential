@@ -444,7 +444,8 @@
   margin-top: 0.5rem;
   padding: 0.5rem 0;
   min-width: 180px;
-  z-index: 1050;
+  z-index: 9999 !important;
+  position: absolute !important;
   animation: dropdownSlide 0.2s ease-out;
 }
 

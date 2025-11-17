@@ -1,15 +1,21 @@
-# Foxy Confidential - Restaurant Discovery Platform
+# Foxy Confidential - Restaurant Discovery Platform 🦊
 
-A modern, full-featured restaurant discovery and review platform with interactive maps, advanced filtering, and comprehensive review system.
+> A modern, secure, and full-featured restaurant discovery and review platform with interactive maps, advanced filtering, and comprehensive review system.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18.2.0-61dafb.svg)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-16+-339933.svg)](https://nodejs.org/)
+[![Security](https://img.shields.io/badge/Security-Hardened-success.svg)](./SECURITY.md)
 
 ## 🌟 Features
 
 ### 🗺️ Interactive Dashboard
-- **Google Maps Integration** - Real-time map with custom markers and clustering
-- **Location-Based Search** - Automatic user location detection
+- **Interactive Maps** - Enhanced Leaflet maps with search, legend, and multiple map styles
+- **Location-Based Search** - Automatic GPS detection with accuracy radius
 - **Advanced Filtering** - Filter by cuisine, rating, price range, and distance radius
 - **Dual View Modes** - Toggle between interactive map and grid list views
 - **Live Statistics** - Real-time metrics on restaurants, cuisines, and ratings
+- **Collapsible Info Overlay** - Clean map interface with toggleable information
 
 ### ⭐ Enhanced Reviews System
 - **Comprehensive Reviews** - Multi-category rating system (food, taste, ambiance, creativity, uniqueness)
@@ -25,21 +31,32 @@ A modern, full-featured restaurant discovery and review platform with interactiv
 - **Responsive Layout** - Perfect on desktop, tablet, and mobile
 - **Dark Theme** - Eye-friendly dark interface with vibrant accents
 - **Interactive Elements** - Engaging buttons, cards, and controls
+- **PWA Ready** - Progressive Web App with offline support
 
-### 🔐 Backend Integration (MySQL)
+### 🔐 Security Features
+- **Environment Variables** - All secrets stored securely in `.env` files
+- **Input Validation** - Express Validator for backend security
+- **JWT Authentication** - Secure token-based authentication
+- **Rate Limiting** - Protection against DDoS and brute force
+- **Security Headers** - Helmet.js for comprehensive security headers
+- **SQL Injection Protection** - Parameterized queries throughout
+- **XSS Prevention** - Input sanitization and output escaping
+- **Pre-commit Hooks** - Automatic security checks before commits
+
+### 🔧 Backend Integration (MySQL)
 - **RESTful API** - Complete Express.js backend
-- **JWT Authentication** - Secure user authentication
 - **MySQL Database** - Robust data storage with optimized schema
 - **User Management** - Registration, login, and profile management
 - **Admin Features** - Restaurant and review management
+- **Connection Pooling** - Optimized database performance
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- MySQL database (for backend features)
-- Google Maps API key
+- Node.js 16+ and npm 8+
+- MySQL 8.x or higher (for backend features)
+- Google Maps API key (optional, for production)
+- Git
 
 ### Installation
 
@@ -51,32 +68,97 @@ cd foxy-confidential
 
 2. **Install dependencies**
 ```bash
+# Frontend dependencies
 npm install
-```
 
-3. **Set up Google Maps API**
-   - Visit [Google Cloud Console](https://console.cloud.google.com/google/maps-apis)
-   - Create a new project or select existing
-   - Enable "Maps JavaScript API" and "Geocoding API"
-   - Create an API key
-   - Copy `.env.example` to `.env`
-   - Add your API key: `REACT_APP_GOOGLE_MAPS_API_KEY=your_key_here`
-
-4. **Set up MySQL Database (Optional)**
-```bash
+# Backend dependencies
 cd server
 npm install
-# Configure database connection in server/.env
-# Run database.sql to create tables
-node server.js
+cd ..
 ```
 
-5. **Start the application**
+3. **Configure Environment Variables**
+```bash
+# Copy environment templates
+cp .env.example .env
+cp server/.env.example server/.env
+
+# Edit .env files with your configuration
+# IMPORTANT: Never commit .env files to Git!
+```
+
+**Required Environment Variables:**
+- `REACT_APP_GOOGLE_MAPS_API_KEY` - Get from [Google Cloud Console](https://console.cloud.google.com/)
+- `REACT_APP_API_URL` - Backend API URL (default: http://localhost:5000/api)
+- `JWT_SECRET` - Generate: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`
+- `DB_PASSWORD` - Your MySQL root password
+
+4. **Set up Database**
+```bash
+# Create MySQL database
+mysql -u root -p
+
+CREATE DATABASE foxy_confidential;
+exit;
+
+# Import schema
+cd server
+mysql -u root -p foxy_confidential < config/database.sql
+```
+
+5. **Run Security Audit**
+```bash
+# Unix/Linux/Mac
+chmod +x security-audit.sh
+./security-audit.sh
+
+# Windows PowerShell
+.\security-audit.ps1
+```
+
+6. **Start Development Servers**
+
+**Terminal 1 - Frontend:**
 ```bash
 npm start
+# Opens http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Terminal 2 - Backend:**
+```bash
+cd server
+npm run dev
+# Runs on http://localhost:5000
+```
+
+## 🔐 Security
+
+This project implements comprehensive security measures:
+
+- ✅ **Environment Variables** - All secrets in `.env` files
+- ✅ **Git Ignore** - Sensitive files excluded from Git
+- ✅ **Pre-commit Hooks** - Automatic security scans
+- ✅ **Dependency Audits** - Regular vulnerability checks
+- ✅ **Input Validation** - All user inputs sanitized
+- ✅ **Rate Limiting** - DDoS and brute force protection
+- ✅ **Security Headers** - Helmet.js configuration
+- ✅ **JWT Tokens** - Secure authentication
+- ✅ **Password Hashing** - Bcrypt with salt rounds
+- ✅ **SQL Protection** - Parameterized queries only
+
+**Read more:** [SECURITY.md](./SECURITY.md) | [Security Checklist](./SECURITY_CHECKLIST.md)
+
+### Quick Security Check
+```bash
+# Run comprehensive security audit
+npm run security-check
+
+# Audit dependencies
+npm audit
+
+# Check for outdated packages
+npm outdated
+```
 
 ## 📱 Pages & Features
 

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Modal, Row, Col, Badge, Alert, Dropdown } from 'react-bootstrap';
-import { FaStar, FaUser, FaCalendarAlt, FaThumbsUp, FaThumbsDown, FaFlag, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
-import StarRating from '../StarRating';
+import { FaUser, FaCalendarAlt, FaThumbsUp, FaThumbsDown, FaFlag, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import './Reviews.css';
 
-const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, onDeleteReview }) => {
-  const [showReviewForm, setShowReviewForm] = useState(false);
+const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, onDeleteReview, autoShowForm = false, inlineForm = false }) => {
+  console.log('🎬 [Reviews] Component mounted/updated with:', { 
+    restaurant: restaurant?.name, 
+    autoShowForm, 
+    inlineForm,
+    userReviewsCount: userReviews.length 
+  });
+  
+  const [showReviewForm, setShowReviewForm] = useState(autoShowForm);
   const [editingReview, setEditingReview] = useState(null);
   const [sortBy, setSortBy] = useState('newest');
   const [filterBy, setFilterBy] = useState('all');
@@ -59,6 +65,21 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
     creativity: 'Creativity',
     uniqueness: 'Uniqueness'
   };
+
+  // Effect to ensure form shows when autoShowForm is true
+  useEffect(() => {
+    console.log('📋 [Reviews] autoShowForm changed to:', autoShowForm);
+    if (autoShowForm) {
+      console.log('✅ [Reviews] Setting showReviewForm to true');
+      setShowReviewForm(true);
+    }
+  }, [autoShowForm]);
+
+  // Log when showReviewForm state changes
+  useEffect(() => {
+    console.log('📝 [Reviews] showReviewForm state:', showReviewForm);
+    console.log('📝 [Reviews] inlineForm mode:', inlineForm);
+  }, [showReviewForm, inlineForm]);
 
   const handleRatingChange = (category, rating) => {
     setNewReview(prev => ({
@@ -370,26 +391,39 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                     : 'N/A'
                   }
                 </div>
-                <StarRating 
-                  rating={userReviews.length > 0 
-                    ? userReviews.reduce((sum, r) => sum + r.overallRating, 0) / userReviews.length
-                    : 0
-                  } 
-                  size="large" 
-                  color="primary"
-                />
+                <div className="d-flex align-items-center gap-1">
+                  {[1, 2, 3, 4, 5].map(tail => {
+                    const avgRating = userReviews.length > 0 
+                      ? userReviews.reduce((sum, r) => sum + r.overallRating, 0) / userReviews.length
+                      : 0;
+                    return (
+                      <img 
+                        key={tail}
+                        src={process.env.PUBLIC_URL + '/foxy-tail.png'} 
+                        alt="rating" 
+                        style={{ 
+                          width: '28px', 
+                          height: '28px',
+                          opacity: tail <= Math.round(avgRating) ? 1 : 0.3
+                        }} 
+                      />
+                    );
+                  })}
+                </div>
                 <div className="total-reviews">{userReviews.length} reviews</div>
               </div>
             </Col>
             <Col md={6}>
               <div className="rating-distribution">
-                {[5, 4, 3, 2, 1].map(stars => {
-                  const count = userReviews.filter(r => Math.floor(r.overallRating) === stars).length;
+                {[5, 4, 3, 2, 1].map(tails => {
+                  const count = userReviews.filter(r => Math.floor(r.overallRating) === tails).length;
                   const percentage = userReviews.length > 0 ? (count / userReviews.length) * 100 : 0;
                   
                   return (
-                    <div key={stars} className="rating-bar">
-                      <span className="stars">{stars} ★</span>
+                    <div key={tails} className="rating-bar">
+                      <span className="stars">
+                        {tails} <img src={process.env.PUBLIC_URL + '/foxy-tail.png'} alt="tail" style={{ width: '14px', height: '14px', marginLeft: '2px' }} />
+                      </span>
                       <div className="progress-container">
                         <div 
                           className="progress-fill" 
@@ -574,9 +608,17 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
               <div className="stat-label">Average Rating</div>
               <div className="stat-stars">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className={`star ${i < Math.round(reviewStats.averageRating) ? 'filled' : ''}`}>
-                    ⭐
-                  </span>
+                  <img 
+                    key={i}
+                    src={process.env.PUBLIC_URL + '/foxy-tail.png'} 
+                    alt="tail" 
+                    style={{ 
+                      width: '16px', 
+                      height: '16px',
+                      opacity: i < Math.round(reviewStats.averageRating) ? 1 : 0.3,
+                      marginRight: '2px'
+                    }} 
+                  />
                 ))}
               </div>
             </div>
@@ -611,7 +653,9 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                 const percentage = reviewStats.totalReviews > 0 ? (count / reviewStats.totalReviews) * 100 : 0;
                 return (
                   <div key={rating} className="rating-bar-container">
-                    <span className="rating-label">{rating} ⭐</span>
+                    <span className="rating-label">
+                      {rating} <img src={process.env.PUBLIC_URL + '/foxy-tail.png'} alt="tail" style={{ width: '14px', height: '14px', marginLeft: '2px' }} />
+                    </span>
                     <div className="rating-bar">
                       <div 
                         className="rating-bar-fill" 
@@ -666,12 +710,21 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                     </div>
                   </div>
                   <div className="review-rating">
-                    <StarRating 
-                      rating={review.overallRating} 
-                      size="medium" 
-                      color="primary"
-                      showValue={true}
-                    />
+                    <div className="d-flex align-items-center gap-1">
+                      <span className="fw-bold me-2">{review.overallRating.toFixed(1)}</span>
+                      {[1, 2, 3, 4, 5].map(tail => (
+                        <img 
+                          key={tail}
+                          src={process.env.PUBLIC_URL + '/foxy-tail.png'} 
+                          alt="rating" 
+                          style={{ 
+                            width: '18px', 
+                            height: '18px',
+                            opacity: tail <= Math.round(review.overallRating) ? 1 : 0.3
+                          }} 
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -709,11 +762,24 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                     <div className="service-ratings mt-3">
                       <h6 className="service-title">Service Quality</h6>
                       <Row className="g-2">
-                        {Object.entries(review.serviceRatings).map(([service, rating]) => (
+                        {Object.entries(review.serviceRatings).filter(([service, rating]) => rating > 0).map(([service, rating]) => (
                           <Col xs={6} md={4} key={service}>
                             <div className="service-rating-item">
                               <span className="service-name">{service.replace(/([A-Z])/g, ' $1').trim()}</span>
-                              <StarRating rating={rating} size="mini" color="accent" />
+                              <div className="d-flex align-items-center gap-1">
+                                {[1, 2, 3, 4, 5].map(tail => (
+                                  <img 
+                                    key={tail}
+                                    src={process.env.PUBLIC_URL + '/foxy-tail.png'} 
+                                    alt="rating" 
+                                    style={{ 
+                                      width: '12px', 
+                                      height: '12px',
+                                      opacity: tail <= rating ? 1 : 0.3
+                                    }} 
+                                  />
+                                ))}
+                              </div>
                             </div>
                           </Col>
                         ))}
@@ -768,7 +834,20 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                         <Col xs={6} md={4} lg={2} key={category} className="mb-2">
                           <div className="category-rating-small">
                             <div className="category-label">{categoryLabels[category]}</div>
-                            <StarRating rating={rating} size="small" color="secondary" />
+                            <div className="d-flex align-items-center gap-1">
+                              {[1, 2, 3, 4, 5].map(tail => (
+                                <img 
+                                  key={tail}
+                                  src={process.env.PUBLIC_URL + '/foxy-tail.png'} 
+                                  alt="rating" 
+                                  style={{ 
+                                    width: '12px', 
+                                    height: '12px',
+                                    opacity: tail <= rating ? 1 : 0.3
+                                  }} 
+                                />
+                              ))}
+                            </div>
                           </div>
                         </Col>
                       ))}
@@ -845,19 +924,10 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
         )}
       </div>
 
-      {/* Review Form Modal */}
-      <Modal 
-        show={showReviewForm} 
-        onHide={resetForm}
-        size="lg"
-        className="review-form-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {editingReview ? 'Edit Review' : 'Write a Review'} - {restaurant?.name}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      {/* Review Form - Conditional Rendering */}
+      {inlineForm && autoShowForm ? (
+        // Render form inline without modal when in App.js modal
+        <div className="review-form-inline p-4">
           {formErrors.submit && (
             <Alert variant="danger" className="mb-3">
               {formErrors.submit}
@@ -948,11 +1018,23 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                   <div className="d-flex justify-content-between align-items-center">
                     <Form.Label className="mb-0">{label}</Form.Label>
                     <div className="rating-stars">
-                      {[1, 2, 3, 4, 5].map(star => (
-                        <FaStar
-                          key={star}
-                          className={`rating-star ${star <= newReview.ratings[category] ? 'active' : ''}`}
-                          onClick={() => handleRatingChange(category, star)}
+                      {[1, 2, 3, 4, 5].map(tail => (
+                        <img
+                          key={tail}
+                          src={process.env.PUBLIC_URL + '/foxy-tail.png'}
+                          alt="rating"
+                          className={`rating-tail ${tail <= newReview.ratings[category] ? 'active' : ''}`}
+                          onClick={() => handleRatingChange(category, tail)}
+                          style={{
+                            width: '24px',
+                            height: '24px',
+                            cursor: 'pointer',
+                            opacity: tail <= newReview.ratings[category] ? 1 : 0.3,
+                            transition: 'all 0.2s ease',
+                            marginRight: '4px'
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                         />
                       ))}
                     </div>
@@ -1012,17 +1094,29 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
                       <div className="d-flex justify-content-between align-items-center">
                         <Form.Label className="mb-0">{label}</Form.Label>
                         <div className="rating-stars">
-                          {[1, 2, 3, 4, 5].map(star => (
-                            <FaStar
-                              key={star}
-                              className={`star ${star <= (newReview.serviceRatings[service] || 0) ? 'filled' : ''}`}
+                          {[1, 2, 3, 4, 5].map(tail => (
+                            <img
+                              key={tail}
+                              src={process.env.PUBLIC_URL + '/foxy-tail.png'}
+                              alt="rating"
+                              className={`tail ${tail <= ((newReview.serviceRatings && newReview.serviceRatings[service]) || 0) ? 'filled' : ''}`}
                               onClick={() => setNewReview(prev => ({
                                 ...prev,
                                 serviceRatings: {
-                                  ...prev.serviceRatings,
-                                  [service]: star
+                                  ...(prev.serviceRatings || {}),
+                                  [service]: tail
                                 }
                               }))}
+                              style={{
+                                width: '20px',
+                                height: '20px',
+                                cursor: 'pointer',
+                                opacity: tail <= ((newReview.serviceRatings && newReview.serviceRatings[service]) || 0) ? 1 : 0.3,
+                                transition: 'all 0.2s ease',
+                                marginRight: '4px'
+                              }}
+                              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                             />
                           ))}
                         </div>
@@ -1058,8 +1152,249 @@ const Reviews = ({ restaurant, userReviews = [], onAddReview, onUpdateReview, on
               </Button>
             </div>
           </Form>
-        </Modal.Body>
-      </Modal>
+        </div>
+      ) : (
+        // Render form in modal when not inline
+        <Modal 
+          show={showReviewForm} 
+          onHide={resetForm}
+          size="lg"
+          className="review-form-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {editingReview ? 'Edit Review' : 'Write a Review'} - {restaurant?.name}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {formErrors.submit && (
+              <Alert variant="danger" className="mb-3">
+                {formErrors.submit}
+              </Alert>
+            )}
+            
+            <Form onSubmit={handleSubmitReview}>
+              {/* Same form content as above - this will be the existing modal form */}
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Your Name *</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={newReview.userName}
+                      onChange={(e) => setNewReview(prev => ({ ...prev, userName: e.target.value }))}
+                      isInvalid={!!formErrors.userName}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.userName}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Visit Date</Form.Label>
+                    <Form.Control
+                      type="date"
+                      value={newReview.visitDate}
+                      onChange={(e) => setNewReview(prev => ({ ...prev, visitDate: e.target.value }))}
+                      isInvalid={!!formErrors.visitDate}
+                      max={new Date().toISOString().split('T')[0]}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.visitDate}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Review Title *</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Summarize your experience (min 10 characters)"
+                  value={newReview.title}
+                  onChange={(e) => setNewReview(prev => ({ ...prev, title: e.target.value }))}
+                  isInvalid={!!formErrors.title}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.title}
+                </Form.Control.Feedback>
+                <Form.Text className="text-muted">
+                  {newReview.title.length}/100 characters
+                </Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-4">
+                <Form.Label>Your Review *</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  placeholder="Share your detailed experience (min 50 characters)..."
+                  value={newReview.content}
+                  onChange={(e) => setNewReview(prev => ({ ...prev, content: e.target.value }))}
+                  isInvalid={!!formErrors.content}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.content}
+                </Form.Control.Feedback>
+                <Form.Text className="text-muted">
+                  {newReview.content.length}/1000 characters (minimum 50)
+                </Form.Text>
+              </Form.Group>
+
+              {/* Rating Categories */}
+              <div className={`rating-section mb-4 ${formErrors.ratings ? 'border-danger' : ''}`}>
+                <h6>Rate Your Experience *</h6>
+                {formErrors.ratings && (
+                  <div className="text-danger mb-2 small">
+                    {formErrors.ratings}
+                  </div>
+                )}
+                {Object.entries(categoryLabels).map(([category, label]) => (
+                  <div key={category} className="rating-input mb-3">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Form.Label className="mb-0">{label}</Form.Label>
+                      <div className="rating-stars">
+                        {[1, 2, 3, 4, 5].map(tail => (
+                          <img
+                            key={tail}
+                            src={process.env.PUBLIC_URL + '/foxy-tail.png'}
+                            alt="rating"
+                            className={`rating-tail ${tail <= newReview.ratings[category] ? 'active' : ''}`}
+                            onClick={() => handleRatingChange(category, tail)}
+                            style={{
+                              width: '24px',
+                              height: '24px',
+                              cursor: 'pointer',
+                              opacity: tail <= newReview.ratings[category] ? 1 : 0.3,
+                              transition: 'all 0.2s ease',
+                              marginRight: '4px'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Additional Details Section */}
+              <div className="additional-details-section mb-4">
+                <h6 className="section-title">Additional Details</h6>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Dishes Tried</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="e.g., Pizza Margherita, Caesar Salad"
+                        value={newReview.dishes}
+                        onChange={(e) => setNewReview(prev => ({ ...prev, dishes: e.target.value }))}
+                      />
+                      <Form.Text className="text-muted">
+                        Separate multiple dishes with commas
+                      </Form.Text>
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Price Range</Form.Label>
+                      <Form.Select
+                        value={newReview.priceRange}
+                        onChange={(e) => setNewReview(prev => ({ ...prev, priceRange: e.target.value }))}
+                      >
+                        <option value="">Select price range</option>
+                        <option value="$">$ - Budget (Under $15)</option>
+                        <option value="$$">$$ - Moderate ($15-30)</option>
+                        <option value="$$$">$$$ - Expensive ($30-50)</option>
+                        <option value="$$$$">$$$$ - Very Expensive ($50+)</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+
+              {/* Service Ratings Section */}
+              <div className="service-ratings-section mb-4">
+                <h6 className="section-title">Service Quality (Optional)</h6>
+                <Row>
+                  {Object.entries({
+                    speed: 'Service Speed',
+                    friendliness: 'Staff Friendliness',
+                    knowledge: 'Staff Knowledge',
+                    attentiveness: 'Attentiveness'
+                  }).map(([service, label]) => (
+                    <Col md={6} key={service} className="mb-3">
+                      <div className="service-rating-input">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <Form.Label className="mb-0">{label}</Form.Label>
+                          <div className="rating-stars">
+                            {[1, 2, 3, 4, 5].map(tail => (
+                              <img
+                                key={tail}
+                                src={process.env.PUBLIC_URL + '/foxy-tail.png'}
+                                alt="rating"
+                                className={`tail ${tail <= ((newReview.serviceRatings && newReview.serviceRatings[service]) || 0) ? 'filled' : ''}`}
+                                onClick={() => setNewReview(prev => ({
+                                  ...prev,
+                                  serviceRatings: {
+                                    ...(prev.serviceRatings || {}),
+                                    [service]: tail
+                                  }
+                                }))}
+                                style={{
+                                  width: '20px',
+                                  height: '20px',
+                                  cursor: 'pointer',
+                                  opacity: tail <= ((newReview.serviceRatings && newReview.serviceRatings[service]) || 0) ? 1 : 0.3,
+                                  transition: 'all 0.2s ease',
+                                  marginRight: '4px'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+
+              <Form.Group className="mb-3">
+                <Form.Check
+                  type="checkbox"
+                  label="I would recommend this restaurant"
+                  checked={newReview.wouldRecommend}
+                  onChange={(e) => setNewReview(prev => ({ ...prev, wouldRecommend: e.target.checked }))}
+                />
+              </Form.Group>
+
+              <div className="d-flex justify-content-end gap-2">
+                <Button variant="secondary" onClick={resetForm} disabled={isSubmitting}>
+                  Cancel
+                </Button>
+                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      {editingReview ? 'Updating...' : 'Submitting...'}
+                    </>
+                  ) : (
+                    editingReview ? 'Update Review' : 'Submit Review'
+                  )}
+                </Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      )}
 
       {/* Image Modal */}
       <Modal 

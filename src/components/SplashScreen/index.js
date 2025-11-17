@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, ProgressBar } from 'react-bootstrap';
-import { FaUtensils, FaStar, FaHeart } from 'react-icons/fa';
+import { FaUtensils, FaHeart } from 'react-icons/fa';
 import FoxyLogo from '../FoxyLogo';
 import './SplashScreen.css';
 
@@ -80,7 +80,7 @@ const SplashScreen = ({ onLoadComplete }) => {
                 animationDuration: `${3 + Math.random() * 2}s`
               }}
             >
-              <FaStar />
+              <img src={process.env.PUBLIC_URL + '/foxy-tail.png'} alt="foxy tail" style={{ width: '24px', height: '24px' }} />
             </div>
           ))}
         </div>
@@ -108,7 +108,7 @@ const SplashScreen = ({ onLoadComplete }) => {
               <span>Quality Food</span>
             </div>
             <div className="feature-icon" style={{ animationDelay: '0.4s' }}>
-              <FaStar />
+              <img src={process.env.PUBLIC_URL + '/foxy-tail.png'} alt="rating" style={{ width: '32px', height: '32px' }} />
               <span>Expert Reviews</span>
             </div>
             <div className="feature-icon" style={{ animationDelay: '0.6s' }}>
@@ -141,25 +141,31 @@ const SplashScreen = ({ onLoadComplete }) => {
               <div className="preview-info">
                 <div className="preview-name">Le Bernardin</div>
                 <div className="preview-rating">
-                  <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                  {[1,2,3,4,5].map(i => (
+                    <img key={i} src={process.env.PUBLIC_URL + '/foxy-tail.png'} alt="tail" style={{ width: '16px', height: '16px', marginRight: '2px' }} />
+                  ))}
                 </div>
               </div>
             </div>
-            <div className="preview-card" style={{ animationDelay: '1.3s' }}>
+            <div className="preview-card" style={{ animationDelay: '1.2s' }}>
               <div className="preview-image"></div>
               <div className="preview-info">
-                <div className="preview-name">Momofuku</div>
+                <div className="preview-name">Eleven Madison Park</div>
                 <div className="preview-rating">
-                  <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                  {[1,2,3,4,5].map(i => (
+                    <img key={i} src={process.env.PUBLIC_URL + '/foxy-tail.png'} alt="tail" style={{ width: '16px', height: '16px', marginRight: '2px' }} />
+                  ))}
                 </div>
               </div>
             </div>
             <div className="preview-card" style={{ animationDelay: '1.6s' }}>
               <div className="preview-image"></div>
               <div className="preview-info">
-                <div className="preview-name">Peter Luger</div>
+                <div className="preview-name">Per Se</div>
                 <div className="preview-rating">
-                  <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
+                  {[1,2,3,4,5].map(i => (
+                    <img key={i} src={process.env.PUBLIC_URL + '/foxy-tail.png'} alt="tail" style={{ width: '16px', height: '16px', marginRight: '2px' }} />
+                  ))}
                 </div>
               </div>
             </div>
