@@ -2,60 +2,132 @@
 
 > A modern, secure, and full-featured restaurant discovery and review platform with interactive maps, advanced filtering, and comprehensive review system.
 
+**Created by Developer Colin Nebula for [Nebula 3D Development](https://github.com/ColinNebula)**
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-18.2.0-61dafb.svg)](https://reactjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-16+-339933.svg)](https://nodejs.org/)
 [![Security](https://img.shields.io/badge/Security-Hardened-success.svg)](./SECURITY.md)
 
-## 🌟 Features
+## 💡 What is Foxy Confidential?
 
-### 🗺️ Interactive Dashboard
-- **Interactive Maps** - Enhanced Leaflet maps with search, legend, and multiple map styles
-- **Location-Based Search** - Automatic GPS detection with accuracy radius
-- **Advanced Filtering** - Filter by cuisine, rating, price range, and distance radius
-- **Dual View Modes** - Toggle between interactive map and grid list views
-- **Live Statistics** - Real-time metrics on restaurants, cuisines, and ratings
-- **Collapsible Info Overlay** - Clean map interface with toggleable information
+Foxy Confidential is a **user-centric restaurant discovery platform** that helps food enthusiasts find, review, and share their dining experiences. Whether you're exploring new cuisines in your neighborhood or planning your next culinary adventure, Foxy Confidential provides all the tools you need in one beautiful, intuitive interface.
 
-### ⭐ Enhanced Reviews System
-- **Comprehensive Reviews** - Multi-category rating system (food, taste, ambiance, creativity, uniqueness)
-- **Service Ratings** - Rate speed, friendliness, knowledge, and attentiveness
-- **Image Gallery** - Upload and view multiple review photos
-- **Advanced Filters** - Filter by rating ranges, date periods, verified status
-- **Statistics Dashboard** - Visual rating distribution and review analytics
-- **Search & Sort** - Powerful search with multiple sorting options
+### Why Foxy Confidential?
 
-### 🎨 Modern UI/UX
-- **Glassmorphism Design** - Beautiful frosted glass effects throughout
-- **Smooth Animations** - Fluid transitions and hover effects
-- **Responsive Layout** - Perfect on desktop, tablet, and mobile
-- **Dark Theme** - Eye-friendly dark interface with vibrant accents
-- **Interactive Elements** - Engaging buttons, cards, and controls
-- **PWA Ready** - Progressive Web App with offline support
+🎯 **For Diners:**
+- Discover hidden gems and popular restaurants near you
+- Read authentic reviews from real food lovers
+- Make informed decisions with detailed ratings across multiple categories
+- Save your favorite places and track your dining journey
+- Share your experiences with photos and comprehensive reviews
 
-### 🔐 Security Features
-- **Environment Variables** - All secrets stored securely in `.env` files
-- **Input Validation** - Express Validator for backend security
-- **JWT Authentication** - Secure token-based authentication
-- **Rate Limiting** - Protection against DDoS and brute force
-- **Security Headers** - Helmet.js for comprehensive security headers
-- **SQL Injection Protection** - Parameterized queries throughout
+🏪 **For Restaurant Enthusiasts:**
+- Build your personal restaurant collection
+- Track where you've been and rate your experiences
+- Compare restaurants side-by-side
+- Get personalized recommendations based on your preferences
+
+📊 **For Data-Driven Foodies:**
+- View aggregated ratings and statistics
+- Filter by cuisine, price, distance, and ratings
+- See rating distributions and trends
+- Make decisions backed by real data
+
+## 🌟 Key Features
+
+### 🗺️ Interactive Map Dashboard
+Explore restaurants with our powerful map interface:
+- **Live Map Integration** - Real-time restaurant markers with custom icons
+- **GPS Location Detection** - Automatically find restaurants near you with accuracy radius display
+- **Smart Search Bar** - Search restaurants by name, cuisine, or address with instant filtering
+- **Multiple Map Styles** - Choose between standard, satellite, and terrain views
+- **Quick Action Buttons** - Re-center map, toggle search, and show/hide legend
+- **Distance Radius Control** - Adjust search radius from 1-50 km with visual circle overlay
+- **Restaurant Legend** - Color-coded markers (regular restaurants, user-added places, your location)
+- **Collapsible Info Panel** - View restaurant count and location stats without blocking controls
+- **Click-to-Details** - Tap any marker to see restaurant information and get directions
+
+### ⭐ Comprehensive Review System
+Share and discover authentic dining experiences:
+- **Multi-Category Ratings** - Rate food quality, taste, ambiance, creativity, and uniqueness (1-5 stars)
+- **Service Quality Metrics** - Evaluate speed, staff friendliness, knowledge, and attentiveness
+- **Photo Upload Gallery** - Attach multiple images to your reviews (up to 10 per review)
+- **Detailed Written Reviews** - Share your full dining experience with rich text support
+- **Advanced Filtering** - Filter reviews by rating ranges, date periods, and verified status
+- **Rating Distribution Charts** - Visual breakdown of ratings across all categories
+- **Sort & Search** - Sort by newest, highest rated, most helpful, or search by keywords
+- **Verified Reviewer Badges** - See which reviews come from verified diners
+- **Helpful Votes** - Upvote useful reviews to help others make informed decisions
+
+### 🎯 Advanced Restaurant Filtering
+Find exactly what you're craving:
+- **Cuisine Types** - Filter by 20+ cuisine categories (Italian, Asian, Mexican, Mediterranean, etc.)
+- **Price Range** - Budget-friendly ($), moderate ($$), or fine dining ($$$)
+- **Rating Threshold** - Show only restaurants above your chosen star rating
+- **Distance Filter** - Adjust search radius dynamically with live map updates
+- **Open Now** - See which restaurants are currently open for service
+- **Combined Filters** - Stack multiple filters for precise results
+
+### 👤 User Restaurant Management
+Build your personal food guide:
+- **Add Your Favorites** - Manually add restaurants with full details (name, address, cuisine, price)
+- **Custom Ratings** - Rate your own restaurant additions with the Foxy Tail system (1-5 tails)
+- **Upload Photos** - Add your own photos to restaurant entries
+- **Personal Notes** - Keep private notes about each place (e.g., "best pizza in town", "ask for John")
+- **Favorites System** - Heart your favorite places for quick access
+- **Dining History** - Track all restaurants you've visited
+- **User-Added Badge** - Your contributions display with a special gold star marker
+
+### 📊 Live Dashboard Statistics
+Stay informed with real-time metrics:
+- **Restaurant Count** - See total restaurants in your area
+- **Cuisine Breakdown** - Distribution of available cuisine types
+- **Average Ratings** - Community rating averages
+- **Your Location Display** - Always know where you are on the map (blue marker)
+- **Nearby Count** - Restaurants within your selected radius
+
+### 🎨 Premium UI/UX Experience
+Beautiful design meets functionality:
+- **Glassmorphism Effects** - Modern frosted glass design throughout the app
+- **Smooth Animations** - Fluid page transitions, hover effects, and micro-interactions
+- **Dark Theme** - Eye-friendly dark interface with vibrant accent colors
+- **Fully Responsive** - Perfect experience on desktop (1920px+), tablets (768px), and mobile (375px+)
+- **Touch Optimized** - Swipe gestures and touch-friendly controls for mobile
+- **Loading States** - Skeleton screens and spinners for better perceived performance
+- **Error Handling** - User-friendly error messages with recovery suggestions
+- **PWA Support** - Install on your device and use offline (coming soon)
+
+### 🔐 Enterprise-Grade Security
+Your data is protected:
+- **JWT Authentication** - Secure token-based user sessions
+- **Password Encryption** - Bcrypt hashing with salt rounds (never store plain text)
+- **SQL Injection Protection** - Parameterized queries throughout the backend
 - **XSS Prevention** - Input sanitization and output escaping
-- **Pre-commit Hooks** - Automatic security checks before commits
+- **CORS Configuration** - Controlled cross-origin resource sharing
+- **Rate Limiting** - DDoS and brute-force attack protection (100 requests/15min)
+- **Security Headers** - Helmet.js for comprehensive HTTP header security
+- **Environment Variables** - All secrets stored in `.env` files (never committed)
+- **Pre-commit Hooks** - Automatic security scans before every commit
+- **Regular Audits** - Automated dependency vulnerability scanning
 
-### 🔧 Backend Integration (MySQL)
-- **RESTful API** - Complete Express.js backend
-- **MySQL Database** - Robust data storage with optimized schema
-- **User Management** - Registration, login, and profile management
-- **Admin Features** - Restaurant and review management
-- **Connection Pooling** - Optimized database performance
+### 🔧 Full-Stack Backend Integration
+Powerful API and database:
+- **RESTful API** - Complete Express.js backend with proper HTTP methods
+- **MySQL Database** - Robust relational database with optimized schema
+- **User Management** - Registration, login, logout, profile updates
+- **Admin Dashboard** - Manage restaurants, users, and reviews (admin-only)
+- **Connection Pooling** - Optimized database connections for performance
+- **Error Logging** - Comprehensive server-side logging for debugging
+- **API Documentation** - Clear endpoints with request/response examples
 
-### 📦 Git LFS (Large File Storage)
-- **Lightweight Repository** - Images stored efficiently with Git LFS
-- **28 Image Files** - All large assets tracked by LFS (~24MB)
-- **Fast Cloning** - Reduced repository size for faster clones
-- **Bandwidth Optimization** - Only download files you need
-- See [GIT_LFS_SETUP.md](./GIT_LFS_SETUP.md) for details
+### 📦 Optimized Performance
+Fast and efficient:
+- **Git LFS** - Large images stored efficiently (28 files, ~24MB)
+- **Code Splitting** - Lazy loading for faster initial page load
+- **Image Optimization** - Compressed assets for quick loading
+- **Caching Strategy** - Browser caching for static resources
+- **Minified Production Build** - Optimized bundle size for deployment
 
 ## 🚀 Quick Start
 
@@ -308,32 +380,62 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+## 💖 Support This Project
+
+**Foxy Confidential** is a passion project created by **Colin Nebula** at **Nebula 3D Development** with the mission of building **user-centric applications** that make people's lives easier and more enjoyable.
+
+### Why Support?
+
+Your support helps us:
+- 🚀 Continue developing new features and improvements
+- 🐛 Maintain and fix bugs promptly
+- 🎨 Enhance UI/UX based on user feedback
+- 📱 Expand to mobile platforms (iOS/Android)
+- 🌐 Keep the servers running and API services active
+- 🔒 Maintain security and privacy standards
+- 📚 Create comprehensive documentation and tutorials
+
+### How to Support
+
+#### 💰 Donations
+- **PayPal**: [Donate via PayPal](https://paypal.me/ColinNebula) *(Replace with your actual link)*
+- **Buy Me a Coffee**: [Support on Ko-fi](https://ko-fi.com/colinnebula) *(Replace with your actual link)*
+- **GitHub Sponsors**: [Sponsor on GitHub](https://github.com/sponsors/ColinNebula) *(Replace with your actual link)*
+- **Cryptocurrency**: Contact for crypto donation addresses
+
+#### 🌟 Other Ways to Help
+- ⭐ **Star this repository** - Show your appreciation
+- 🐛 **Report bugs** - Help us improve quality
+- 💡 **Suggest features** - Share your ideas
+- 📝 **Contribute code** - Submit pull requests
+- 📣 **Spread the word** - Tell others about Foxy Confidential
+- 📚 **Improve documentation** - Help new users get started
+
+### Enterprise & Custom Solutions
+
+Interested in a custom version for your business? Contact **Nebula 3D Development** for:
+- 🏢 White-label restaurant discovery platforms
+- 🎨 Custom branding and design
+- 🔧 Feature customization and integrations
+- 📊 Analytics and reporting dashboards
+- 🛠️ Technical support and maintenance
+
+**Contact**: [Your Email] or visit [Your Website]
+
+---
+
+**Thank you for supporting user-centric development!** Every contribution, no matter how small, helps us continue building amazing applications that put users first. 🦊❤️
+
+---
+
+*Made with ❤️ by [Colin Nebula](https://github.com/ColinNebula) at Nebula 3D Development*
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
